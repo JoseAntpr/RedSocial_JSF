@@ -9,6 +9,7 @@ import eajsf.entity.Usuario;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -27,5 +28,31 @@ public class UsuarioFacade extends AbstractFacade<Usuario> {
     public UsuarioFacade() {
         super(Usuario.class);
     }
+    
+    /**
+     * 
+     * @param email
+     * @param password
+     * @return Usuario
+     * 
+     * Azahar: Método para buscar usuarios en el login.
+     * Devuelve el usuario si lo encuentra, y si no devuelve null.
+     */
+    public Usuario login(String email, String password){
+        
+        Usuario user = null;
+        
+        //Creamos una consulta que busque usuarios por email y contraseña.
+        Query query = em.createQuery("SELECT u FROM Usuario u WHERE u.email=:email AND u.password=:password");
+        query.setParameter("email", email);
+        query.setParameter("password", password);
+        
+        try{
+            user = (Usuario) query.getSingleResult();  
+        }catch ( Exception ex){}
+                    
+        
+        return user;
+    } 
     
 }
