@@ -6,6 +6,8 @@
 package eajsf.ejb;
 
 import eajsf.entity.Usuario;
+import java.math.BigDecimal;
+import java.util.Date;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -54,5 +56,42 @@ public class UsuarioFacade extends AbstractFacade<Usuario> {
         
         return user;
     } 
+     public Usuario buscarEmail (String email){
+    
+        Query query = em.createNamedQuery("Usuario.findByEmail");
+        query.setParameter("email", email);
+        Usuario user = null;
+        
+        try{
+         user = (Usuario) query.getSingleResult();
+        }catch ( Exception ex){}
+         
+        return user;
+    } 
+      //Azahar: Método para cuando se registra un nuevo usuario.
+     public Usuario nuevoUser(String nombre, String apellidos, String direccion, String localidad, String provincia, String pais, String email, String password) {
+       
+       
+ //            BigDecimal bg = new BigDecimal(11.0);
+                
+             Usuario user = new Usuario();         
+             
+              user.setNombre(nombre);
+              user.setApellidos(apellidos);
+              user.setDireccion(direccion);
+              user.setLocalidad(localidad);
+              user.setProvincia(provincia);
+              user.setPais(pais);
+              user.setEmail(email);
+              user.setDescripcion(null);
+              user.setImagen(null);
+              user.setPassword(password);
+ //             user.setIdUsuario(bg);
+              user.setFechaIngreso(new Date());  
+
+              create(user);  
+             return user;
+         
+    }
     
 }

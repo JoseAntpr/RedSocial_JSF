@@ -19,14 +19,21 @@ import javax.faces.bean.SessionScoped;
 @ManagedBean
 @SessionScoped
 public class LoginBean {
+
     @EJB
     private UsuarioFacade usuarioFacade;
-    
+
+    private String nombre;
+    private String apellidos;
+    private String direccion;
+    private String localidad;
+    private String provincia;
+    private String pais;
     private String email;
     private String password;
     private BigDecimal idUsuario;
     private BigDecimal idUsuarioMuro;
-    private String error=null;
+    private String error = null;
 
     public UsuarioFacade getUsuarioFacade() {
         return usuarioFacade;
@@ -47,7 +54,6 @@ public class LoginBean {
     public String getPassword() {
         return password;
     }
-   
 
     public void setPassword(String password) {
         this.password = password;
@@ -76,34 +82,93 @@ public class LoginBean {
     public void setError(String error) {
         this.error = error;
     }
-    
-    
-    
-    
-    public String comprobarUsuario(){
-        
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getApellidos() {
+        return apellidos;
+    }
+
+    public void setApellidos(String apellidos) {
+        this.apellidos = apellidos;
+    }
+
+    public String getDireccion() {
+        return direccion;
+    }
+
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
+    }
+
+    public String getLocalidad() {
+        return localidad;
+    }
+
+    public void setLocalidad(String localidad) {
+        this.localidad = localidad;
+    }
+
+    public String getProvincia() {
+        return provincia;
+    }
+
+    public void setProvincia(String provincia) {
+        this.provincia = provincia;
+    }
+
+    public String getPais() {
+        return pais;
+    }
+
+    public void setPais(String pais) {
+        this.pais = pais;
+    }
+
+    public String comprobarUsuario() {
+
         Usuario usr = usuarioFacade.login(this.email, this.password);
-        String ruta=null;
-        
-        if(usr != null){
-            idUsuario= usr.getIdUsuario();
-            idUsuarioMuro=usr.getIdUsuario();
-            ruta="muro";
-        }else{
-            error="Nombre de usuario o contraseña incorrectos, vuelve a intentarlo porfavor";
-            ruta="login";
+        String ruta = null;
+
+        if (usr != null) {
+            idUsuario = usr.getIdUsuario();
+            idUsuarioMuro = usr.getIdUsuario();
+            ruta = "muro";
+        } else {
+            error = "Nombre de usuario o contraseña incorrectos, vuelve a intentarlo porfavor";
+            ruta = "login";
         }
-       return ruta; 
+        return ruta;
     }
-    
-    public String registrarUsuario(){
-        return null;
+
+    public String registrarUsuario() {
+            String ruta=null;
+            Usuario usr = usuarioFacade.buscarEmail(email);
+
+            if (usr == null) {
+                usr = usuarioFacade.nuevoUser(this.nombre, this.apellidos, this.direccion, this.localidad, this.provincia, this.pais, this.email, this.password);
+                idUsuario = usr.getIdUsuario();
+                idUsuarioMuro = usr.getIdUsuario();
+                ruta = "muro";
+            } else {
+                error="El email ya esta registrado en nuestra red social.";
+                ruta="login";
+            }
         
+        return ruta;
+
     }
+
     /**
      * Creates a new instance of LoginBean
      */
     public LoginBean() {
     }
-    
+
 }
