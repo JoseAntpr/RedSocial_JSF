@@ -3,6 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:a="http://java.sun.com/jsf/passthrough"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
       >
     <h:head>
         <meta http-equiv="content-type" content="text/html; charset=UTF-8"/> 
@@ -61,28 +62,28 @@
                                     <h:form>
                                         <h4 class="form-signin-heading">Registrate:</h4> 
                                         <div class="col-sm-4">
-                                            <h:inputText    class="form-control col-sm-4" value="#{loginBean.nombre}"  /><br/>
+                                            <h:inputText    class="form-control col-sm-4" value="#{loginBean.nombre}" pt:type="nombre" pt:placeholder="Nombre" /><br/>
                                         </div>
                                         <div class="col-sm-6">
-                                            <h:inputText class="form-control" value="#{loginBean.apellidos}"/><br/>
+                                            <h:inputText class="form-control" value="#{loginBean.apellidos}" pt:type="apellidos" pt:placeholder="Apellidos" /><br/>
                                         </div>
                                         <div class="col-sm-6">
-                                            <h:inputText class="form-control" value="#{loginBean.direccion}"/><br/>
+                                            <h:inputText class="form-control" value="#{loginBean.direccion}" pt:type="direccion" pt:placeholder="Dirección" /><br/>
                                         </div>
                                         <div class="col-sm-4">
-                                            <h:inputText class="form-control" value="#{loginBean.localidad}"/><br/>
+                                            <h:inputText class="form-control" value="#{loginBean.localidad}" pt:type="localidad" pt:placeholder="Localidad" /><br/>
                                         </div>
                                         <div class="col-sm-4">
-                                            <h:inputText class="form-control" value="#{loginBean.provincia}"/><br/>
+                                            <h:inputText class="form-control" value="#{loginBean.provincia}" pt:type="provincia" pt:placeholder="Provincia" /><br/>
                                         </div>
                                         <div class="col-sm-4">
-                                            <h:inputText class="form-control" value="#{loginBean.pais}"/><br/>
+                                            <h:inputText class="form-control" value="#{loginBean.pais}" pt:type="pais" pt:placeholder="País" /><br/>
                                         </div>
                                         <div class="col-sm-6">
-                                            <h:inputText class="form-control" value="#{loginBean.email}"/><br/>
+                                            <h:inputText class="form-control" value="#{loginBean.email}" pt:type="email" pt:placeholder="Email" /><br/>
                                         </div>
                                         <div class="col-sm-6">
-                                            <h:inputSecret value="#{loginBean.password}" class="form-control"/><br/>  
+                                            <h:inputSecret value="#{loginBean.password}" class="form-control" pt:type="password" pt:placeholder="Password" /> <br/>  
                                         </div>
                                         <div class="col-sm-4">
                                             <h:commandButton value="Registrar" action="#{loginBean.registrarUsuario()}" class="btn btn-success btn-block"/>

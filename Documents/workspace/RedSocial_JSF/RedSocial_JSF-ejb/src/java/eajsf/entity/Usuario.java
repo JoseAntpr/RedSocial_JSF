@@ -250,6 +250,22 @@ public class Usuario implements Serializable {
     public void setImagen(String imagen) {
         this.imagen = imagen;
     }
+    
+    /**
+     * Creado por Jose
+     * @param u
+     * @return 
+     */
+    public boolean siguesUsuario(Usuario u){
+        boolean s=false;
+        for(int i=0;i<this.getUsuarioCollection().size();i++){
+            if(this.getUsuarioCollection().contains(u)){
+                s=true;
+            }
+        }
+        return s;
+    }
+    
 
     @XmlTransient
     public Collection<Grupo> getGrupoCollection() {

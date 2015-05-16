@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package eajsf.beans;
+package eajsf.bean;
 
 import eajsf.ejb.UsuarioFacade;
 import eajsf.entity.Usuario;
@@ -148,21 +148,29 @@ public class LoginBean {
     }
 
     public String registrarUsuario() {
-            String ruta=null;
-            Usuario usr = usuarioFacade.buscarEmail(email);
+        String ruta = null;
+        Usuario usr = usuarioFacade.buscarEmail(email);
 
-            if (usr == null) {
-                usr = usuarioFacade.nuevoUser(this.nombre, this.apellidos, this.direccion, this.localidad, this.provincia, this.pais, this.email, this.password);
-                idUsuario = usr.getIdUsuario();
-                idUsuarioMuro = usr.getIdUsuario();
-                ruta = "muro";
-            } else {
-                error="El email ya esta registrado en nuestra red social.";
-                ruta="login";
-            }
-        
+        if (usr == null) {
+            usr = usuarioFacade.nuevoUser(this.nombre, this.apellidos, this.direccion, this.localidad, this.provincia, this.pais, this.email, this.password);
+            idUsuario = usr.getIdUsuario();
+            idUsuarioMuro = usr.getIdUsuario();
+            ruta = "muro";
+        } else {
+            error = "El email ya esta registrado en nuestra red social.";
+            ruta = "login";
+        }
+
         return ruta;
 
+    }
+    
+    public Usuario buscarID(BigDecimal id){
+        return (Usuario)usuarioFacade.find(id);
+    }
+    
+    public boolean sigues(Usuario u, Usuario u2){
+        return u.siguesUsuario(u2);
     }
 
     /**
