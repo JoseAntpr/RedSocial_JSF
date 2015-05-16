@@ -11,12 +11,15 @@ import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -41,6 +44,8 @@ public class Comentario implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "ID_COMENTARIO")
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator = "secuencia_comentario")
+    @SequenceGenerator(name="secuencia_comentario", sequenceName = "COMENTARIO_SEQ", allocationSize=1)
     private BigDecimal idComentario;
     @Basic(optional = false)
     @NotNull

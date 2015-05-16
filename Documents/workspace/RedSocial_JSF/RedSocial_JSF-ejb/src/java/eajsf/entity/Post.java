@@ -13,6 +13,8 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -21,6 +23,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -49,6 +52,8 @@ public class Post implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "ID_POST")
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator = "secuencia_post")
+    @SequenceGenerator(name="secuencia_post", sequenceName = "POST_SEQ", allocationSize=1)
     private BigDecimal idPost;
     @Basic(optional = false)
     @NotNull
