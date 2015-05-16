@@ -1,7 +1,9 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title>Grupo</title>
     </h:head>
@@ -12,11 +14,29 @@
 
                     <!-- LISTADO GRUPOS -->
                     <div class="column col-sm-2 col-xs-1 sidebar-offcanvas" id="sidebar">
-
                         <ul class="nav hidden-xs" id="lg-menu">
-                            <%if(usuario.getIdUsuario().equals(usuarioMuro.getIdUsuario())){%>
-                            <li class="active"><a href="crearGrupo.jsp?usurioMuro=<%=usuarioMuro.getIdUsuario()%>"><i class="glyphicon glyphicon-list-alt"></i> + Crear grupo </a></li> 
-                            <%}%>
+                            <c:if test="#{grupoBean.usuario.idUsuario eq grupoBean.usuarioMuro.idUsuario}">
+                                <li class="active"><a href="crearGrupo.jsp?usurioMuro=<%=usuarioMuro.getIdUsuario()%>"><i class="glyphicon glyphicon-list-alt"></i> + Crear grupo </a></li> 
+                            </c:if>
+                            <c:if test="#{grupoBean.tieneGrupos}">
+                                <c:forEach items="#{grupoBean.listaGruposUsuarioMuro}" var="g">
+                                    <li class="active list-group">
+                                        <h:link value="#{g.nombre}" outcome="#{grupoBean.doGrupoElegido()}" class="glyphicon glyphicon-list-alt">
+                                            <f:param name="idGrupoElegido" value="#{g.idGrupo}"
+                                        </h:link>
+                                        <h:form>
+                                            <h:inputHidden value="#{grupoBean.idGrupoAbandonar = g.idGrupo}" />
+                                            <h:commandButton value="Abandonar" action="#{grupoBean.doAbandonarGrupo()}" class="btn btn-danger btn-block"/>
+                                            
+                                        </h:form>
+                                        <form action="GrupoUnirAbandonarServlet" method="post">
+                                            <input type="hidden" name="accion" value="abandonar"/>
+                                            <input type="hidden" name="idGrupo" value="<%=g.getIdGrupo()%>"/>
+                                            <input  class="btn btn-danger btn-block" type="submit" name="boton" value="Abandonar">
+                                        </form>
+                                    </li>
+                                </c:forEach>
+                            </c:if>
                             <%if(tieneGrupos){
                                 for(Grupo g : listaGruposUsuarioMuro){ %>
                                     <li class="active list-group">
