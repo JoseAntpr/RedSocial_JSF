@@ -31,8 +31,9 @@ public class LoginBean {
     private String pais;
     private String email;
     private String password;
-    private BigDecimal idUsuario;
-    private BigDecimal idUsuarioMuro;
+
+    private Usuario usuario;
+    private Usuario usuarioMuro;
     private String error = null;
 
     public UsuarioFacade getUsuarioFacade() {
@@ -57,22 +58,6 @@ public class LoginBean {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public BigDecimal getIdUsuario() {
-        return idUsuario;
-    }
-
-    public void setIdUsuario(BigDecimal idUsuario) {
-        this.idUsuario = idUsuario;
-    }
-
-    public BigDecimal getIdUsuarioMuro() {
-        return idUsuarioMuro;
-    }
-
-    public void setIdUsuarioMuro(BigDecimal idUsuarioMuro) {
-        this.idUsuarioMuro = idUsuarioMuro;
     }
 
     public String getError() {
@@ -131,15 +116,33 @@ public class LoginBean {
         this.pais = pais;
     }
 
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
+
+    public Usuario getUsuarioMuro() {
+        return usuarioMuro;
+    }
+
+    public void setUsuarioMuro(Usuario usuarioMuro) {
+        this.usuarioMuro = usuarioMuro;
+    }
+    
+    
+
     public String comprobarUsuario() {
 
         Usuario usr = usuarioFacade.login(this.email, this.password);
         String ruta = null;
 
         if (usr != null) {
-            idUsuario = usr.getIdUsuario();
-            idUsuarioMuro = usr.getIdUsuario();
             ruta = "muro";
+            this.usuario=usr;
+            this.usuarioMuro=usr;
         } else {
             error = "Nombre de usuario o contraseña incorrectos, vuelve a intentarlo porfavor";
             ruta = "login";
@@ -153,8 +156,8 @@ public class LoginBean {
 
         if (usr == null) {
             usr = usuarioFacade.nuevoUser(this.nombre, this.apellidos, this.direccion, this.localidad, this.provincia, this.pais, this.email, this.password);
-            idUsuario = usr.getIdUsuario();
-            idUsuarioMuro = usr.getIdUsuario();
+            this.usuario=usr;
+            this.usuarioMuro=usr;
             ruta = "muro";
         } else {
             error = "El email ya esta registrado en nuestra red social.";

@@ -31,83 +31,46 @@
                     
                     <div class="padding">
 			<div class="full col-sm-9">
-                            <c:if test="#{loginBean.sigues(loginBean.buscarID(loginBean.idUsuario),loginBean.buscarID(loginBean.idUsuarioMuro))}">
-                                <p>No puedes ver el muro de un usuario que no sigues</p>
-                            </c:if>
-                            <!--<%  if(mensaje!=null){  %>
-                                   <p><%=mensaje%></p>
-                            <%  } %>-->
+                            
+                            
                             <!-- content -->                      
                             <div class="row">
 				<!-- main col left -->
-                                
-                                <c:if test="#{loginBean.idUsuario.equals(loginBean.idUsuarioMuro)}">
+                                <!--
+                                <c:if test="#{loginBean.usuario.equals(loginBean.usuarioMuro)}">
                                     <div class="col-sm-6">
+                                    
                                 </c:if>
-                                <c:if test="#{!loginBean.idUsuario.equals(loginBean.idUsuarioMuro)}">
-                                    <div class="col-sm-6 centered">
-                                </c:if>
-                                <!--<%
-                                     if(usuario.equals(usuarioMuro)){
-                                %>
+                                -->
+                                
                                 <div class="col-sm-6">
-                                
-                                <%
-                                     }else{
-                                %>
-                                 <div class="col-sm-6 centered">
-                                
-                                <%
-                                     }
-                                %>-->
-                                    <!--
-                                    <%for (int i=0;i<lista.size();i++) { 
-                                        Post p=lista.get(i);
+                               <!--
+                                <c:otherwise>
+                                    <div class="col-sm-6 centered">   
                                         
-                                        if(p.getIdGrupo()==null){
-                                     %> 
-                                     -->
-                                     <ui:repeat value="#{}" var="post"><!--Coger la lista de post en POSTCONSTRUCT de MuroBean-->
-                                         <c:if test="#{post.getIdGrupo()==null}">
+                                </c:otherwise>
+                                -->
+                                
+                                 <div class="col-sm-6 centered">
+                                <ui:repeat value="#{muroBean.listaPost}" var="p">
+                                  
                                             <div class="panel panel-default">
                                                <div class="panel-thumbnail">
-                                                   <% if (p.getImagen() != null) {%>
-                                                   <img src="<%= p.getImagen()%>" class="img-responsive">
-                                                   <% }%>
+                                                   
+                                                  
                                                </div>
                                                <div class="panel-body">
-                                                   <p><img src="assets/img/uFp_tsTJboUY7kue5XAsGAs28.png" height="28px" width="28px">
-                                                       <%= usuarioMuro.getNombre() + " " + usuarioMuro.getApellidos()%></p>
-                                                   <p><%= format.format(p.getFecha()) %></p>
-                                                   <p><%= p.getDescripcion()%></p>
-
-
-                                                       <% if(usuario.equals(usuarioMuro)){%>
-                                                       <form name="delete" action="PostDeleteServlet" method="post">    
-                                                           <input type="hidden" value="usuario" name="tipo_borrado"/>
-                                                           <input type="hidden" value="<%=p.getIdPost()%>" name="idGuardada"/> <!--Guardamos la id para recuperarla al borrar post-->
-                                                           <input  class="btnEliminar botonEliminar" type="submit" value="Eliminar" name="eliminar" />
-                                                       </form>
-                                                       <%} %>
+                                                   
+                                                       
 
                                                </div>
                                            </div>
-                                         </c:if>
-                                    </ui:repeat>  
-                                     <!--
-                                    <%} 
-                                    } %> --> 
+                                      
+                                </ui:repeat>
+                                   
                                 </div>
                                 <!-- Include sidebar -->
-                                <%
-                                     if(usuario.equals(usuarioMuro)){
-                                %>
-                                <%@include file="postAmigos.jsp" %> 
-                                
-                                <%
-                                     }
-                                %>
-                                                        
+                                                    
                                 <!-- /Include sidebar -->
                             </div>
                         </div><!-- /col-9 -->  
@@ -116,7 +79,7 @@
             </div>
            <!-- /main -->
         </div>
-    </div>
+     </div>
      </div>
 
     <script type="text/javascript" src="assets/js/jquery.js"></script>
