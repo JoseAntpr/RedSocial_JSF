@@ -238,6 +238,8 @@ public class GrupoBean {
         }
 
         tieneGrupos = listaGruposUsuarioMuro.size() > 0;
+        
+        Grupo g = grupoFacade.find(new BigDecimal(1));
 
         if (tieneGrupos) {
             if (idGrupoElegido != null) {
@@ -249,7 +251,7 @@ public class GrupoBean {
                 grupo = (Grupo) grupoFacade.find(listaGruposUsuarioMuro.get(0).getIdGrupo());
             }
             listaPostGrupo = (List) postFacade.getListaPostGrupo(grupo.getIdGrupo());
-            listaMiembrosGrupo = (List) grupo.getUsuarioCollection();
+            listaMiembrosGrupo = (List) grupo.getUsuarioBloqueadoCollection();
         }
 
     }
@@ -263,20 +265,24 @@ public class GrupoBean {
     }
     
     public String doGrupoElegido() {
-        idGrupoElegido = getParam("idGrupoElegido");
+        idGrupoElegido = getParameter("idGrupoElegido");
         BigDecimal idGrupo = new BigDecimal(idGrupoElegido);
         grupo = (Grupo) grupoFacade.find(idGrupo);
-        return "grupo.xhtml";
+        return "grupo";
     }
     
+    public String doCrearGrupo(){
+        return "crearGrupo?idUsuarioMuro=" + idUsuarioMuro;
+    }
     
     // Mirar a ver que tal
     public String doAbandonarGrupo() {
-        return "seguirNoSeguirBean?idGrupoAbandonar="+idGrupoAbandonar;
+        return "seguirNoSeguirBean?idGrupoAbandonar=" + idGrupoAbandonar;
     }
     
+    
     // Metodos auxiliares
-    private String getParam(String name){
+    private String getParameter(String name){
         return FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get(name);
     }
     

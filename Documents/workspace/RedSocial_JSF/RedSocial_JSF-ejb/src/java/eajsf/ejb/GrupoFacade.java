@@ -54,7 +54,7 @@ public class GrupoFacade extends AbstractFacade<Grupo> {
     public void eliminarGrupo(Grupo grupoEliminar, Usuario usuario) {
         
         // Eliminamos el grupo de cada miembro y lo actualizamos en BD
-        for (Usuario u : grupoEliminar.getUsuarioCollection()){
+        for (Usuario u : grupoEliminar.getUsuarioBloqueadoCollection()){
             if (u.getIdUsuario().equals(usuario.getIdUsuario())){
 //                u.getGrupoCollection().remove(grupoEliminar);
 //                usuario = u;
@@ -81,7 +81,7 @@ public class GrupoFacade extends AbstractFacade<Grupo> {
         BigDecimal idGrupoAbandonar = new BigDecimal(idGrupo);
         Grupo grupo = find(idGrupoAbandonar);
 
-        Integer size = grupo.getUsuarioCollection().size();
+        Integer size = grupo.getUsuarioBloqueadoCollection().size();
         if (size.compareTo(1) == 0) {
             // Eliminio el grupo del usuario
             usuario.getGrupoCollection().remove(grupo);
@@ -96,7 +96,7 @@ public class GrupoFacade extends AbstractFacade<Grupo> {
                 
 
                 // Cambio el administrador del grupo
-                List<Usuario> listaUsuarios = (List) grupo.getUsuarioCollection();
+                List<Usuario> listaUsuarios = (List) grupo.getUsuarioBloqueadoCollection();
 
                 Usuario nuevoAdmin = null;
                 if(usuario.getIdUsuario().equals(listaUsuarios.get(0).getIdUsuario())){
@@ -112,7 +112,7 @@ public class GrupoFacade extends AbstractFacade<Grupo> {
                 usuario.getGrupoCollection().remove(grupo);
 
                 // Elimino el usuario del grupo
-                grupo.getUsuarioCollection().remove(usuario);
+                grupo.getUsuarioBloqueadoCollection().remove(usuario);
 
                 // Actualizo el grupo en BD
                 edit(grupo);
@@ -121,7 +121,7 @@ public class GrupoFacade extends AbstractFacade<Grupo> {
                 usuarioFacade.edit(usuario);
             } else { // No es el administrador
                 // Elimino el usuario del grupo
-                grupo.getUsuarioCollection().remove(usuario);
+                grupo.getUsuarioBloqueadoCollection().remove(usuario);
 
                 // Eliminio el grupo del usuario
                 usuario.getGrupoCollection().remove(grupo);
@@ -141,7 +141,7 @@ public class GrupoFacade extends AbstractFacade<Grupo> {
         Grupo grupo = find(idGrupoUnirse);
 
         // Elimino el usuario del grupo
-        grupo.getUsuarioCollection().add(usuario);
+        grupo.getUsuarioBloqueadoCollection().add(usuario);
 
         // Eliminio el grupo del usuario
         usuario.getGrupoCollection().add(grupo);

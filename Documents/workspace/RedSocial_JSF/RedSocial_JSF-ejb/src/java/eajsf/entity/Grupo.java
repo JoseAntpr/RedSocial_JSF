@@ -72,12 +72,12 @@ public class Grupo implements Serializable {
         @JoinColumn(name = "ID_GRUPO", referencedColumnName = "ID_GRUPO")}, inverseJoinColumns = {
         @JoinColumn(name = "ID_USUARIO", referencedColumnName = "ID_USUARIO")})
     @ManyToMany
-    private Collection<Usuario> usuarioCollection;
+    private Collection<Usuario> usuarioBloqueadoCollection;
     @JoinTable(name = "MIEMBRO", joinColumns = {
         @JoinColumn(name = "ID_GRUPO", referencedColumnName = "ID_GRUPO")}, inverseJoinColumns = {
         @JoinColumn(name = "ID_USUARIO", referencedColumnName = "ID_USUARIO")})
     @ManyToMany
-    private Collection<Usuario> usuarioCollection1;
+    private Collection<Usuario> usuarioMiembroCollection;
     @OneToMany(mappedBy = "idGrupo")
     private Collection<Post> postCollection;
     @JoinColumn(name = "ID_ADMINISTRADOR", referencedColumnName = "ID_USUARIO")
@@ -138,21 +138,21 @@ public class Grupo implements Serializable {
     }
 
     @XmlTransient
-    public Collection<Usuario> getUsuarioCollection() {
-        return usuarioCollection;
+    public Collection<Usuario> getUsuarioBloqueadoCollection() {
+        return usuarioBloqueadoCollection;
     }
 
-    public void setUsuarioCollection(Collection<Usuario> usuarioCollection) {
-        this.usuarioCollection = usuarioCollection;
+    public void setUsuarioBloqueadoCollection(Collection<Usuario> usuarioBloqueadoCollection) {
+        this.usuarioBloqueadoCollection = usuarioBloqueadoCollection;
     }
 
     @XmlTransient
-    public Collection<Usuario> getUsuarioCollection1() {
-        return usuarioCollection1;
+    public Collection<Usuario> getUsuarioMiembroCollection() {
+        return usuarioMiembroCollection;
     }
 
-    public void setUsuarioCollection1(Collection<Usuario> usuarioCollection1) {
-        this.usuarioCollection1 = usuarioCollection1;
+    public void setUsuarioMiembroCollection(Collection<Usuario> usuarioMiembroCollection) {
+        this.usuarioMiembroCollection = usuarioMiembroCollection;
     }
 
     @XmlTransient
