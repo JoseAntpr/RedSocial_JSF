@@ -43,7 +43,7 @@ public class PostFacade extends AbstractFacade<Post> {
         Query q;
         List<Post> listaPost;        
         
-        q = em.createQuery("SELECT p FROM Post p WHERE p.idUsuario.idUsuario=:ID ORDER BY p.idPost DESC");
+        q = em.createQuery("SELECT p FROM Post p WHERE p.idUsuarioP.idUsuario=:ID ORDER BY p.idPost DESC");
         
         q.setParameter("ID", id_usuario);
         listaPost = q.getResultList();
@@ -55,7 +55,7 @@ public class PostFacade extends AbstractFacade<Post> {
         Query q;
         List<Post> post;        
         
-        q = em.createQuery("SELECT p FROM Post p, Usuario u ,IN (u.usuarioCollection) us WHERE u.idUsuario=:ID AND p.idUsuario.idUsuario=us.idUsuario ORDER BY p.idPost DESC");
+        q = em.createQuery("SELECT p FROM Post p, Usuario u ,IN (u.usuarioCollection) us WHERE u.idUsuario=:ID AND p.idUsuarioP.idUsuario=us.idUsuario ORDER BY p.idPost DESC");
         
         q.setParameter("ID", id_usuario);
         post = (List) q.getResultList();

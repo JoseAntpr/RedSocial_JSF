@@ -10,6 +10,9 @@ import eajsf.ejb.UsuarioFacade;
 import eajsf.entity.Post;
 import eajsf.entity.Usuario;
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
+import java.util.AbstractList;
+import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -36,13 +39,16 @@ public class MuroBean {
     
     private List<Post> listaPost;
     private String cssDiv;
-
+    
+    private SimpleDateFormat format = new SimpleDateFormat("EEEEE dd MMM yyyy - HH:mm");
+    private SimpleDateFormat formatSinHora = new SimpleDateFormat("EEE dd MMM yyyy");
+    
+    
     @PostConstruct
     public void init() {
-        Usuario usuario = loginBean.getUsuario();
-        Usuario usuarioMuro = loginBean.getUsuarioMuro();
+//        Usuario usuario = loginBean.getUsuario();
+//        Usuario usuarioMuro = loginBean.getUsuarioMuro();
 
-        List<Post> listaPost = null;
         List<Post> postSigues = null;
         
         if(loginBean.getUsuario().equals(loginBean.getUsuarioMuro())){
@@ -50,9 +56,28 @@ public class MuroBean {
         }else{
             this.cssDiv="col-sm-6 centered";
         }
+        
+        this.listaPost=postFacade.findPostIdUsuarioOrder(loginBean.getUsuario().getIdUsuario());
 
+        
     }
 
+    public SimpleDateFormat getFormat() {
+        return format;
+    }
+
+    public void setFormat(SimpleDateFormat format) {
+        this.format = format;
+    }
+
+    public SimpleDateFormat getFormatSinHora() {
+        return formatSinHora;
+    }
+
+    public void setFormatSinHora(SimpleDateFormat formatSinHora) {
+        this.formatSinHora = formatSinHora;
+    }
+    
     public UsuarioFacade getUsuarioFacade() {
         return usuarioFacade;
     }

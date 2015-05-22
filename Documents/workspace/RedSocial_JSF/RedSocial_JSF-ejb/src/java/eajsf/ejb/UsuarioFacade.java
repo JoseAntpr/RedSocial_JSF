@@ -91,6 +91,7 @@ public class UsuarioFacade extends AbstractFacade<Usuario> {
         user.setDescripcion("");
         user.setImagen("");
         user.setPassword(password);
+        user.setBloqueado("0");
 //        user.setIdUsuario(bg);
         user.setFechaIngreso(new Date());
         

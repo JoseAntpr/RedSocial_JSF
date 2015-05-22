@@ -1,0 +1,88 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"  
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+    <h:head>
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8"/> 
+        <meta charset="utf-8"/>
+        <title>Añadir Post</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+        <link rel="stylesheet" type="text/css" media="all" href="resources/css/bootstrap.css"/>
+        <link rel="stylesheet" type="text/css" media="all" href="resources/css/facebook.css"/>
+    </h:head>
+    <h:body>
+        <div class="wrapper">
+            <div class="box">
+                <div class="row row-offcanvas row-offcanvas-left">
+
+                   <!-- Include sidebar -->
+                    <ui:include src="sidebar.xhtml"/>                     
+                    <!-- /Include sidebar -->
+
+                    <!-- main right col -->
+                    <div class="column col-sm-10 col-xs-11" id="main">
+
+                        <!-- top nav -->
+                        <ui:include src="navbar.xhtml"/>
+                        <!-- /top nav -->
+
+                        <div class="padding">
+                            <div class="full col-sm-9">
+
+                                <!-- content -->                      
+                                <div class="row">
+
+                                    <!-- main 100% page --> 
+                                    <div class="col-sm-12">
+
+
+                                        <!-- POST --> 
+                                        <div class="well">
+                                            
+                                            <h:form id="form" enctype="multipart/form-data">                                            
+                                                <h4>¿Qué estás pensando?</h4>
+                                                <div class="form-group" style="padding:14px;">                                                 
+                                                    <h:inputTextarea class="form-control" value="#{postBean.text}" pt:placeholder="Escriba el contenido del post"/>
+                                                </div>
+                                                <h:inputFile id="file" value="#{postBean.img}" /> <!--validator="postBean.validarImagen"-->                                               
+                                                <h:commandButton class="btn btn-primary pull-right" value="Post" action="#{postBean.addPost()}" >
+                                                    <!--<f:ajax execute="file" render="@all"/>-->
+                                                </h:commandButton>
+
+                                            </h:form>
+                                        </div>
+
+                                    </div>
+
+
+                                </div><!--/row-->
+                            </div> <!--/col-9 -->
+                       </div> <!-- /padding -->
+                    </div>
+                    <!-- /main -->
+
+                </div>
+            </div>
+        </div>
+
+        <script type="text/javascript" src="resources/js/jquery.js"></script>
+    <script type="text/javascript" src="resources/js/bootstrap.js"></script>
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $('[data-toggle=offcanvas]').click(function () {
+                    $(this).toggleClass('visible-xs text-center');
+                    $(this).find('i').toggleClass('glyphicon-chevron-right glyphicon-chevron-left');
+                    $('.row-offcanvas').toggleClass('active');
+                    $('#lg-menu').toggleClass('hidden-xs').toggleClass('visible-xs');
+                    $('#xs-menu').toggleClass('visible-xs').toggleClass('hidden-xs');
+                    $('#btnShow').toggle();
+                });
+            });
+        </script>
+    </h:body>
+</html>
+

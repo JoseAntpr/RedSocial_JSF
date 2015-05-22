@@ -13,7 +13,7 @@
         <li><img src="resources/img/Avatar.jpg" class="img-responsive"/></li><br/>
         <li class="active">#{loginBean.usuarioMuro.getNombre()} #{loginBean.usuarioMuro.getApellidos()}</li><br/>
         <li class="active">Vive en #{loginBean.usuarioMuro.getLocalidad()}, #{loginBean.usuarioMuro.getProvincia()}, #{loginBean.usuarioMuro.getPais()}</li><br/>
-        <li class="active">Fecha ingreso: #{loginBean.usuarioMuro.getFechaIngreso()}</li><br/>
+        <li class="active">Fecha ingreso: #{muroBean.formatSinHora.format(loginBean.usuarioMuro.getFechaIngreso())}</li><br/>
         <li>#{loginBean.usuarioMuro.getDescripcion()}</li><br/>
         
         <!-- FALTAN LOS ENLACES -->
