@@ -20,7 +20,8 @@
                 <div class="input-group-btn">
                     
                     <!--BUSCAR-->
-                    <h:commandButton action="#" class="btn btn-default" ><i class="glyphicon glyphicon-search"></i></h:commandButton>
+                    <!--<h:commandButton action="#" class="btn btn-default" styleClass="btn btn-primary"><span class="glyphicon glyphicon-search"></span></h:commandButton>-->
+                    <button type="submit" name="botonBuscar" class="btn btn-default" onclick="#{muroBean.muro()}"><i class="glyphicon glyphicon-search"></i></button>
                 </div>
             </div>
                         
@@ -30,12 +31,12 @@
                 <!--
                 <h:link value="" outcome="muro" ><i class="glyphicon glyphicon-home"></i> Inicio</h:link> 
                 -->
-                <a role="button"><i class="glyphicon glyphicon-home"></i>Inicio</a>
+                <a role="button"><i class="glyphicon glyphicon-home"></i> Inicio</a>
             </li>
             <li>
                <c:if test="#{loginBean.usuario.getIdUsuario().equals(loginBean.usuarioMuro.getIdUsuario())}">
                    <!--<h:link value="" outcome="postAdd" ></h:link>-->
-                   <a role="button"><i class="glyphicon glyphicon-plus"></i>Post</a>                  
+                   <a role="button"><i class="glyphicon glyphicon-plus"></i> Post</a>                  
                </c:if>
                
             </li>
@@ -47,7 +48,7 @@
                 <ul aria-labelledby="drop3" role="menu" class="dropdown-menu">
                    <li role="presentation"></li> 
                     <li role="presentation"><a href="#" tabindex="-1" role="menuitem">Editar Perfil</a></li>
-                    <li role="presentation"><a href="#" tabindex="-1" role="menuitem"></a>Cambiar Contraseña</li>
+                    <li role="presentation"><a href="#" tabindex="-1" role="menuitem">Cambiar Contraseña</a></li>
                     <li class="divider" role="presentation"></li>
                     <li role="presentation"><a href="#" tabindex="-1" role="menuitem">Cerrar Sesión</a></li>
                     <li class="divider" role="presentation"></li>                   

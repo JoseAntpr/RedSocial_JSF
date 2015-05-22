@@ -17,15 +17,16 @@ import javax.persistence.PersistenceContext;
 
 /**
  *
- * @author Joseantpr
+ * @author Jesus
  */
 @Stateless
 public class GrupoFacade extends AbstractFacade<Grupo> {
-    @EJB
-    private UsuarioFacade usuarioFacade;
     @PersistenceContext(unitName = "RedSocial_JSF-ejbPU")
     private EntityManager em;
 
+    @EJB
+    private UsuarioFacade usuarioFacade;
+    
     @Override
     protected EntityManager getEntityManager() {
         return em;
@@ -35,10 +36,10 @@ public class GrupoFacade extends AbstractFacade<Grupo> {
         super(Grupo.class);
     }
     
-    public Grupo nuevoGrupo(Usuario administrador, String nombre, String privacidad) {
+     public Grupo nuevoGrupo(Usuario administrador, String nombre, String privacidad) {
         Grupo grupo = new Grupo();
 
-        grupo.setIdAdministrador(administrador);
+        grupo.setIdAdministradorG(administrador);
         grupo.setNombre(nombre);
         grupo.setImagen("imagen");
 
@@ -91,7 +92,7 @@ public class GrupoFacade extends AbstractFacade<Grupo> {
             remove(grupo);
         } else if (size >= 2) {
             // Es el administrador
-            if (usuario.getIdUsuario().equals(grupo.getIdAdministrador().getIdUsuario())) {
+            if (usuario.getIdUsuario().equals(grupo.getIdAdministradorG().getIdUsuario())) {
 //            if (usuario.getIdUsuario().equals(new BigDecimal(grupo.getIdAdministrador().toString()))) {
                 
 
@@ -106,7 +107,7 @@ public class GrupoFacade extends AbstractFacade<Grupo> {
 //                    nuevoAdmin = new BigInteger(listaUsuarios.get(0).getIdUsuario().intValue()+"");
                     nuevoAdmin = listaUsuarios.get(0);
                 }
-                grupo.setIdAdministrador(nuevoAdmin);
+                grupo.setIdAdministradorG(nuevoAdmin);
                 
                 // Eliminio el grupo del usuario
                 usuario.getGrupoCollection().remove(grupo);
@@ -152,6 +153,5 @@ public class GrupoFacade extends AbstractFacade<Grupo> {
         // Actualizo el usuario en BD
         usuarioFacade.edit(usuario);
     }
-
     
 }

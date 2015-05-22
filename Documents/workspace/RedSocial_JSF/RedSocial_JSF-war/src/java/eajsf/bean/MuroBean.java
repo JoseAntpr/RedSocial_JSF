@@ -35,6 +35,7 @@ public class MuroBean {
     private PostFacade postFacade;
     
     private List<Post> listaPost;
+    private String cssDiv;
 
     @PostConstruct
     public void init() {
@@ -43,6 +44,12 @@ public class MuroBean {
 
         List<Post> listaPost = null;
         List<Post> postSigues = null;
+        
+        if(loginBean.getUsuario().equals(loginBean.getUsuarioMuro())){
+            this.cssDiv="col-sm-6";
+        }else{
+            this.cssDiv="col-sm-6 centered";
+        }
 
     }
 
@@ -77,8 +84,18 @@ public class MuroBean {
     public void setListaPost(List<Post> listaPost) {
         this.listaPost = listaPost;
     }
+
+    public String getCssDiv() {
+        return cssDiv;
+    }
+
+    public void setCssDiv(String cssDiv) {
+        this.cssDiv = cssDiv;
+    }
     
-    
+    public String muro(){
+        return "muro";
+    }
 
     /**
      * Creates a new instance of MuroBean

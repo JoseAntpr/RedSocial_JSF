@@ -7,22 +7,17 @@ package eajsf.entity;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -30,11 +25,10 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Joseantpr
+ * @author Jesus
  */
 @Entity
 @Table(name = "POST")
@@ -68,19 +62,12 @@ public class Post implements Serializable {
     @Size(max = 256)
     @Column(name = "IMAGEN")
     private String imagen;
-    @JoinTable(name = "MEGUSTA", joinColumns = {
-        @JoinColumn(name = "ID_POST", referencedColumnName = "ID_POST")}, inverseJoinColumns = {
-        @JoinColumn(name = "ID_USUARIO", referencedColumnName = "ID_USUARIO")})
-    @ManyToMany
-    private Collection<Usuario> usuarioCollection;
-    @JoinColumn(name = "ID_GRUPO", referencedColumnName = "ID_GRUPO")
+    @JoinColumn(name = "ID_GRUPO_P", referencedColumnName = "ID_GRUPO")
     @ManyToOne
-    private Grupo idGrupo;
-    @JoinColumn(name = "ID_USUARIO", referencedColumnName = "ID_USUARIO")
+    private Grupo idGrupoP;
+    @JoinColumn(name = "ID_USUARIO_P", referencedColumnName = "ID_USUARIO")
     @ManyToOne(optional = false)
-    private Usuario idUsuario;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idPost")
-    private Collection<Comentario> comentarioCollection;
+    private Usuario idUsuarioP;
 
     public Post() {
     }
@@ -127,38 +114,20 @@ public class Post implements Serializable {
         this.imagen = imagen;
     }
 
-    @XmlTransient
-    public Collection<Usuario> getUsuarioCollection() {
-        return usuarioCollection;
+    public Grupo getIdGrupoP() {
+        return idGrupoP;
     }
 
-    public void setUsuarioCollection(Collection<Usuario> usuarioCollection) {
-        this.usuarioCollection = usuarioCollection;
+    public void setIdGrupoP(Grupo idGrupoP) {
+        this.idGrupoP = idGrupoP;
     }
 
-    public Grupo getIdGrupo() {
-        return idGrupo;
+    public Usuario getIdUsuarioP() {
+        return idUsuarioP;
     }
 
-    public void setIdGrupo(Grupo idGrupo) {
-        this.idGrupo = idGrupo;
-    }
-
-    public Usuario getIdUsuario() {
-        return idUsuario;
-    }
-
-    public void setIdUsuario(Usuario idUsuario) {
-        this.idUsuario = idUsuario;
-    }
-
-    @XmlTransient
-    public Collection<Comentario> getComentarioCollection() {
-        return comentarioCollection;
-    }
-
-    public void setComentarioCollection(Collection<Comentario> comentarioCollection) {
-        this.comentarioCollection = comentarioCollection;
+    public void setIdUsuarioP(Usuario idUsuarioP) {
+        this.idUsuarioP = idUsuarioP;
     }
 
     @Override

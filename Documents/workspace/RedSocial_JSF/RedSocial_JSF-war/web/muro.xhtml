@@ -9,8 +9,10 @@
         <meta charset="utf-8"/>
         <title>Red Social</title>
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
-        <h:outputStylesheet library="css" name="bootstrap.css"/>
-        <h:outputStylesheet library="css" name="facebook.css"/>
+        <!--<h:outputStylesheet library="css" name="bootstrap.css"/>
+        <h:outputStylesheet library="css" name="facebook.css"/>-->
+        <link rel="stylesheet" type="text/css" media="all" href="resources/css/bootstrap.css"/>
+        <link rel="stylesheet" type="text/css" media="all" href="resources/css/facebook.css"/>
         
     </h:head>
     <h:body>
@@ -36,22 +38,9 @@
                             <!-- content -->                      
                             <div class="row">
 				<!-- main col left -->
-                                <!--
-                                <c:if test="#{loginBean.usuario.equals(loginBean.usuarioMuro)}">
-                                    <div class="col-sm-6">
-                                    
-                                </c:if>
-                                -->
                                 
-                                <div class="col-sm-6">
-                               <!--
-                                <c:otherwise>
-                                    <div class="col-sm-6 centered">   
-                                        
-                                </c:otherwise>
-                                -->
+                                <div class="#{muroBean.cssDiv}">
                                 
-                                 <div class="col-sm-6 centered">
                                 <ui:repeat value="#{muroBean.listaPost}" var="p">
                                   
                                             <div class="panel panel-default">
@@ -80,10 +69,9 @@
            <!-- /main -->
         </div>
      </div>
-     </div>
 
-    <script type="text/javascript" src="assets/js/jquery.js"></script>
-    <script type="text/javascript" src="assets/js/bootstrap.js"></script>
+    <script type="text/javascript" src="resources/js/jquery.js"></script>
+    <script type="text/javascript" src="resources/js/bootstrap.js"></script>
     <script type="text/javascript">
         $(document).ready(function () {
             $('[data-toggle=offcanvas]').click(function () {

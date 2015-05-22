@@ -18,18 +18,18 @@ import javax.persistence.Query;
 
 /**
  *
- * @author Joseantpr
+ * @author Jesus
  */
 @Stateless
 public class PostFacade extends AbstractFacade<Post> {
+    @PersistenceContext(unitName = "RedSocial_JSF-ejbPU")
+    private EntityManager em;
+
     @EJB
     private GrupoFacade grupoFacade;
     @EJB
     private UsuarioFacade usuarioFacade;
     
-    @PersistenceContext(unitName = "RedSocial_JSF-ejbPU")
-    private EntityManager em;
-
     @Override
     protected EntityManager getEntityManager() {
         return em;
@@ -83,7 +83,7 @@ public class PostFacade extends AbstractFacade<Post> {
         usuarioFacade.edit(usuario);
         
         // Borro el post en el grupo al que pertenece
-        Grupo grupo = grupoFacade.find(post.getIdGrupo().getIdGrupo());
+        Grupo grupo = grupoFacade.find(post.getIdGrupoP().getIdGrupo());
         grupo.getPostCollection().remove(post);
         
         // Actualizo el grupo en la BD

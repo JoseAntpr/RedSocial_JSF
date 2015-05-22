@@ -18,7 +18,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -31,7 +30,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Joseantpr
+ * @author Jesus
  */
 @Entity
 @Table(name = "GRUPO")
@@ -39,6 +38,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Grupo.findAll", query = "SELECT g FROM Grupo g"),
     @NamedQuery(name = "Grupo.findByIdGrupo", query = "SELECT g FROM Grupo g WHERE g.idGrupo = :idGrupo"),
+    @NamedQuery(name = "Grupo.findByIdAdministradorG", query = "SELECT g FROM Grupo g WHERE g.idAdministradorG = :idAdministradorG"),
     @NamedQuery(name = "Grupo.findByNombre", query = "SELECT g FROM Grupo g WHERE g.nombre = :nombre"),
     @NamedQuery(name = "Grupo.findByPrivacidad", query = "SELECT g FROM Grupo g WHERE g.privacidad = :privacidad"),
     @NamedQuery(name = "Grupo.findByImagen", query = "SELECT g FROM Grupo g WHERE g.imagen = :imagen"),
@@ -55,6 +55,10 @@ public class Grupo implements Serializable {
     private BigDecimal idGrupo;
     @Basic(optional = false)
     @NotNull
+    @Column(name = "ID_ADMINISTRADOR_G")
+    private BigInteger idAdministradorG;
+    @Basic(optional = false)
+    @NotNull
     @Size(min = 1, max = 64)
     @Column(name = "NOMBRE")
     private String nombre;
@@ -69,20 +73,17 @@ public class Grupo implements Serializable {
     @Column(name = "DESCRIPCION")
     private String descripcion;
     @JoinTable(name = "BLOQUEOGRUPO", joinColumns = {
-        @JoinColumn(name = "ID_GRUPO", referencedColumnName = "ID_GRUPO")}, inverseJoinColumns = {
-        @JoinColumn(name = "ID_USUARIO", referencedColumnName = "ID_USUARIO")})
+        @JoinColumn(name = "ID_GRUPO_BG", referencedColumnName = "ID_GRUPO")}, inverseJoinColumns = {
+        @JoinColumn(name = "ID_USUARIO_BG", referencedColumnName = "ID_USUARIO")})
     @ManyToMany
     private Collection<Usuario> usuarioCollection;
     @JoinTable(name = "MIEMBRO", joinColumns = {
-        @JoinColumn(name = "ID_GRUPO", referencedColumnName = "ID_GRUPO")}, inverseJoinColumns = {
-        @JoinColumn(name = "ID_USUARIO", referencedColumnName = "ID_USUARIO")})
+        @JoinColumn(name = "ID_GRUPO_M", referencedColumnName = "ID_GRUPO")}, inverseJoinColumns = {
+        @JoinColumn(name = "ID_USUARIO_M", referencedColumnName = "ID_USUARIO")})
     @ManyToMany
     private Collection<Usuario> usuarioCollection1;
-    @OneToMany(mappedBy = "idGrupo")
+    @OneToMany(mappedBy = "idGrupoP")
     private Collection<Post> postCollection;
-    @JoinColumn(name = "ID_ADMINISTRADOR", referencedColumnName = "ID_USUARIO")
-    @ManyToOne(optional = false)
-    private Usuario idAdministrador;
 
     public Grupo() {
     }
@@ -91,8 +92,9 @@ public class Grupo implements Serializable {
         this.idGrupo = idGrupo;
     }
 
-    public Grupo(BigDecimal idGrupo, String nombre, BigInteger privacidad) {
+    public Grupo(BigDecimal idGrupo, BigInteger idAdministradorG, String nombre, BigInteger privacidad) {
         this.idGrupo = idGrupo;
+        this.idAdministradorG = idAdministradorG;
         this.nombre = nombre;
         this.privacidad = privacidad;
     }
@@ -103,6 +105,14 @@ public class Grupo implements Serializable {
 
     public void setIdGrupo(BigDecimal idGrupo) {
         this.idGrupo = idGrupo;
+    }
+
+    public BigInteger getIdAdministradorG() {
+        return idAdministradorG;
+    }
+
+    public void setIdAdministradorG(BigInteger idAdministradorG) {
+        this.idAdministradorG = idAdministradorG;
     }
 
     public String getNombre() {
@@ -162,14 +172,6 @@ public class Grupo implements Serializable {
 
     public void setPostCollection(Collection<Post> postCollection) {
         this.postCollection = postCollection;
-    }
-
-    public Usuario getIdAdministrador() {
-        return idAdministrador;
-    }
-
-    public void setIdAdministrador(Usuario idAdministrador) {
-        this.idAdministrador = idAdministrador;
     }
 
     @Override

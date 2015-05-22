@@ -33,7 +33,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Joseantpr
+ * @author Jesus
  */
 @Entity
 @Table(name = "USUARIO")
@@ -51,7 +51,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Usuario.findByPais", query = "SELECT u FROM Usuario u WHERE u.pais = :pais"),
     @NamedQuery(name = "Usuario.findByFechaIngreso", query = "SELECT u FROM Usuario u WHERE u.fechaIngreso = :fechaIngreso"),
     @NamedQuery(name = "Usuario.findByDescripcion", query = "SELECT u FROM Usuario u WHERE u.descripcion = :descripcion"),
-    @NamedQuery(name = "Usuario.findByImagen", query = "SELECT u FROM Usuario u WHERE u.imagen = :imagen")})
+    @NamedQuery(name = "Usuario.findByImagen", query = "SELECT u FROM Usuario u WHERE u.imagen = :imagen"),
+    @NamedQuery(name = "Usuario.findByBloqueado", query = "SELECT u FROM Usuario u WHERE u.bloqueado = :bloqueado")})
 public class Usuario implements Serializable {
     private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
@@ -108,35 +109,26 @@ public class Usuario implements Serializable {
     @Size(max = 256)
     @Column(name = "IMAGEN")
     private String imagen;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 1)
+    @Column(name = "BLOQUEADO")
+    private String bloqueado;
     @ManyToMany(mappedBy = "usuarioCollection")
     private Collection<Grupo> grupoCollection;
-    @ManyToMany(mappedBy = "usuarioCollection")
-    private Collection<Roles> rolesCollection;
-    @ManyToMany(mappedBy = "usuarioCollection")
-    private Collection<Post> postCollection;
     @JoinTable(name = "SEGUIDOR", joinColumns = {
         @JoinColumn(name = "ID_SEGUIDOR", referencedColumnName = "ID_USUARIO")}, inverseJoinColumns = {
-        @JoinColumn(name = "ID_USUARIO", referencedColumnName = "ID_USUARIO")})
+        @JoinColumn(name = "ID_USUARIO_S", referencedColumnName = "ID_USUARIO")})
     @ManyToMany
     private Collection<Usuario> usuarioCollection;
     @ManyToMany(mappedBy = "usuarioCollection")
     private Collection<Usuario> usuarioCollection1;
     @ManyToMany(mappedBy = "usuarioCollection1")
     private Collection<Grupo> grupoCollection1;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idUsuarioDestino")
-    private Collection<Privado> privadoCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idUsuarioOrigen")
-    private Collection<Privado> privadoCollection1;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idUsuario")
-    private Collection<Post> postCollection1;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idAdministrador")
-    private Collection<Grupo> grupoCollection2;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idUsuario")
-    private Collection<Comentario> comentarioCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuario")
-    private Collection<Bloqueo> bloqueoCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idUsuario")
-    private Collection<Notificacion> notificacionCollection;
+    @ManyToMany(mappedBy = "usuarioCollection")
+    private Collection<Roles> rolesCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idUsuarioP")
+    private Collection<Post> postCollection;
 
     public Usuario() {
     }
@@ -145,7 +137,7 @@ public class Usuario implements Serializable {
         this.idUsuario = idUsuario;
     }
 
-    public Usuario(BigDecimal idUsuario, String nombre, String email, String password, String provincia, String pais, Date fechaIngreso) {
+    public Usuario(BigDecimal idUsuario, String nombre, String email, String password, String provincia, String pais, Date fechaIngreso, String bloqueado) {
         this.idUsuario = idUsuario;
         this.nombre = nombre;
         this.email = email;
@@ -153,6 +145,7 @@ public class Usuario implements Serializable {
         this.provincia = provincia;
         this.pais = pais;
         this.fechaIngreso = fechaIngreso;
+        this.bloqueado = bloqueado;
     }
 
     public BigDecimal getIdUsuario() {
@@ -250,22 +243,14 @@ public class Usuario implements Serializable {
     public void setImagen(String imagen) {
         this.imagen = imagen;
     }
-    
-    /**
-     * Creado por Jose
-     * @param u
-     * @return 
-     */
-    public boolean siguesUsuario(Usuario u){
-        boolean s=false;
-        for(int i=0;i<this.getUsuarioCollection().size();i++){
-            if(this.getUsuarioCollection().contains(u)){
-                s=true;
-            }
-        }
-        return s;
+
+    public String getBloqueado() {
+        return bloqueado;
     }
-    
+
+    public void setBloqueado(String bloqueado) {
+        this.bloqueado = bloqueado;
+    }
 
     @XmlTransient
     public Collection<Grupo> getGrupoCollection() {
@@ -274,24 +259,6 @@ public class Usuario implements Serializable {
 
     public void setGrupoCollection(Collection<Grupo> grupoCollection) {
         this.grupoCollection = grupoCollection;
-    }
-
-    @XmlTransient
-    public Collection<Roles> getRolesCollection() {
-        return rolesCollection;
-    }
-
-    public void setRolesCollection(Collection<Roles> rolesCollection) {
-        this.rolesCollection = rolesCollection;
-    }
-
-    @XmlTransient
-    public Collection<Post> getPostCollection() {
-        return postCollection;
-    }
-
-    public void setPostCollection(Collection<Post> postCollection) {
-        this.postCollection = postCollection;
     }
 
     @XmlTransient
@@ -322,66 +289,36 @@ public class Usuario implements Serializable {
     }
 
     @XmlTransient
-    public Collection<Privado> getPrivadoCollection() {
-        return privadoCollection;
+    public Collection<Roles> getRolesCollection() {
+        return rolesCollection;
     }
 
-    public void setPrivadoCollection(Collection<Privado> privadoCollection) {
-        this.privadoCollection = privadoCollection;
-    }
-
-    @XmlTransient
-    public Collection<Privado> getPrivadoCollection1() {
-        return privadoCollection1;
-    }
-
-    public void setPrivadoCollection1(Collection<Privado> privadoCollection1) {
-        this.privadoCollection1 = privadoCollection1;
+    public void setRolesCollection(Collection<Roles> rolesCollection) {
+        this.rolesCollection = rolesCollection;
     }
 
     @XmlTransient
-    public Collection<Post> getPostCollection1() {
-        return postCollection1;
+    public Collection<Post> getPostCollection() {
+        return postCollection;
     }
 
-    public void setPostCollection1(Collection<Post> postCollection1) {
-        this.postCollection1 = postCollection1;
+    public void setPostCollection(Collection<Post> postCollection) {
+        this.postCollection = postCollection;
     }
-
-    @XmlTransient
-    public Collection<Grupo> getGrupoCollection2() {
-        return grupoCollection2;
-    }
-
-    public void setGrupoCollection2(Collection<Grupo> grupoCollection2) {
-        this.grupoCollection2 = grupoCollection2;
-    }
-
-    @XmlTransient
-    public Collection<Comentario> getComentarioCollection() {
-        return comentarioCollection;
-    }
-
-    public void setComentarioCollection(Collection<Comentario> comentarioCollection) {
-        this.comentarioCollection = comentarioCollection;
-    }
-
-    @XmlTransient
-    public Collection<Bloqueo> getBloqueoCollection() {
-        return bloqueoCollection;
-    }
-
-    public void setBloqueoCollection(Collection<Bloqueo> bloqueoCollection) {
-        this.bloqueoCollection = bloqueoCollection;
-    }
-
-    @XmlTransient
-    public Collection<Notificacion> getNotificacionCollection() {
-        return notificacionCollection;
-    }
-
-    public void setNotificacionCollection(Collection<Notificacion> notificacionCollection) {
-        this.notificacionCollection = notificacionCollection;
+    
+    /**
+     * Creado por Jose
+     * @param u
+     * @return 
+     */
+    public boolean siguesUsuario(Usuario u){
+        boolean s=false;
+        for(int i=0;i<this.getUsuarioCollection().size();i++){
+            if(this.getUsuarioCollection().contains(u)){
+                s=true;
+            }
+        }
+        return s;
     }
 
     @Override

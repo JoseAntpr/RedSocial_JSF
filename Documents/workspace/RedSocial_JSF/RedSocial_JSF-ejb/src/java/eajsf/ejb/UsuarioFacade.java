@@ -7,7 +7,6 @@ package eajsf.ejb;
 
 import eajsf.entity.Grupo;
 import eajsf.entity.Usuario;
-import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Date;
 import java.util.LinkedList;
@@ -19,11 +18,10 @@ import javax.persistence.Query;
 
 /**
  *
- * @author Joseantpr
+ * @author Jesus
  */
 @Stateless
 public class UsuarioFacade extends AbstractFacade<Usuario> {
-
     @PersistenceContext(unitName = "RedSocial_JSF-ejbPU")
     private EntityManager em;
 
@@ -35,8 +33,9 @@ public class UsuarioFacade extends AbstractFacade<Usuario> {
     public UsuarioFacade() {
         super(Usuario.class);
     }
-
-    /**
+    
+    
+     /**
      *
      * @param email
      * @param password
@@ -139,5 +138,5 @@ public class UsuarioFacade extends AbstractFacade<Usuario> {
 
         return lista;
     }
-
+    
 }
