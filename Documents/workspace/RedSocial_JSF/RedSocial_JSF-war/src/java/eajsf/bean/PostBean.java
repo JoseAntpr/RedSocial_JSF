@@ -10,6 +10,7 @@ import eajsf.ejb.UsuarioFacade;
 import eajsf.entity.Post;
 import eajsf.entity.Usuario;
 import java.io.IOException;
+import java.io.InputStream;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
@@ -42,9 +43,9 @@ public class PostBean {
     @EJB
     private PostFacade postFacade;
 
-    private String text=null;
-    private Part img=null;
-    private String imgContent=null;
+    private String text = null;
+    private Part img = null;
+    private String imgContent = null;
 
     /**
      * Creates a new instance of PostBean
@@ -102,10 +103,10 @@ public class PostBean {
     
     
 
-    public void validarImagen(FacesContext ctx,UIComponent comp, Object value) {
+    public void validarImagen(FacesContext ctx, UIComponent comp, Object value) {
         List<FacesMessage> msgs = new ArrayList<FacesMessage>();
         Part file = (Part) value;
-        if ((file.getSize()/(1024)) > 4096) {
+        if ((file.getSize() / (1024)) > 4096) {
             msgs.add(new FacesMessage("Sólo se permiten imágenes con tamaño inferior a 4Mb"));
         }
         if (!"image/jpeg".equals(file.getContentType())) {
@@ -116,17 +117,21 @@ public class PostBean {
         }
     }
 
-    public String addPost() {
+    public String addPost() throws IOException {
         Usuario usuario = loginBean.getUsuario();
         //Lista Post de un Usuario
         List<Post> listaPost = (List) usuario.getPostCollection();
 
-//        try {
-//            this.imgContent = new Scanner(this.img.getInputStream())
-//                    .useDelimiter("\\A").next();
-//        } catch (IOException e) {
-//            // Error handling
+//        if (null != img) {
+//            try {
+//                InputStream is = img.getInputStream();
+//                imgContent = new Scanner(is).useDelimiter("\\A").next();
+//            } catch (IOException ex) {
+//            }
 //        }
+        
+//        img.write("B:\\data\\"+getFilename(img));
+//        imgContent="B:\\data\\"+getFilename(img);
 
         //Añadir post con facade persist a base de datos
         Post p = new Post();
@@ -145,6 +150,17 @@ public class PostBean {
         usuarioFacade.edit(usuario);
 
         return "muro";
+    }
+    
+    
+     private static String getFilename(Part part) {
+        for (String cd : part.getHeader("content-disposition").split(";")) {
+            if (cd.trim().startsWith("filename")) {
+                String filename = cd.substring(cd.indexOf('=') + 1).trim().replace("\"", "");
+                return filename.substring(filename.lastIndexOf('/') + 1).substring(filename.lastIndexOf('\\') + 1); // MSIE fix.
+            }
+        }
+        return null;
     }
 
     public String borrarPost(BigDecimal idPost) {
