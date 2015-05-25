@@ -2,25 +2,28 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"  
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
     <h:head>
         <meta http-equiv="content-type" content="text/html; charset=UTF-8"/> 
         <meta charset="utf-8"/>
         <title>Red Social</title>
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
-        <h:outputStylesheet library="css" name="bootstrap.css"/>
-        <h:outputStylesheet library="css" name="facebook.css"/>
+        <!--<h:outputStylesheet library="css" name="bootstrap.css"/>
+        <h:outputStylesheet library="css" name="facebook.css"/>-->
+        <link rel="stylesheet" type="text/css" media="all" href="resources/css/bootstrap.css"/>
+        <link rel="stylesheet" type="text/css" media="all" href="resources/css/facebook.css"/>
     </h:head>
     <h:body>
         <div class="wrapper">
             <div class="box">
                 <div class="row row-offcanvas row-offcanvas-left">
-
                     <!-- LISTADO GRUPOS -->
                     <div class="column col-sm-2 col-xs-1 sidebar-offcanvas" id="sidebar">
                         <ul class="nav hidden-xs" id="lg-menu">
-                            <c:if test="#{grupoBean.usuario.idUsuario.equals(grupoBean.usuarioMuro.idUsuario)}">
+                            <c:if test="#{grupoBean.muroPropio}">
                                 <li class="active">
                                     <h:link outcome="#{grupoBean.doCrearGrupo()}" >
                                         <i class="glyphicon glyphicon-list-alt"></i> + Crear grupo
@@ -30,24 +33,118 @@
                             <c:if test="#{grupoBean.tieneGrupos}">
                                 <c:forEach items="#{grupoBean.listaGruposUsuarioMuro}" var="g">
                                     <li class="active list-group">
-                                        <h:link value="#{g.nombre}" outcome="#{grupoBean.doGrupoElegido()}" class="glyphicon glyphicon-list-alt">
+                                        <h:link value="#{g.nombre}" outcome="grupo.xhtml" class="glyphicon glyphicon-list-alt">
                                             <f:param name="idGrupoElegido" value="#{g.idGrupo}"/>
                                         </h:link>
-                                        <h:form>
-                                            <h:inputHidden value="#{grupoBean.idGrupoAbandonar = g.idGrupo}" />
-                                            <h:commandButton value="Abandonar" action="#{grupoBean.doAbandonarGrupo()}" class="btn btn-danger btn-block"/>
-                                        </h:form>
+                                        <c:if test="#{grupoBean.muroPropio}">
+                                            <h:form>
+                                                <h:commandButton value="Abandonar" action="#{grupoBean.doAbandonarGrupo()}" class="btn btn-danger btn-block">
+                                                    <f:setPropertyActionListener target="#{grupoBean.grupoAAbandonar}" value="#{g}" />
+                                                </h:commandButton>
+                                            </h:form>
+                                        </c:if>
                                     </li>
                                 </c:forEach>
                             </c:if>
-                            <p>FIN</p>
                          </ul>
                     </div> <!-- fin LISTADO GRUPOS -->
                     <!-- /sidebar -->
 
                     <!-- main right col -->
-                    
-                    <!-- /main -->
+                    <div class="column col-sm-10 col-xs-11" id="main">
+                        <!-- top nav -->
+                        <!-- AQUI VA EL INCLUDE DEL NAVEGADOR -->
+                        <div class="padding">
+                            <div class="full col-sm-9">
+
+                                <!-- content -->                      
+                                <div class="row">
+
+                                    <!-- main col left --> 
+                                    <div class="col-sm-5">
+                                        <c:if test="#{grupoBean.tieneGrupos}">
+                                            <!-- INFO DEL GRUPO -->
+                                            <div class="panel panel-default">
+                                                <div class="panel-thumbnail"><img src="#{grupoBean.grupo.imagen}" class="img-responsive"/></div>
+                                                <div class="panel-body">
+                                                    <p class="lead">#{grupoBean.grupo.nombre}</p>
+                                                    <p>#{grupoBean.listaMiembrosGrupo.size()} Miembros, #{grupoBean.listaPostGrupo.size()} Posts</p>
+                                                    <c:if test="#{grupoBean.muroPropio}">  
+                                                        <h:button class="btn btn-warning btn-block" value="Editar Grupo" outcome="#{grupoBean.doEditarGrupo()}"/>
+                                                        <h:button class="btn btn-danger btn-block" value="Eliminar Grupo" outcome="#{grupoBean.doEliminarGrupo()}"/>
+                                                    </c:if>
+                                                </div>
+                                            </div> <!-- fin INFO DEL GRUPO -->
+                                            
+                                            <!-- MIEMBROS DEL GRUPO -->
+                                            <div class="panel panel-default">
+                                                <div class="panel-heading"> <h4>Miembros</h4></div>
+                                                <c:if test="#{grupoBean.esAdministradorGrupo}">
+                                                    <div class="panel-body">
+                                                        <h:button class="btn btn-primary btn-block" value="Añadir/Eliminar Miembro" outcome="#{grupoBean.doAnadirEliminarMiembro()}"/>
+                                                    </div>
+                                                </c:if>
+                                                <c:forEach items="#{grupoBean.listaMiembrosGrupo}" var="m">
+                                                    <div class="panel-body">
+                                                        <img src="#{g.imagen}" class="img-circle pull-right">
+                                                            <h:link outcome="muro?usuarioMuro=#{grupoBean.usuarioMuro.idUsuario}">#{m.nombre}</h:link>
+                                                        </img>
+                                                    <div class="clearfix"></div>
+                                                    <hr/>
+                                                    </div>
+                                                </c:forEach>
+                                            </div> <!-- fin MIEMBROS DEL GRUPO -->
+                                        </c:if>
+                                        <c:if test="#{!grupoBean.tieneGrupos}">
+                                            <p class="lead">NO HAY GRUPOS</p>
+                                        </c:if>
+                                    </div> <!-- main col left -->
+
+                                    <!-- main col right -->
+                                    <div class="col-sm-7">
+                                        <c:if test="#{grupoBean.tieneGrupos}">
+                                            <c:if test="#{grupoBean.muroPropio}">
+                                            <!-- CREAR POST GRUPO -->
+                                                <div class="well"> 
+                                                    <h:form enctype="multipart/form-data">
+                                                        <h4>¿Qué te cuentas?</h4>
+                                                        <div class="form-group" style="padding:14px;">
+                                                            <h:inputTextarea class="form-control" pt:placeholder="Actualiza tu estado" value="#{grupoBean.descripcionPostGrupo}" />
+                                                            <h:inputFile class="filestyle" pt:data-input="false" pt:data-buttonText="Buscar Archivo" />
+                                                            <h:commandButton class="btn btn-primary pull-right" action="#{grupoBean.doPostGrupoCrear()}" value="Post" />
+                                                        </div>
+                                                    </h:form>
+                                                </div> <!-- fin CREAR POST GRUPO -->
+                                            </c:if>
+                                            
+                                            <!-- LISTAR POST GRUPO -->
+                                            <c:forEach items="#{grupoBean.listaPostGrupo}" var="p">
+                                                <div class="panel panel-default">
+                                                    <c:if test="#{p.imagen != null}">
+                                                        <div class="panel-thumbnail"><img src="#{p.imagen}" class="img-responsive"/></div>
+                                                    </c:if>
+                                                    <div class="panel-body">
+                                                        <p>#{p.descripcion}</p>
+                                                        <c:if test="#{p.idUsuarioP.idUsuario.equals(usuario.idUsuario)}">
+                                                            <h:button class="btn btn-danger pull-right" value="Eliminar" outcome="#{grupoBean.doPostGrupoEliminar()}">
+                                                                <f:setPropertyActionListener target="#{grupoBean.postABorrar}" value="#{p}"/>
+                                                            </h:button>
+                                                            <h:button class="btn btn-warning pull-right" value="Editar" outcome="#{grupoBean.doPostGrupoEditar()}">
+                                                                <f:setPropertyActionListener target="#{grupoBean.postAEditar}" value="#{p}"/>
+                                                            </h:button>
+                                                        </c:if>
+                                                    </div>
+                                                </div>
+                                                
+                                            </c:forEach> <!--/fin LISTAR POST GRUPO-->
+                                        </c:if> <!--/tieneGrupos-->
+                                    </div> <!-- /main col right -->
+                                </div><!--/row-->
+                                <hr/>
+                            </div><!-- /col-9 -->
+                        </div><!-- /padding -->
+                        
+                    </div><!-- /main -->
 
                 </div>
             </div>

@@ -36,10 +36,10 @@ public class GrupoFacade extends AbstractFacade<Grupo> {
         super(Grupo.class);
     }
     
-     public Grupo nuevoGrupo(Usuario administrador, String nombre, String privacidad) {
+     public Grupo crearGrupo(Usuario administrador, String nombre, String privacidad, String descripcion) {
         Grupo grupo = new Grupo();
-
-        grupo.setIdAdministradorG(administrador);
+        BigInteger idAdmin = new BigInteger(administrador.getIdUsuario().toString());
+        grupo.setIdAdministradorG(idAdmin);
         grupo.setNombre(nombre);
         grupo.setImagen("imagen");
 
@@ -78,42 +78,43 @@ public class GrupoFacade extends AbstractFacade<Grupo> {
         return lista;
     }
 
-    public void abandonarGrupo(String idGrupo, Usuario usuario) {
-        BigDecimal idGrupoAbandonar = new BigDecimal(idGrupo);
-        Grupo grupo = find(idGrupoAbandonar);
+    public void abandonarGrupo(Grupo grupo, Usuario usuario) {
+//        BigDecimal idGrupoAbandonar = new BigDecimal(idGrupo);
+//        Grupo grupo = find(idGrupoAbandonar);
 
-        Integer size = grupo.getUsuarioCollection().size();
+        Integer size = grupo.getUsuarioCollection1().size();
         if (size.compareTo(1) == 0) {
             // Eliminio el grupo del usuario
-            usuario.getGrupoCollection().remove(grupo);
+            usuario.getGrupoCollection1().remove(grupo);
             // Actualizo el usuario en BD
             usuarioFacade.edit(usuario);
             // Borro el grupo de la BD (Se ha quedado sin miembros)
             remove(grupo);
         } else if (size >= 2) {
             // Es el administrador
-            if (usuario.getIdUsuario().equals(grupo.getIdAdministradorG().getIdUsuario())) {
-//            if (usuario.getIdUsuario().equals(new BigDecimal(grupo.getIdAdministrador().toString()))) {
+//            if (usuario.getIdUsuario().equals(grupo.getIdAdministradorG().getIdUsuario())) {
+            if (usuario.getIdUsuario().equals(new BigDecimal(grupo.getIdAdministradorG().toString()))) {
                 
 
                 // Cambio el administrador del grupo
                 List<Usuario> listaUsuarios = (List) grupo.getUsuarioCollection();
 
-                Usuario nuevoAdmin = null;
+//                Usuario nuevoAdmin = null;
+                BigInteger nuevoAdmin = null;
                 if(usuario.getIdUsuario().equals(listaUsuarios.get(0).getIdUsuario())){
-//                    nuevoAdmin = new BigInteger(listaUsuarios.get(1).getIdUsuario().intValue()+"");
-                    nuevoAdmin = listaUsuarios.get(1);
+                    nuevoAdmin = new BigInteger(listaUsuarios.get(1).getIdUsuario().intValue()+"");
+//                    nuevoAdmin = listaUsuarios.get(1);
                 }else{
-//                    nuevoAdmin = new BigInteger(listaUsuarios.get(0).getIdUsuario().intValue()+"");
-                    nuevoAdmin = listaUsuarios.get(0);
+                    nuevoAdmin = new BigInteger(listaUsuarios.get(0).getIdUsuario().intValue()+"");
+//                    nuevoAdmin = listaUsuarios.get(0);
                 }
                 grupo.setIdAdministradorG(nuevoAdmin);
                 
                 // Eliminio el grupo del usuario
-                usuario.getGrupoCollection().remove(grupo);
+                usuario.getGrupoCollection1().remove(grupo);
 
                 // Elimino el usuario del grupo
-                grupo.getUsuarioCollection().remove(usuario);
+                grupo.getUsuarioCollection1().remove(usuario);
 
                 // Actualizo el grupo en BD
                 edit(grupo);
@@ -122,10 +123,10 @@ public class GrupoFacade extends AbstractFacade<Grupo> {
                 usuarioFacade.edit(usuario);
             } else { // No es el administrador
                 // Elimino el usuario del grupo
-                grupo.getUsuarioCollection().remove(usuario);
+                grupo.getUsuarioCollection1().remove(usuario);
 
                 // Eliminio el grupo del usuario
-                usuario.getGrupoCollection().remove(grupo);
+                usuario.getGrupoCollection1().remove(grupo);
 
                 // Actualizo el grupo en BD
                 edit(grupo);
