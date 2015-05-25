@@ -48,10 +48,15 @@
                                                 <div class="form-group" style="padding:14px;">                                                 
                                                     <h:inputTextarea class="form-control" value="#{postBean.text}" pt:placeholder="Escriba el contenido del post"/>
                                                 </div>
-                                                <h:inputFile id="file" value="#{postBean.img}" /> <!--validator="postBean.validarImagen"-->                                               
                                                 <h:commandButton class="btn btn-primary pull-right" value="Post" action="#{postBean.addPost()}" >
                                                     <!--<f:ajax execute="file" render="@all"/>-->
-                                                </h:commandButton>
+                                                    <!--<f:ajax execute="file" render="msgError"/>-->
+                                                </h:commandButton>   
+                                                
+                                                <h:inputFile id="file" value="#{postBean.img}" validator="#{postBean.validarImagen}">                                               
+                                                    <f:ajax execute="file" render="msgError"/>
+                                                </h:inputFile>                                           
+                                                <h:messages id="msgError" styleClass="error"/>
 
                                             </h:form>
                                         </div>

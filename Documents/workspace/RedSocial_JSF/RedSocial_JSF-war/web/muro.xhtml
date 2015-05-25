@@ -56,17 +56,16 @@
                                                    </p>
                                                    <p>#{muroBean.format.format(p.getFecha())}</p>
                                                    <p>#{p.getDescripcion()}</p> 
-                                                   
-                                                   <c:if test="#{loginBean.usuario.equals(loginBean.usuarioMuro)}">
-                                                   
-                                                       <h:commandButton class="btnEliminar botonEliminar" value="Eliminar" action="#{postBean.borrarPost(p.getIdPost())}"/>
-                                                       
+                                                   <c:if test="#{loginBean.usuario.equals(loginBean.usuarioMuro)}"> 
+                                                        <h:form>
+                                                            <h:commandButton class="btnEliminar botonEliminar" value="Eliminar" action="#{postBean.borrarPost(p)}"/>    
+                                                        </h:form>  
                                                    </c:if>
                                                </div>
                                            </div>
                                       
                                     </ui:repeat>
-                                   
+                                    
                                 </div>
                                 <!-- Include sidebar -->
                                                     
