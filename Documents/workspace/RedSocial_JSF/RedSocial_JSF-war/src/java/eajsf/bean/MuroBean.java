@@ -40,6 +40,7 @@ public class MuroBean {
     private List<Post> listaPost;
     private String cssDiv;
     
+    
     private SimpleDateFormat format = new SimpleDateFormat("EEEEE dd MMM yyyy - HH:mm");
     private SimpleDateFormat formatSinHora = new SimpleDateFormat("EEE dd MMM yyyy");
     
@@ -58,7 +59,6 @@ public class MuroBean {
         }
         
         this.listaPost=postFacade.findPostIdUsuarioOrder(loginBean.getUsuario().getIdUsuario());
-
         
     }
 
@@ -103,7 +103,7 @@ public class MuroBean {
     }
 
     public List<Post> getListaPost() {
-        return listaPost;
+        return postFacade.findPostIdUsuarioOrder(loginBean.getUsuario().getIdUsuario());
     }
 
     public void setListaPost(List<Post> listaPost) {

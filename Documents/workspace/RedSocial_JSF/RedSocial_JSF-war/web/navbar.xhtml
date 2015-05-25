@@ -28,14 +28,14 @@
         </h:form>
 	<ul class="nav navbar-nav">
             <li>
-                <!--
+                
                 <h:link value="" outcome="muro" ><i class="glyphicon glyphicon-home"></i> Inicio</h:link> 
-                -->
-                <a role="button"><i class="glyphicon glyphicon-home"></i> Inicio</a>
+                
+                <!--<a role="button"><i class="glyphicon glyphicon-home"></i> Inicio</a>-->
             </li>
             <li>
                <c:if test="#{loginBean.usuario.getIdUsuario().equals(loginBean.usuarioMuro.getIdUsuario())}">
-                   <h:link value="" outcome="#{postBean.redirectAddPost()}" ><i class="glyphicon glyphicon-plus"></i> Post</h:link>
+                   <h:link value="" outcome="postAdd" ><i class="glyphicon glyphicon-plus"></i> Post</h:link>
                    <!--<a role="button" ><i class="glyphicon glyphicon-plus"></i> Post</a>-->                  
                </c:if>
                
