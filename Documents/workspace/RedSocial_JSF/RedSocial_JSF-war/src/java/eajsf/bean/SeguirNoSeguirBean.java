@@ -5,8 +5,15 @@
  */
 package eajsf.bean;
 
+import eajsf.ejb.GrupoFacade;
+import eajsf.ejb.UsuarioFacade;
+import eajsf.entity.Usuario;
+import java.math.BigDecimal;
+import javax.annotation.PostConstruct;
+import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.context.FacesContext;
 
 /**
  *
@@ -21,5 +28,5 @@ public class SeguirNoSeguirBean {
      */
     public SeguirNoSeguirBean() {
     }
-    
+   
 }

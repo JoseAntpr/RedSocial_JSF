@@ -13,6 +13,7 @@ import eajsf.entity.Post;
 import eajsf.entity.Usuario;
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
@@ -48,7 +49,7 @@ public class GrupoBean {
     private List<Post> listaPostGrupo = null;
     private List<Usuario> listaMiembrosGrupo = null;
 
-    private Boolean muroDeOtro;
+    private Boolean muroPropio;
     private Boolean tieneGrupos;
     
     // atributos para crear post
@@ -58,8 +59,13 @@ public class GrupoBean {
     private String idGrupoElegido;
     private String idPostEditar;
     
-    // para el form del listado grupo
-    private String idGrupoAbandonar;
+    private boolean esAdministradorGrupo;
+
+    private Post postABorrar;
+    private Post postAEditar;
+    
+    private Grupo grupoAAbandonar;
+    
 
     /**
      * Creates a new instance of GrupoBean
@@ -155,12 +161,12 @@ public class GrupoBean {
         this.listaMiembrosGrupo = listaMiembrosGrupo;
     }
 
-    public Boolean getMuroDeOtro() {
-        return muroDeOtro;
+    public Boolean getMuroPropio() {
+        return muroPropio;
     }
 
-    public void setMuroDeOtro(Boolean muroDeOtro) {
-        this.muroDeOtro = muroDeOtro;
+    public void setMuroPropio(Boolean muroPropio) {
+        this.muroPropio = muroPropio;
     }
 
     public Boolean getTieneGrupos() {
@@ -203,14 +209,39 @@ public class GrupoBean {
         this.imagenPostGrupo = imagenPostGrupo;
     }
 
-    public String getIdGrupoAbandonar() {
-        return idGrupoAbandonar;
+    public boolean isEsAdministradorGrupo() {
+        return esAdministradorGrupo;
     }
 
-    public void setIdGrupoAbandonar(String idGrupoAbandonar) {
-        this.idGrupoAbandonar = idGrupoAbandonar;
+    public void setEsAdministradorGrupo(boolean esAdministradorGrupo) {
+        this.esAdministradorGrupo = esAdministradorGrupo;
     }
 
+    public Post getPostABorrar() {
+        return postABorrar;
+    }
+
+    public void setPostABorrar(Post postABorrar) {
+        this.postABorrar = postABorrar;
+    }
+
+    public Post getPostAEditar() {
+        return postAEditar;
+    }
+
+    public void setPostAEditar(Post postAEditar) {
+        this.postAEditar = postAEditar;
+    }
+
+    public Grupo getGrupoAAbandonar() {
+        return grupoAAbandonar;
+    }
+
+    public void setGrupoAAbandonar(Grupo grupoAAbandonar) {
+        this.grupoAAbandonar = grupoAAbandonar;
+    }
+    
+    
     
     // Metodos gestores
     @PostConstruct
@@ -229,17 +260,16 @@ public class GrupoBean {
         }
 
         // True si estamos viendo un muro de otra persona
-        muroDeOtro = !idUsuario.equals(idUsuarioMuro);
+        muroPropio = idUsuario.equals(idUsuarioMuro);
 
-        if (muroDeOtro) {
-            listaGruposUsuarioMuro = (List) usuarioFacade.gruposPublicosDeUsuario(usuarioMuro);
+        if (muroPropio) {
+            listaGruposUsuarioMuro = (List) usuarioMuro.getGrupoCollection1();
         } else {
-            listaGruposUsuarioMuro = (List) usuarioMuro.getGrupoCollection();
+            listaGruposUsuarioMuro = (List) usuarioFacade.gruposPublicosDeUsuario(usuarioMuro);
         }
 
         tieneGrupos = listaGruposUsuarioMuro.size() > 0;
-        
-        Grupo g = grupoFacade.find(new BigDecimal(1));
+        idGrupoElegido = getParameter("idGrupoElegido");
 
         if (tieneGrupos) {
             if (idGrupoElegido != null) {
@@ -250,36 +280,63 @@ public class GrupoBean {
                 // Mostramos el primer grupo
                 grupo = (Grupo) grupoFacade.find(listaGruposUsuarioMuro.get(0).getIdGrupo());
             }
+            
+            esAdministradorGrupo = idUsuario.toBigInteger().equals(grupo.getIdAdministradorG());
+            
             listaPostGrupo = (List) postFacade.getListaPostGrupo(grupo.getIdGrupo());
-            listaMiembrosGrupo = (List) grupo.getUsuarioBloqueadoCollection();
+            //listaPostGrupo = (List) grupo.getPostCollection();
+            listaMiembrosGrupo = (List) grupo.getUsuarioCollection1();
         }
 
     }
     
-    public String doPostGrupoCrear() {
-        return "PostCreateBean";
-    }
-    
-    public String doPostGrupoEdit(){
-        return "PostEditBean";
-    }
-    
-    public String doGrupoElegido() {
-        idGrupoElegido = getParameter("idGrupoElegido");
-        BigDecimal idGrupo = new BigDecimal(idGrupoElegido);
-        grupo = (Grupo) grupoFacade.find(idGrupo);
-        return "grupo";
-    }
-    
     public String doCrearGrupo(){
-        return "crearGrupo?idUsuarioMuro=" + idUsuarioMuro;
+        return "crearGrupo?idUsuario=" + idUsuario;
+    }
+    
+    public String doEditarGrupo(){
+        // Falta implementar el xhtml y el bean
+        return "editarGrupo?idGrupo=" + grupo.getIdGrupo();
+    }
+    
+    public String doEliminarGrupo(){
+        if(muroPropio && esAdministradorGrupo){
+            grupoFacade.eliminarGrupo(grupo, usuario);
+            // Falta actualizar los usuarios de la sesión
+        }
+        return "grupo";
     }
     
     // Mirar a ver que tal
     public String doAbandonarGrupo() {
-        return "seguirNoSeguirBean?idGrupoAbandonar=" + idGrupoAbandonar;
+        grupoFacade.abandonarGrupo(grupoAAbandonar, usuario);
+        // Actualizar usuario de la sesion
+        usuarioMuro = usuario;
+        return "grupo";
     }
     
+    public String doAnadirEliminarMiembro(){
+        // Falta implementar el xhtml y el bean
+        return "addDeleteMiembroGrupo?idGrupo=" + grupo.getIdGrupo();
+    }
+    
+    public String doPostGrupoCrear() {
+        // Ajax
+        // Falta
+        return null;
+    }
+    
+    public String doPostGrupoEditar(){
+        // Ajax
+        // Falta
+        return null;
+    }
+    
+    public String doPostGrupoEliminar(){
+        // Ajax
+        postFacade.deletePostGrupo(postABorrar, usuario);
+        return null;
+    }
     
     // Metodos auxiliares
     private String getParameter(String name){
