@@ -72,9 +72,9 @@ public class PostFacade extends AbstractFacade<Post> {
         q.executeUpdate();
     }
     
-    public void deletePostGrupo(BigDecimal id_post, Usuario usuario){
+    public void deletePostGrupo(Post post, Usuario usuario){
         // Busco el Post en la BD
-        Post post = find(id_post);
+//        Post post = find(id_post);
         
         // Borro el post en el usuario sesion
         usuario.getPostCollection().remove(post);
@@ -95,7 +95,7 @@ public class PostFacade extends AbstractFacade<Post> {
     }
     
     public List getListaPostGrupo(BigDecimal idGrupo){
-        return em.createQuery("SELECT p FROM Post p WHERE p.idGrupo.idGrupo = :ID ORDER BY p.idPost DESC")
+        return em.createQuery("SELECT p FROM Post p WHERE p.idGrupoP.idGrupo = :ID ORDER BY p.idPost DESC")
                 .setParameter("ID", idGrupo)
                 .getResultList();
         
