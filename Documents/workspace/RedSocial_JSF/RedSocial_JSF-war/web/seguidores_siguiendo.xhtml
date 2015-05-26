@@ -1,0 +1,171 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <h:head>
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8"/> 
+        <meta charset="utf-8"/>
+        <title>Red Social</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+        <!--<h:outputStylesheet library="css" name="bootstrap.css"/>
+        <h:outputStylesheet library="css" name="facebook.css"/>-->
+        <link rel="stylesheet" type="text/css" media="all" href="resources/css/bootstrap.css"/>
+        <link rel="stylesheet" type="text/css" media="all" href="resources/css/facebook.css"/>
+    </h:head>
+    <h:body>
+        <div class="wrapper">
+            <div class="box">
+                <div class="row row-offcanvas row-offcanvas-left">
+
+                   <!-- Include sidebar -->
+                    <ui:include src="sidebar.xhtml"/>                   
+		<!-- /Include sidebar -->
+
+                    <!-- main right col -->
+                    <div class="column col-sm-10 col-xs-11" id="main">
+
+                        <!-- top nav -->
+                        <ui:include src="navbar.xhtml"/>
+                        
+                        <!-- /top nav -->
+
+                        <div class="padding">
+                            <div class="full col-sm-9">
+
+                                <!-- content -->                      
+                                <div class="row">
+
+                                    <!-- main 100% page --> 
+                                    <div class="col-sm-12">
+
+
+                                        <!-- POST -->
+
+
+
+                                        
+                                        
+                                        <ui:repeat value="#{listarSeguidoresSiguiendoBean.listaUsuarios}" var="u">
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading">
+                                               
+                                               
+                                                <h:form>
+                                                    <h:commandButton value="Siguiendo" class="btn btn-success pull-right" 
+                                                                     rendered="#{loginBean.usuario.siguesUsuario(u)}">
+                                               
+                                                    </h:commandButton>
+                                                      <h:commandButton value="Seguir" class="btn btn-primary pull-right" 
+                                                                     rendered="#{!loginBean.usuario.siguesUsuario(u)}">
+                                               
+                                                    </h:commandButton>
+                                                </h:form>                                   
+                                                  <!--    if(s.equals("si")){ %>
+                                                        <form action="SeguirNoSeguirServlet" method="post">  
+                                                        <input type="hidden" value="<%=u.getIdUsuario() %>" name="usuarioDejarSeguir" >
+                                                        <input type="hidden" value="Siguiendo" name="botonSeguir" >
+                                                        <input type="hidden" value="<%= usuarioMuro.getIdUsuario() %>" name="usuariomuro" >
+                                                        <input type="hidden" value="<%= ruta %>" name="ruta" >
+                                                        <input  class="btn btn-success pull-right" type="submit" name="boton" value="Siguiendo">
+                                                        </form>
+                                                      <% }else{%>
+                                                        <form action="SeguirNoSeguirServlet" method="post">
+                                                        <input type="hidden" value="<%=u.getIdUsuario() %>" name="usuarioSeguir" >
+                                                        <input type="hidden" value="Seguir" name="botonSeguir" >
+                                                        <input type="hidden" value="<%= usuarioMuro.getIdUsuario() %>" name="usuariomuro" >
+                                                        <input type="hidden" value="<%= ruta %>" name="ruta" >
+                                                        <input  class="btn btn-primary pull-right" type="submit" name="boton" value="Seguir">
+                                                        </form>
+                                               -->
+                                               
+                                               <!--<a href="MuroServlet?usuarioMuroGet=<%= u.getIdUsuario() %>">  <%= u.getNombre() + " " + u.getApellidos()%></a> -->
+                                                      <h4><img src="resources/img/uFp_tsTJboUY7kue5XAsGAs28.png" height="28px" width="28px"/> #{u.getNombre()} #{u.getApellidos()}</h4>
+                                                
+ 
+                                            </div>
+                                            <div class="panel-body">
+                                                <p>#{u.getDescripcion()}</p> 
+
+                                            </div>
+                                        </div> 
+                                        </ui:repeat>
+                                            
+
+
+
+
+
+
+                                        <!--<ul class="list-inline"><li><a href=""><i class="glyphicon glyphicon-upload"></i></a></li><li><a href=""><i class="glyphicon glyphicon-film"></i></a></li><li><a href=""><i class="glyphicon glyphicon-map-marker"></i></a></li></ul>-->
+
+
+
+
+                                    </div>
+
+
+                                </div><!--/row-->
+
+
+
+                                <div class="row" id="footer">    
+                                    <div class="col-sm-6">
+
+                                    </div>
+
+                                </div>
+
+                            </div><!-- /col-9 -->
+                        </div><!-- /padding -->
+                    </div>
+                    <!-- /main -->
+
+                </div>
+            </div>
+        </div>
+
+
+        <!--post modal-->
+        <div id="postModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">�</button>
+                        Update Status
+                    </div>
+                    <div class="modal-body">
+                        <form class="form center-block">
+                            <div class="form-group">
+                                <textarea class="form-control input-lg" autofocus="" placeholder="What do you want to share?"></textarea>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <div>
+                            <button class="btn btn-primary btn-sm" data-dismiss="modal" aria-hidden="true">Post</button>
+                            <ul class="pull-left list-inline"><li><a href=""><i class="glyphicon glyphicon-upload"></i></a></li><li><a href=""><i class="glyphicon glyphicon-camera"></i></a></li><li><a href=""><i class="glyphicon glyphicon-map-marker"></i></a></li></ul>
+                        </div>	
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script type="text/javascript" src="resources/js/jquery.js"></script>
+        <script type="text/javascript" src="resources/js/bootstrap.js"></script>
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $('[data-toggle=offcanvas]').click(function () {
+                    $(this).toggleClass('visible-xs text-center');
+                    $(this).find('i').toggleClass('glyphicon-chevron-right glyphicon-chevron-left');
+                    $('.row-offcanvas').toggleClass('active');
+                    $('#lg-menu').toggleClass('hidden-xs').toggleClass('visible-xs');
+                    $('#xs-menu').toggleClass('visible-xs').toggleClass('hidden-xs');
+                    $('#btnShow').toggle();
+                });
+            });
+        </script>
+    </h:body>
+</html>
+
