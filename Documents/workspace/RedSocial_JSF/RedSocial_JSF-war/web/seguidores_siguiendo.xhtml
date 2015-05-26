@@ -3,7 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <meta http-equiv="content-type" content="text/html; charset=UTF-8"/> 
         <meta charset="utf-8"/>
@@ -51,17 +52,13 @@
                                         <div class="panel panel-default">
                                             <div class="panel-heading">
                                                
-                                               
-                                                <h:form>
-                                                    <h:commandButton value="Siguiendo" class="btn btn-success pull-right" 
-                                                                     rendered="#{loginBean.usuario.siguesUsuario(u)}">
-                                               
+                                               <h:form>
+                                                    <h:commandButton id="seguirsiguiendo" value="#{seguirNoSeguirBean.tituloBoton(u)}" class="#{seguirNoSeguirBean.classBoton()} pull-right" >
+                                                        <f:ajax  render="seguirsiguiendo"/>
                                                     </h:commandButton>
-                                                      <h:commandButton value="Seguir" class="btn btn-primary pull-right" 
-                                                                     rendered="#{!loginBean.usuario.siguesUsuario(u)}">
-                                               
-                                                    </h:commandButton>
-                                                </h:form>                                   
+
+                                                </h:form>   
+                                                                               
                                                   <!--    if(s.equals("si")){ %>
                                                         <form action="SeguirNoSeguirServlet" method="post">  
                                                         <input type="hidden" value="<%=u.getIdUsuario() %>" name="usuarioDejarSeguir" >
@@ -82,7 +79,7 @@
                                                
                                                <!--<a href="MuroServlet?usuarioMuroGet=<%= u.getIdUsuario() %>">  <%= u.getNombre() + " " + u.getApellidos()%></a> -->
                                                       <h4><img src="resources/img/uFp_tsTJboUY7kue5XAsGAs28.png" height="28px" width="28px"/> #{u.getNombre()} #{u.getApellidos()}</h4>
-                                                
+                                                 
  
                                             </div>
                                             <div class="panel-body">
