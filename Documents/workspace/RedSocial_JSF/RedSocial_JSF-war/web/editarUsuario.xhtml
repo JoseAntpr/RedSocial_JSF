@@ -38,32 +38,32 @@
                                 <div class="col-sm-8">  
                                       
                                  <h:form>
-                                        <h:inputHidden value="#{usuarioBean.editarUsuario.id}"/>
+                                        <h:inputHidden value="#{usuarioBean.usuarioEditar.id}"/>
                                         <h3><h:outputText value="Editar Perfil"/></h3>
                                         <h:panelGrid columns="2" width="500px">
 
                                             <h:outputLabel value="Nombre:" for="nombre" />
-                                            <h:inputText id="nombre" class="form-control" value="#{loginBean.usuarioEditar.nombre}" title="Nombre" required="true" requiredMessage="El campo nombre es obligatorio."/>
+                                            <h:inputText id="nombre" class="form-control" value="#{usuarioBean.usuarioEditar.nombre}" title="Nombre" required="true" requiredMessage="El campo nombre es obligatorio."/>
 
                                             <h:outputLabel value="Apellidos:" for="apellidos" />
-                                            <h:inputText id="apellidos" class="form-control" value="#{loginBean.usuarioEditar.apellidos}" title="Apellidos" required="true" requiredMessage="El campo Apellidos es obligatorio."/>
+                                            <h:inputText id="apellidos" class="form-control" value="#{usuarioBean.usuarioEditar.apellidos}" title="Apellidos" required="true" requiredMessage="El campo Apellidos es obligatorio."/>
 
                                             <h:outputLabel value="Direccion:" for="direccion" />
-                                            <h:inputText id="direccion" class="form-control" value="#{loginBean.usuarioEditar.direccion}" title="Direccion" />
+                                            <h:inputText id="direccion" class="form-control" value="#{usuarioBean.usuarioEditar.direccion}" title="Direccion" />
 
                                             <h:outputLabel value="Localidad:" for="localidad" />
-                                            <h:inputText id="localidad" class="form-control" value="#{loginBean.usuarioEditar.localidad}" title="Localidad" />
+                                            <h:inputText id="localidad" class="form-control" value="#{usuarioBean.usuarioEditar.localidad}" title="Localidad" />
 
                                             <h:outputLabel value="Provincia:" for="provincia" />
-                                            <h:inputText id="provincia" class="form-control" value="#{loginBean.usuarioEditar.provincia}" title="Provincia" />
+                                            <h:inputText id="provincia" class="form-control" value="#{usuarioBean.usuarioEditar.provincia}" title="Provincia" />
 
                                             <h:outputLabel value="Pais:" for="pais" />
-                                            <h:inputText id="pais" class="form-control" value="#{loginBean.usuarioEditar.pais}" title="Pais" />
+                                            <h:inputText id="pais" class="form-control" value="#{usuarioBean.usuarioEditar.pais}" title="Pais" />
 
                                             <h:outputLabel value="Email:" for="email" />
-                                            <h:inputText id="email" class="form-control" value="#{loginBean.usuarioEditar.email}" title="Email" />
+                                            <h:inputText id="email" class="form-control" value="#{usuarioBean.usuarioEditar.email}" title="Email" />
 
-                                            <h:commandLink class="btn btn-success" value="Guardar" action="#{loginBean.modificarUsuario()}" title="Guardar cambios realizados"/>
+                                            <h:commandLink class="btn btn-success" value="Guardar" action="#{usuarioBean.modificarUsuario()}" title="Guardar cambios realizados"/>
                                         </h:panelGrid>
                                     </h:form> 
                                 </div> <!--/row-->
