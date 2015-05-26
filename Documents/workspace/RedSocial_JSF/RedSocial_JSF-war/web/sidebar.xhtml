@@ -17,10 +17,25 @@
         <li>#{loginBean.usuarioMuro.getDescripcion()}</li><br/>
         
         <!-- FALTAN LOS ENLACES -->
-        <li><i class="glyphicon glyphicon-align-right" /> Grupos</li>
-        <li><i class="glyphicon glyphicon-list" /> Seguidores <b>#{loginBean.usuarioMuro.getUsuarioCollection1().size()}</b></li>
-        <li><i class="glyphicon glyphicon-list" /> Siguiendo <b>#{loginBean.usuarioMuro.getUsuarioCollection().size()}</b></li>
-        
+        <h:form>
+        <li><i class="glyphicon glyphicon-align-right" />
+             <h:commandLink value=" Grupos" >
+            </h:commandLink>
+        </li>
+        <li><i class="glyphicon glyphicon-list" /> 
+            <h:commandLink value=" Seguidores" action="#{listarSeguidoresSiguiendoBean.cargarSeguidores()}">
+                
+            </h:commandLink>
+            <b>#{loginBean.usuarioMuro.getUsuarioCollection1().size()}</b>
+            
+        </li>
+        <li><i class="glyphicon glyphicon-list" />
+            <h:commandLink value=" Siguiendo" action="#{listarSeguidoresSiguiendoBean.cargarSigues()}">
+                
+            </h:commandLink>
+            <b><h:outputText value="&#160;"/> #{loginBean.usuarioMuro.getUsuarioCollection().size()}</b>
+        </li>
+        </h:form>
     </ul>
     <ul class="list-unstyled hidden-xs" id="sidebar-footer"></ul>
     <!-- tiny only nav-->
