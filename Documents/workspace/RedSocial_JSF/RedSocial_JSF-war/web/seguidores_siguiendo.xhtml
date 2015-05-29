@@ -39,7 +39,7 @@
                                 <div class="row">
 
                                     <!-- main 100% page --> 
-                                    <div class="col-sm-12">
+                                    <div id="aaa" class="col-sm-12">
 
 
                                         <!-- POST -->
@@ -53,10 +53,13 @@
                                             <div class="panel-heading">
                                                
                                                <h:form>
-                                                    <h:commandButton id="seguirsiguiendo" value="#{seguirNoSeguirBean.tituloBoton(u)}" class="#{seguirNoSeguirBean.classBoton()} pull-right" >
-                                                        <f:ajax  render="seguirsiguiendo"/>
+                                                   <h:commandButton action="#{muroBean.muro()}" >
+                                                        <!--<f:ajax  render="seguirsiguiendo"/>-->
                                                     </h:commandButton>
 
+                                                   <h:button id="" class="" value="" outcome="#{muroBean.muro()}">
+                                                   <f:ajax  render="seguirsiguiendo"/>
+                                                   </h:button>
                                                 </h:form>   
                                                                                
                                                   <!--    if(s.equals("si")){ %>

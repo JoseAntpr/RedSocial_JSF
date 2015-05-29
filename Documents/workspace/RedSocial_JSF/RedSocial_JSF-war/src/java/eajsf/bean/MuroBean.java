@@ -9,7 +9,6 @@ import eajsf.ejb.PostFacade;
 import eajsf.ejb.UsuarioFacade;
 import eajsf.entity.Post;
 import eajsf.entity.Usuario;
-import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.AbstractList;
 import java.util.ArrayList;
@@ -118,7 +117,12 @@ public class MuroBean {
         this.cssDiv = cssDiv;
     }
     
+    
+    
     public String muro(){
+        
+        loginBean.setUsuarioMuro(loginBean.getUsuario());
+        
         return "muro";
     }
 
