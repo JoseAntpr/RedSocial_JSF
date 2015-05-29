@@ -10,10 +10,10 @@ import eajsf.ejb.UsuarioFacade;
 import eajsf.entity.Post;
 import eajsf.entity.Usuario;
 import java.math.BigDecimal;
+
 import java.text.SimpleDateFormat;
-import java.util.AbstractList;
-import java.util.ArrayList;
 import java.util.List;
+
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
@@ -37,7 +37,8 @@ public class MuroBean {
     @EJB
     private PostFacade postFacade;
     
-    private List<Post> listaPost;
+    private List<Post> listaPostUsuarioMuro;
+   
     private String cssDiv;
     
     
@@ -50,7 +51,7 @@ public class MuroBean {
 //        Usuario usuario = loginBean.getUsuario();
 //        Usuario usuarioMuro = loginBean.getUsuarioMuro();
 
-        List<Post> postSigues = null;
+        
         
         if(loginBean.getUsuario().equals(loginBean.getUsuarioMuro())){
             this.cssDiv="col-sm-6";
@@ -58,7 +59,7 @@ public class MuroBean {
             this.cssDiv="col-sm-6 centered";
         }
         
-        this.listaPost=postFacade.findPostIdUsuarioOrder(loginBean.getUsuario().getIdUsuario());
+        
         
     }
 
@@ -102,13 +103,7 @@ public class MuroBean {
         this.postFacade = postFacade;
     }
 
-    public List<Post> getListaPost() {
-        return postFacade.findPostIdUsuarioOrder(loginBean.getUsuario().getIdUsuario());
-    }
-
-    public void setListaPost(List<Post> listaPost) {
-        this.listaPost = listaPost;
-    }
+ 
 
     public String getCssDiv() {
         return cssDiv;
@@ -117,11 +112,39 @@ public class MuroBean {
     public void setCssDiv(String cssDiv) {
         this.cssDiv = cssDiv;
     }
-    
-    public String muro(){
-        return "muro";
+
+    public List<Post> getListaPostUsuarioMuro() {
+        return listaPostUsuarioMuro;
     }
 
+    public void setListaPostUsuarioMuro(List<Post> listaPostUsuarioMuro) {
+        this.listaPostUsuarioMuro = listaPostUsuarioMuro;
+    }
+    
+    public String muro(){
+       
+        loginBean.setUsuarioMuro(loginBean.getUsuario());
+        
+        return "muro";
+    }
+    
+
+    public String cargarUsuarioMuro(Usuario u){
+        loginBean.setUsuarioMuro(u);
+        listaPostUsuarioMuro = (List) postFacade.findPostIdUsuarioOrder(u.getIdUsuario());
+        
+        return "muro";
+    }
+    
+    public List<Post> listaPostUsuario(){
+        List<Post> aux =null;
+        if(loginBean.getUsuario().equals(loginBean.getUsuarioMuro())){
+            aux=loginBean.getListaPostUsuario();
+        }else{
+            aux=listaPostUsuarioMuro;
+        }
+         return aux;
+    }
     /**
      * Creates a new instance of MuroBean
      */

@@ -48,16 +48,19 @@
 
                                         
                                         
-                                        <ui:repeat value="#{listarSeguidoresSiguiendoBean.listaUsuarios}" var="u">
+                                        <ui:repeat value="#{loginBean.listaUsuarios}" var="u">
                                         <div class="panel panel-default">
                                             <div class="panel-heading">
                                                
                                                <h:form>
-                                                    <h:commandButton id="seguirsiguiendo" value="#{seguirNoSeguirBean.tituloBoton(u)}" class="#{seguirNoSeguirBean.classBoton()} pull-right" >
-                                                        <f:ajax  render="seguirsiguiendo"/>
-                                                    </h:commandButton>
-
-                                                </h:form>   
+                                                   
+                                                   <h:commandButton value="#{seguirNoSeguirBean.tituloBoton(u)}" class="#{seguirNoSeguirBean.classBoton()} pull-right" action="#{seguirNoSeguirBean.seguirDejarSeguir(u)}" >
+                                                       
+                                                     <!--<f:ajax  render="seguirsiguiendo"/>-->
+                                                    </h:commandButton> 
+                                                   <h:commandLink action="#{muroBean.cargarUsuarioMuro(u)}"><h4><img src="resources/img/uFp_tsTJboUY7kue5XAsGAs28.png" height="28px" width="28px"/> #{u.getNombre()} #{u.getApellidos()}</h4></h:commandLink>
+                                                </h:form> 
+                                              
                                                                                
                                                   <!--    if(s.equals("si")){ %>
                                                         <form action="SeguirNoSeguirServlet" method="post">  
@@ -78,7 +81,7 @@
                                                -->
                                                
                                                <!--<a href="MuroServlet?usuarioMuroGet=<%= u.getIdUsuario() %>">  <%= u.getNombre() + " " + u.getApellidos()%></a> -->
-                                                      <h4><img src="resources/img/uFp_tsTJboUY7kue5XAsGAs28.png" height="28px" width="28px"/> #{u.getNombre()} #{u.getApellidos()}</h4>
+                                               
                                                  
  
                                             </div>

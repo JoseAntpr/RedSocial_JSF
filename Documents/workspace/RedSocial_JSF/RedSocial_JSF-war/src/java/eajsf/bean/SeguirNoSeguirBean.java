@@ -6,7 +6,10 @@ package eajsf.bean;
  * and open the template in the editor.
  */
 
+import eajsf.ejb.UsuarioFacade;
 import eajsf.entity.Usuario;
+import java.math.BigDecimal;
+import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
@@ -19,6 +22,9 @@ import javax.faces.context.FacesContext;
 @ManagedBean
 @RequestScoped
 public class SeguirNoSeguirBean {
+    @EJB
+    private UsuarioFacade usuarioFacade;
+    
     
     @ManagedProperty(value = "#{loginBean}")
     private LoginBean loginBean;
@@ -26,7 +32,7 @@ public class SeguirNoSeguirBean {
     private String classBoton;
     
     private Usuario usuario;
-
+    
     /**
      * Creates a new instance of SeguirNoSeguirBean
      */
@@ -64,12 +70,22 @@ public class SeguirNoSeguirBean {
     public void setClassBoton(String classBoton) {
         this.classBoton = classBoton;
     }
+
+    public UsuarioFacade getUsuarioFacade() {
+        return usuarioFacade;
+    }
+
+    public void setUsuarioFacade(UsuarioFacade usuarioFacade) {
+        this.usuarioFacade = usuarioFacade;
+    }
+    
+    
     
     
 
     public String tituloBoton(Usuario u){
-        this.usuario=u;
-        if(loginBean.getUsuario().siguesUsuario(u)){
+         usuario=u;
+        if(loginBean.getUsuario().siguesUsuario(usuario)){
             this.titulo="Siguiendo";
         }else{
             this.titulo="Seguir";
@@ -84,6 +100,35 @@ public class SeguirNoSeguirBean {
             this.classBoton="btn btn-primary";
         }
         return classBoton;
+    }
+    
+    public String seguirDejarSeguir(Usuario u){
+        usuario=u;
+        String tit = tituloBoton(u);
+            if(tit.equals("Siguiendo")){
+               usuario.getUsuarioCollection1().remove(loginBean.getUsuario());
+                loginBean.getUsuario().getUsuarioCollection().remove(usuario);
+                
+           
+                usuarioFacade.edit(loginBean.getUsuario());
+                usuarioFacade.edit(usuario);
+                if(loginBean.getIdListaUsuarios().equals("Siguiendo")){
+                    loginBean.getListaUsuarios().remove(usuario);
+                }
+                
+            }else if(tit.equals("Seguir")){
+                usuario.getUsuarioCollection1().add(loginBean.getUsuario());
+                loginBean.getUsuario().getUsuarioCollection().add(usuario);
+            
+           
+                usuarioFacade.edit(loginBean.getUsuario());
+                usuarioFacade.edit(usuario);
+               
+            }
+            
+            
+            return "seguidores_siguiendo";
+        
     }
     
     
