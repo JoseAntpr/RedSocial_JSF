@@ -38,17 +38,35 @@ public class LoginBean {
     private String email;
     private String descripcion;
     private String password;
+    private String password2;
 
     private Usuario usuario;
     private Usuario usuarioMuro;
     private Usuario usuarioEditar;
     private String error = null;
+    private String passError = null;
 
     private List<Post> listaPostUsuario;
     private List<Post> listaPostSigues;
     private List<Usuario> listaUsuarios;
 
     private String idListaUsuarios;
+
+    public String getPassError() {
+        return passError;
+    }
+
+    public void setPassError(String passError) {
+        this.passError = passError;
+    }
+    
+    public String getPassword2() {
+        return password2;
+    }
+
+    public void setPassword2(String password2) {
+        this.password2 = password2;
+    }
 
     public String getIdListaUsuarios() {
         return idListaUsuarios;
@@ -259,7 +277,9 @@ public class LoginBean {
 
     public String botonCambiarPass() {
         usuarioEditar = usuarioMuro;
+        passError=null;
         return "editarPassword.xhtml";
+       
     }
 
     public String modificarUsuario() {
@@ -269,9 +289,20 @@ public class LoginBean {
     }
 
     public String modificarPassword() {
-
-        usuarioFacade.editarPass(usuarioEditar, usuarioEditar.getPassword());
-        return "muro.xhtml";
+        
+        String fin = null;
+        
+        if (usuarioEditar.getPassword().equals(password2)){
+            usuarioFacade.editarPass(usuarioEditar, usuarioEditar.getPassword());
+            fin = "muro.xhtml";
+            passError=null;
+        }else{
+            error="Las contraseñas no coinciden. Intentelo de nuevo.";
+            fin="editarPassword.xhtml";
+            passError="teEquivocasteWey";
+        }
+        
+        return fin;
     }
      public String cerrarSesion() {
         nombre = null;
@@ -289,11 +320,13 @@ public class LoginBean {
         listaPostUsuario = null;
         listaUsuarios = null;
         idListaUsuarios = null;
-        
+        password2=null;
+        passError=null;
         
         return "login.xhtml";
     }
-
+  
+     
     /**
      * Creates a new instance of LoginBean
      */
