@@ -93,6 +93,21 @@ hr {
    color:#fff;
 }
 
+li a.inicio{
+    position: relative;
+    display: block;
+    padding-top: 16px;
+    padding-bottom: 15px;
+    padding-left: 15px;
+    padding-right: 15px;
+    color:#fff;
+}
+
+.inicio:hover{
+   background-color:#2A4888;
+   color:#fff;
+}
+
 #main {
    background-color:#e9eaed;
    padding-left:0;

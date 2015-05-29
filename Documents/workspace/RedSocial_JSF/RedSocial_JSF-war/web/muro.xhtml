@@ -68,7 +68,30 @@
                                     
                                 </div>
                                 <!-- Include sidebar -->
-                                                    
+                                <c:if test="#{loginBean.usuario.equals(loginBean.usuarioMuro)}">
+                                
+                                    <div class="col-sm-6">
+                                        <ui:repeat value="#{loginBean.listaPostSigues}" var="ps">
+                                  
+                                            <div class="panel panel-default">
+                                               <div class="panel-thumbnail">
+                                                   <c:if test="#{ps.getImagen()!=null}">
+                                                       <img src="#{ps.getImagen()}" class="img-responsive"/>
+                                                   </c:if>
+                                               </div>
+                                               <div class="panel-body">
+                                                   <p><img src="resources/img/uFp_tsTJboUY7kue5XAsGAs28.png" height="28px" width="28px"/>
+                                                   #{ps.idUsuarioP.nombre} #{ps.idUsuarioP.apellidos}
+                                                   </p>
+                                                   <p>#{muroBean.format.format(ps.getFecha())}</p>
+                                                   <p>#{ps.getDescripcion()}</p> 
+                                               </div>
+                                           </div>
+                                      
+                                    </ui:repeat>
+                                    </div>
+                                
+                                </c:if>
                                 <!-- /Include sidebar -->
                             </div>
                         </div><!-- /col-9 -->  

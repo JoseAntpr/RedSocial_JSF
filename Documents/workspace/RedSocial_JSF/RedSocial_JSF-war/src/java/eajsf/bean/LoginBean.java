@@ -45,6 +45,7 @@ public class LoginBean {
     private String error = null;
 
     private List<Post> listaPostUsuario;
+    private List<Post> listaPostSigues;
     private List<Usuario> listaUsuarios;
 
     private String idListaUsuarios;
@@ -163,6 +164,7 @@ public class LoginBean {
             this.usuario = usr;
             this.usuarioMuro = usr;
             listaPostUsuario = postFacade.findPostIdUsuarioOrder(usuario.getIdUsuario());
+            listaPostSigues = postFacade.findPostIdUsuarioSeguidoresOrder(usuario.getIdUsuario());
         } else {
             error = "Nombre de usuario o contraseña incorrectos, vuelve a intentarlo porfavor";
             ruta = "login";
@@ -181,6 +183,7 @@ public class LoginBean {
             this.usuario = usr;
             this.usuarioMuro = usr;
             listaPostUsuario = postFacade.findPostIdUsuarioOrder(usuario.getIdUsuario());
+            listaPostSigues = postFacade.findPostIdUsuarioSeguidoresOrder(usuario.getIdUsuario());
             ruta = "muro";
         } else {
             error = "El email ya esta registrado en nuestra red social.";
@@ -214,6 +217,16 @@ public class LoginBean {
     public void setListaPostUsuario(List<Post> listaPostUsuario) {
         this.listaPostUsuario = listaPostUsuario;
     }
+
+    public List<Post> getListaPostSigues() {
+        return listaPostSigues;
+    }
+
+    public void setListaPostSigues(List<Post> listaPostSigues) {
+        this.listaPostSigues = listaPostSigues;
+    }
+    
+    
 
     public List<Usuario> getListaUsuarios() {
         return listaUsuarios;

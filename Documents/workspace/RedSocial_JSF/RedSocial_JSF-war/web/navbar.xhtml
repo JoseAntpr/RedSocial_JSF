@@ -18,10 +18,7 @@
             <div class="input-group input-group-sm" style="max-width:360px;">
                 <h:inputText class="form-control" pt:placeholder="Buscar" id="srch-term" value="#{buscarBean.datos}"/>
                 <div class="input-group-btn">
-                    
-                    
-                   
-                    <h:commandButton action="#{buscarBean.buscar()}" class="btn btn-default" ><i class="glyphicon glyphicon-search"></i></h:commandButton>
+                    <h:commandLink styleClass="btn btn-default" action="#{buscarBean.buscar()}"><i class="glyphicon glyphicon-search"/></h:commandLink>
                 </div>
             </div>
                         
@@ -29,8 +26,7 @@
 	<ul class="nav navbar-nav">
             <li>
                <h:form>
-                   <h:commandLink action="#{muroBean.muro()}" ><i class="glyphicon glyphicon-home"></i> Inicio </h:commandLink>
-                
+                   <h:commandLink class="inicio" action="#{muroBean.muro()}"><i class="glyphicon glyphicon-home"></i> Inicio </h:commandLink>
                 </h:form>
                 
                 
@@ -55,7 +51,7 @@
                    <li role="presentation"><a href="#{loginBean.botonCambiarPass()}" tabindex="-1" role="menuitem">Cambiar Contraseña</a></li>
                    <li class="divider" role="presentation"></li>
                    <h:form>
-                    <li role="presentation"><h:commandLink action="#{loginBean.cerrarSesion()}" tabindex="-1" role="menuitem" >Cerrar Sesion</h:commandLink></li>
+                       <li role="presentation"><h:commandLink class="menu-usuario" action="#{loginBean.cerrarSesion()}" tabindex="-1" role="menuitem" >Cerrar Sesion</h:commandLink></li>
                     </h:form>
                     <li class="divider" role="presentation"></li>                   
                     <li role="presentation"><a href="#" tabindex="-1" role="menuitem">Administrar</a></li>  

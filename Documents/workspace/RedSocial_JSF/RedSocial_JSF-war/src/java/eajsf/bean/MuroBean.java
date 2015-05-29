@@ -127,7 +127,6 @@ public class MuroBean {
         return "muro";
     }
     
-
     public String cargarUsuarioMuro(Usuario u){
         loginBean.setUsuarioMuro(u);
         listaPostUsuarioMuro = (List) postFacade.findPostIdUsuarioOrder(u.getIdUsuario());
