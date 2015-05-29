@@ -101,7 +101,7 @@ public class UsuarioFacade extends AbstractFacade<Usuario> {
     }
     
     //Azahar: Método para cuando el usuario cambia sus datos.
-     public void editarUsuario(Usuario usuario, String nombre, String apellidos, String direccion, String localidad, String provincia, String pais, String email) {
+     public void editarUsuario(Usuario usuario, String nombre, String apellidos, String direccion, String localidad, String provincia, String pais, String email, String descripcion) {
 
             usuario.setNombre(nombre);
             usuario.setApellidos(apellidos);
@@ -110,6 +110,7 @@ public class UsuarioFacade extends AbstractFacade<Usuario> {
             usuario.setProvincia(provincia);
             usuario.setPais(pais);
             usuario.setEmail(email);
+            usuario.setDescripcion(descripcion);
 
             edit(usuario);               
          
@@ -121,6 +122,7 @@ public class UsuarioFacade extends AbstractFacade<Usuario> {
             edit(usuario);               
          
     }
+
      
     public List gruposPublicosDeUsuario(Usuario u) {
         List grupos = new LinkedList();

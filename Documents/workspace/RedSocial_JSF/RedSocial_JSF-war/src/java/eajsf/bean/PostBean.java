@@ -174,13 +174,13 @@ public class PostBean {
 
         //Actualizamos la lista de Post del Usuario
         listaPost.add(p);
-
+        
         //Añadimos el post a la BD
         postFacade.create(p);
-
+        
         // Actualizamos la relacion USUARIO-POST (MURO)
         usuarioFacade.edit(usuario);
-
+        loginBean.setListaPostUsuario(postFacade.findPostIdUsuarioOrder(usuario.getIdUsuario()));
 
 //        muroBean.setListaPost(postFacade.findPostIdUsuarioOrder(loginBean.getUsuario().getIdUsuario()));
         
@@ -203,6 +203,7 @@ public class PostBean {
 
         postFacade.deletePost(p.getIdPost());
         loginBean.getUsuario().getPostCollection().remove(p);
+        loginBean.getListaPostUsuario().remove(p);
         usuarioFacade.edit(loginBean.getUsuario());
         
         //        muroBean.setListaPost(postFacade.findPostIdUsuarioOrder(loginBean.getUsuario().getIdUsuario()));

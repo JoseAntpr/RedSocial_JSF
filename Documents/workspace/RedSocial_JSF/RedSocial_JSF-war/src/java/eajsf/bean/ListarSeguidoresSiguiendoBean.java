@@ -22,7 +22,7 @@ public class ListarSeguidoresSiguiendoBean {
     @ManagedProperty(value = "#{loginBean}")
     private LoginBean loginBean;
     
-    List<Usuario> listaUsuarios;
+   
     
 
     /**
@@ -39,21 +39,15 @@ public class ListarSeguidoresSiguiendoBean {
         this.loginBean = loginBean;
     }
 
-    public List<Usuario> getListaUsuarios() {
-        return listaUsuarios;
-    }
-
-    public void setListaUsuarios(List<Usuario> listaUsuarios) {
-        this.listaUsuarios = listaUsuarios;
-    }
+   
     
     public String cargarSeguidores(){
-        listaUsuarios = (List) loginBean.getUsuarioMuro().getUsuarioCollection1();
+        loginBean.setListaUsuarios((List) loginBean.getUsuarioMuro().getUsuarioCollection1());
         
         return "seguidores_siguiendo";
     }
     public String cargarSigues(){
-        listaUsuarios = (List) loginBean.getUsuarioMuro().getUsuarioCollection();
+        loginBean.setListaUsuarios((List) loginBean.getUsuarioMuro().getUsuarioCollection()) ;
         return "seguidores_siguiendo";
     }
     

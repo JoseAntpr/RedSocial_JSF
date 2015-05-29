@@ -44,44 +44,21 @@
 
                                         <!-- POST -->
 
-
-
-                                        
-                                        
-                                        <ui:repeat value="#{listarSeguidoresSiguiendoBean.listaUsuarios}" var="u">
+                                        <ui:repeat value="#{loginBean.listaUsuarios}" var="u">
                                         <div class="panel panel-default">
                                             <div class="panel-heading">
                                                
                                                <h:form>
-                                                   <h:commandButton action="#{muroBean.muro()}" >
-                                                        <!--<f:ajax  render="seguirsiguiendo"/>-->
-                                                    </h:commandButton>
-
-                                                   <h:button id="" class="" value="" outcome="#{muroBean.muro()}">
-                                                   <f:ajax  render="seguirsiguiendo"/>
-                                                   </h:button>
-                                                </h:form>   
-                                                                               
-                                                  <!--    if(s.equals("si")){ %>
-                                                        <form action="SeguirNoSeguirServlet" method="post">  
-                                                        <input type="hidden" value="<%=u.getIdUsuario() %>" name="usuarioDejarSeguir" >
-                                                        <input type="hidden" value="Siguiendo" name="botonSeguir" >
-                                                        <input type="hidden" value="<%= usuarioMuro.getIdUsuario() %>" name="usuariomuro" >
-                                                        <input type="hidden" value="<%= ruta %>" name="ruta" >
-                                                        <input  class="btn btn-success pull-right" type="submit" name="boton" value="Siguiendo">
-                                                        </form>
-                                                      <% }else{%>
-                                                        <form action="SeguirNoSeguirServlet" method="post">
-                                                        <input type="hidden" value="<%=u.getIdUsuario() %>" name="usuarioSeguir" >
-                                                        <input type="hidden" value="Seguir" name="botonSeguir" >
-                                                        <input type="hidden" value="<%= usuarioMuro.getIdUsuario() %>" name="usuariomuro" >
-                                                        <input type="hidden" value="<%= ruta %>" name="ruta" >
-                                                        <input  class="btn btn-primary pull-right" type="submit" name="boton" value="Seguir">
-                                                        </form>
-                                               -->
+                                                   
+                                                   <h:commandButton value="#{seguirNoSeguirBean.tituloBoton(u)}" class="#{seguirNoSeguirBean.classBoton()} pull-right" action="#{seguirNoSeguirBean.seguirDejarSeguir(u)}" rendered="#{!loginBean.usuario.equals(u)}" >
+                                                       
+                                                     <!--<f:ajax  render="seguirsiguiendo"/>-->
+                                                    </h:commandButton> 
+                                                   <h:commandLink action="#{muroBean.cargarUsuarioMuro(u)}"><h4><img src="resources/img/uFp_tsTJboUY7kue5XAsGAs28.png" height="28px" width="28px"/> #{u.getNombre()} #{u.getApellidos()}</h4></h:commandLink>
+                                                </h:form> 
+                                              
+                                                 
                                                
-                                               <!--<a href="MuroServlet?usuarioMuroGet=<%= u.getIdUsuario() %>">  <%= u.getNombre() + " " + u.getApellidos()%></a> -->
-                                                      <h4><img src="resources/img/uFp_tsTJboUY7kue5XAsGAs28.png" height="28px" width="28px"/> #{u.getNombre()} #{u.getApellidos()}</h4>
                                                  
  
                                             </div>
@@ -91,17 +68,6 @@
                                             </div>
                                         </div> 
                                         </ui:repeat>
-                                            
-
-
-
-
-
-
-                                        <!--<ul class="list-inline"><li><a href=""><i class="glyphicon glyphicon-upload"></i></a></li><li><a href=""><i class="glyphicon glyphicon-film"></i></a></li><li><a href=""><i class="glyphicon glyphicon-map-marker"></i></a></li></ul>-->
-
-
-
 
                                     </div>
 
