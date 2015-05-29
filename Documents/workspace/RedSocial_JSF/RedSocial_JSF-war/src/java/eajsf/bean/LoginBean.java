@@ -22,13 +22,13 @@ import javax.faces.bean.SessionScoped;
 @ManagedBean
 @SessionScoped
 public class LoginBean {
+
     @EJB
     private PostFacade postFacade;
 
     @EJB
     private UsuarioFacade usuarioFacade;
-    
-    
+
     private String nombre;
     private String apellidos;
     private String direccion;
@@ -43,10 +43,10 @@ public class LoginBean {
     private Usuario usuarioMuro;
     private Usuario usuarioEditar;
     private String error = null;
-    
-    private List<Post> listaPostUsuario ;
+
+    private List<Post> listaPostUsuario;
     private List<Usuario> listaUsuarios;
-    
+
     private String idListaUsuarios;
 
     public String getIdListaUsuarios() {
@@ -57,8 +57,6 @@ public class LoginBean {
         this.idListaUsuarios = idListaUsuarios;
     }
 
-    
-    
     public UsuarioFacade getUsuarioFacade() {
         return usuarioFacade;
     }
@@ -154,8 +152,6 @@ public class LoginBean {
     public void setUsuarioMuro(Usuario usuarioMuro) {
         this.usuarioMuro = usuarioMuro;
     }
-    
-    
 
     public String comprobarUsuario() {
 
@@ -164,8 +160,8 @@ public class LoginBean {
 
         if (usr != null) {
             ruta = "muro";
-            this.usuario=usr;
-            this.usuarioMuro=usr;
+            this.usuario = usr;
+            this.usuarioMuro = usr;
             listaPostUsuario = postFacade.findPostIdUsuarioOrder(usuario.getIdUsuario());
         } else {
             error = "Nombre de usuario o contraseña incorrectos, vuelve a intentarlo porfavor";
@@ -174,14 +170,16 @@ public class LoginBean {
         return ruta;
     }
 
+   
+
     public String registrarUsuario() {
         String ruta = null;
         Usuario usr = usuarioFacade.buscarEmail(email);
 
         if (usr == null) {
             usr = usuarioFacade.nuevoUser(this.nombre, this.apellidos, this.direccion, this.localidad, this.provincia, this.pais, this.email, this.password);
-            this.usuario=usr;
-            this.usuarioMuro=usr;
+            this.usuario = usr;
+            this.usuarioMuro = usr;
             listaPostUsuario = postFacade.findPostIdUsuarioOrder(usuario.getIdUsuario());
             ruta = "muro";
         } else {
@@ -192,12 +190,12 @@ public class LoginBean {
         return ruta;
 
     }
-    
-    public Usuario buscarID(BigDecimal id){
-        return (Usuario)usuarioFacade.find(id);
+
+    public Usuario buscarID(BigDecimal id) {
+        return (Usuario) usuarioFacade.find(id);
     }
-    
-    public boolean sigues(Usuario u, Usuario u2){
+
+    public boolean sigues(Usuario u, Usuario u2) {
         return u.siguesUsuario(u2);
     }
 
@@ -240,31 +238,48 @@ public class LoginBean {
     public void setUsuarioEditar(Usuario usuarioEditar) {
         this.usuarioEditar = usuarioEditar;
     }
-    
-    
-    public String botonEditarPerfil(){          
-       usuarioEditar =  usuarioMuro;  
-       return "editarUsuario.xhtml";
-    }
-    
-    public String botonCambiarPass(){          
-       usuarioEditar =  usuarioMuro;  
-       return "editarPassword.xhtml";
-    }
-    
-    public String modificarUsuario(){
-        
-       usuarioFacade.editarUsuario(usuarioEditar, usuarioEditar.getNombre(), usuarioEditar.getApellidos(),usuarioEditar.getDireccion(), usuarioEditar.getLocalidad(), usuarioEditar.getProvincia(), usuarioEditar.getPais(), usuarioEditar.getEmail(), usuarioEditar.getDescripcion()); 
-       return "muro.xhtml";
-    }
-    public String modificarPassword(){
-        
-       usuarioFacade.editarPass(usuarioEditar, usuarioEditar.getPassword()); 
-       return "muro.xhtml";
+
+    public String botonEditarPerfil() {
+        usuarioEditar = usuarioMuro;
+        return "editarUsuario.xhtml";
     }
 
-    
-    
+    public String botonCambiarPass() {
+        usuarioEditar = usuarioMuro;
+        return "editarPassword.xhtml";
+    }
+
+    public String modificarUsuario() {
+
+        usuarioFacade.editarUsuario(usuarioEditar, usuarioEditar.getNombre(), usuarioEditar.getApellidos(), usuarioEditar.getDireccion(), usuarioEditar.getLocalidad(), usuarioEditar.getProvincia(), usuarioEditar.getPais(), usuarioEditar.getEmail(), usuarioEditar.getDescripcion());
+        return "muro.xhtml";
+    }
+
+    public String modificarPassword() {
+
+        usuarioFacade.editarPass(usuarioEditar, usuarioEditar.getPassword());
+        return "muro.xhtml";
+    }
+     public String cerrarSesion() {
+        nombre = null;
+        apellidos = null;
+        direccion = null;
+        localidad = null;
+        provincia = null;
+        pais = null;
+        email = null;
+        descripcion = null;
+        password = null;
+        usuario = null;
+        usuarioMuro = null;
+        usuarioEditar = null;
+        listaPostUsuario = null;
+        listaUsuarios = null;
+        idListaUsuarios = null;
+        
+        
+        return "login.xhtml";
+    }
 
     /**
      * Creates a new instance of LoginBean

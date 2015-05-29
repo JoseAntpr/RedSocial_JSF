@@ -1,0 +1,172 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+      <meta http-equiv="content-type" content="text/html; charset=UTF-8"/> 
+        <meta charset="utf-8"/>
+        <title>Red Social</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+        <!--<h:outputStylesheet library="css" name="bootstrap.css"/>
+        <h:outputStylesheet library="css" name="facebook.css"/>-->
+        <link rel="stylesheet" type="text/css" media="all" href="resources/css/bootstrap.css"/>
+        <link rel="stylesheet" type="text/css" media="all" href="resources/css/facebook.css"/>
+    </h:head>
+    <h:body>
+         <div class="wrapper">
+            <div class="box">
+                <div class="row row-offcanvas row-offcanvas-left">
+
+                   <!-- Include sidebar -->
+                    <ui:include src="sidebar.xhtml"/>                   
+		<!-- /Include sidebar -->
+
+                    <!-- main right col -->
+                    <div class="column col-sm-10 col-xs-11" id="main">
+
+                        <!-- top nav -->
+                        <ui:include src="navbar.xhtml"/>
+                        
+                        <!-- /top nav -->
+
+                        <div class="padding">
+                            <div class="full col-sm-9">
+
+                                <!-- content -->                      
+                                <div class="row">
+
+                                    <!-- main 100% page --> 
+                                    <div class="col-sm-6">
+
+
+                                        <!-- POST -->
+                                        <h3> Usuarios</h3>
+
+
+                                                                                
+                                           <!-- String s=null;
+                                            for (int i = 0; i < listaUsuario.size(); i++) {
+                                                    Usuario u = listaUsuario.get(i);
+                                                    s=usuario.siguesUsuario(u);  -->                                          
+                                           <ui:repeat value="#{buscarBean.listaUsuarios}" var="u">
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading">
+                                               
+                                               <h:form>
+                                                   
+                                                   <h:commandButton value="#{seguirNoSeguirBean.tituloBoton(u)}" class="#{seguirNoSeguirBean.classBoton()} pull-right" action="#{seguirNoSeguirBean.seguirDejarSeguir(u)}"  rendered="#{!loginBean.usuario.equals(u)}">
+                                                       
+                                                     <!--<f:ajax  render="seguirsiguiendo"/>-->
+                                                    </h:commandButton> 
+                                                   <h:commandLink action="#{muroBean.cargarUsuarioMuro(u)}"><h4><img src="resources/img/uFp_tsTJboUY7kue5XAsGAs28.png" height="28px" width="28px"/> #{u.getNombre()} #{u.getApellidos()}</h4></h:commandLink>
+                                                </h:form> 
+                                              
+                                                 
+                                               
+                                                 
+ 
+                                            </div>
+                                            <div class="panel-body">
+                                                <p>#{u.getDescripcion()}</p> 
+
+                                            </div>
+                                        </div> 
+                                        </ui:repeat>
+
+                                    </div>
+
+                                       <div class="col-sm-6">
+
+
+                                        <!-- POST -->
+                                      <!--  <h3> Grupos</h3>
+
+
+                                        <%                                          
+                                            
+                                            for (int i = 0; i < listaGrupos.size(); i++) {
+                                                    Grupo g = listaGrupos.get(i);
+                                                                                                
+                                        %> 
+                                            <div class="panel panel-default">
+                                                <div class="panel-heading">
+                                                    <% // GRUPO PUBLICO
+                                                    if (g.getPrivacidad().equals(BigInteger.ZERO)){ 
+                                                        if (usuario.getGrupoCollection().contains(g)){ %>
+                                                            <p>Grupo p&uacute;blico, eres miembro.</p>
+                                                            <form action="GrupoUnirAbandonarServlet" method="post">
+                                                                <input type="hidden" name="accion" value="abandonar"/>
+                                                                <input type="hidden" name="idGrupo" value="<%=g.getIdGrupo()%>"/>
+                                                                <input type="hidden" name="datosBusqueda" value="<%=datos%>"/>
+                                                                <input  class="btn btn-danger pull-right" type="submit" name="boton" value="Abandonar">
+                                                            </form>
+                                                            <h4><img src="assets/img/uFp_tsTJboUY7kue5XAsGAs28.png" height="28" width="28"> <a href="./GrupoServlet?idGrupoElegido=<%=g.getIdGrupo()%>">  <%= g.getNombre() %></a></h4>
+                                                        <% }else{ %>
+                                                            <p>Grupo p&uacute;blico, no eres miembro.</p>
+                                                            <form action="GrupoUnirAbandonarServlet" method="post">
+                                                                <input type="hidden" name="accion" value="unirse"/>
+                                                                <input type="hidden" name="idGrupo" value="<%=g.getIdGrupo()%>"/>
+                                                                <input type="hidden" name="datosBusqueda" value="<%=datos%>"/>
+                                                                <input  class="btn btn-success pull-right" type="submit" name="boton" value="Unirse">
+                                                            </form>
+                                                            <h4><img src="assets/img/uFp_tsTJboUY7kue5XAsGAs28.png" height="28" width="28"> <a href="./GrupoServlet?idGrupoElegido=<%=g.getIdGrupo()%>">  <%= g.getNombre() %></a></h4>
+                                                        <% }
+                                                    }else { // GRUPO PRIVADO 
+                                                        if (usuario.getGrupoCollection().contains(g)){ %>
+                                                            <p>Grupo privado, eres miembro.</p>
+                                                            <form action="GrupoUnirAbandonarServlet" method="post">
+                                                                <input type="hidden" name="accion" value="abandonar"/>
+                                                                <input type="hidden" name="idGrupo" value="<%=g.getIdGrupo()%>"/>
+                                                                <input type="hidden" name="datosBusqueda" value="<%=datos%>"/>
+                                                                <input  class="btn btn-danger pull-right" type="submit" name="boton" value="Abandonar">
+                                                            </form>
+                                                            <h4><img src="assets/img/uFp_tsTJboUY7kue5XAsGAs28.png" height="28" width="28"> <a href="./GrupoServlet?idGrupoElegido=<%=g.getIdGrupo()%>">  <%= g.getNombre() %></a></h4>
+                                                        <% }else{ %>
+                                                            <p>Grupo privado, no eres miembro.</p>
+                                                            <h4><img src="assets/img/uFp_tsTJboUY7kue5XAsGAs28.png" height="28" width="28"> <a href="#">  <%= g.getNombre() %></a></h4>
+                                                        <%}
+                                                    } %>
+                                                </div>
+                                                <div class="panel-body">
+                                                    <p>Descripcion... </p> 
+
+                                                </div>
+                                            </div> 
+                                        <%  
+                                                
+                                            }%> -->
+                                            
+
+                                        <!--<ul class="list-inline"><li><a href=""><i class="glyphicon glyphicon-upload"></i></a></li><li><a href=""><i class="glyphicon glyphicon-film"></i></a></li><li><a href=""><i class="glyphicon glyphicon-map-marker"></i></a></li></ul>-->
+
+                                    </div>
+
+                                </div><!--/row-->
+
+                            </div><!-- /col-9 -->
+                        </div><!-- /padding -->
+                    </div>
+                    <!-- /main -->
+
+                </div>
+            </div>
+        </div>
+
+        <script type="text/javascript" src="resources/js/jquery.js"></script>
+        <script type="text/javascript" src="resources/js/bootstrap.js"></script>
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $('[data-toggle=offcanvas]').click(function () {
+                    $(this).toggleClass('visible-xs text-center');
+                    $(this).find('i').toggleClass('glyphicon-chevron-right glyphicon-chevron-left');
+                    $('.row-offcanvas').toggleClass('active');
+                    $('#lg-menu').toggleClass('hidden-xs').toggleClass('visible-xs');
+                    $('#xs-menu').toggleClass('visible-xs').toggleClass('hidden-xs');
+                    $('#btnShow').toggle();
+                });
+            });
+        </script>
+    </h:body>
+</html>
+

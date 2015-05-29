@@ -16,12 +16,12 @@
         
         <h:form class="navbar-form navbar-left">
             <div class="input-group input-group-sm" style="max-width:360px;">
-                <h:inputText class="form-control" pt:placeholder="Buscar" id="srch-term"/>
+                <h:inputText class="form-control" pt:placeholder="Buscar" id="srch-term" value="#{buscarBean.datos}"/>
                 <div class="input-group-btn">
                     
-                    <!--BUSCAR-->
-                    <!--<h:commandButton action="#" class="btn btn-default" styleClass="btn btn-primary"><span class="glyphicon glyphicon-search"></span></h:commandButton>-->
-                    <button type="submit" name="botonBuscar" class="btn btn-default" onclick=""><i class="glyphicon glyphicon-search"></i></button>
+                    
+                   
+                    <h:commandButton action="#{buscarBean.buscar()}" class="btn btn-default" ><i class="glyphicon glyphicon-search"></i></h:commandButton>
                 </div>
             </div>
                         
@@ -49,13 +49,17 @@
 	<ul class="nav navbar-nav navbar-right">
             <li class="dropdown" id="fat-menu"> <a data-toggle="dropdown" class="dropdown-toggle" role="button" id="drop3" href="#">#{loginBean.usuario.getNombre()} <b class="caret"></b></a>
                 <ul aria-labelledby="drop3" role="menu" class="dropdown-menu">
+                    
                    <li role="presentation"></li> 
                    <li role="presentation"><a href="#{loginBean.botonEditarPerfil()}" tabindex="-1" role="menuitem">Editar Perfil</a></li>
                    <li role="presentation"><a href="#{loginBean.botonCambiarPass()}" tabindex="-1" role="menuitem">Cambiar Contraseña</a></li>
-                    <li class="divider" role="presentation"></li>
-                    <li role="presentation"><a href="#" tabindex="-1" role="menuitem">Cerrar Sesión</a></li>
+                   <li class="divider" role="presentation"></li>
+                   <h:form>
+                    <li role="presentation"><h:commandLink action="#{loginBean.cerrarSesion()}" tabindex="-1" role="menuitem" >Cerrar Sesion</h:commandLink></li>
+                    </h:form>
                     <li class="divider" role="presentation"></li>                   
-                    <li role="presentation"><a href="#" tabindex="-1" role="menuitem">Administrar</a></li>   
+                    <li role="presentation"><a href="#" tabindex="-1" role="menuitem">Administrar</a></li>  
+                    
                 </ul>
            </li> 
 	</ul>
