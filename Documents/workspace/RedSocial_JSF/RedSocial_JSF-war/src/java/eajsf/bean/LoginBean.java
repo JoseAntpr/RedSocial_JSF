@@ -11,6 +11,7 @@ import eajsf.entity.Post;
 import eajsf.entity.Usuario;
 import java.math.BigDecimal;
 import java.util.List;
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -51,6 +52,11 @@ public class LoginBean {
     private List<Usuario> listaUsuarios;
 
     private String idListaUsuarios;
+    
+    @PostConstruct
+    public void Init(){         
+         listaUsuarios = usuarioFacade.findAll();  
+    }
 
     public String getPassError() {
         return passError;
@@ -190,8 +196,6 @@ public class LoginBean {
         return ruta;
     }
 
-   
-
     public String registrarUsuario() {
         String ruta = null;
         Usuario usr = usuarioFacade.buscarEmail(email);
@@ -282,6 +286,12 @@ public class LoginBean {
        
     }
 
+     public String botonAdministrar() {
+       
+        return "administrar.xhtml";
+       
+    }
+    
     public String modificarUsuario() {
 
         usuarioFacade.editarUsuario(usuarioEditar, usuarioEditar.getNombre(), usuarioEditar.getApellidos(), usuarioEditar.getDireccion(), usuarioEditar.getLocalidad(), usuarioEditar.getProvincia(), usuarioEditar.getPais(), usuarioEditar.getEmail(), usuarioEditar.getDescripcion());
@@ -325,11 +335,7 @@ public class LoginBean {
         
         return "login.xhtml";
     }
-  
-     
-    /**
-     * Creates a new instance of LoginBean
-     */
+   
     public LoginBean() {
     }
 

@@ -100,7 +100,7 @@ public class UsuarioFacade extends AbstractFacade<Usuario> {
 
     }
     
-    //Azahar: Método para cuando el usuario cambia sus datos.
+    //Método para cuando el usuario cambia sus datos.
      public void editarUsuario(Usuario usuario, String nombre, String apellidos, String direccion, String localidad, String provincia, String pais, String email, String descripcion) {
 
             usuario.setNombre(nombre);
@@ -115,7 +115,7 @@ public class UsuarioFacade extends AbstractFacade<Usuario> {
             edit(usuario);               
          
     }
-     //Azahar: Método para cuando el usuario quiera cambiar su contraseña.
+     //Método para cuando el usuario quiera cambiar su contraseña.
      public void editarPass(Usuario usuario, String pass) {
     
             usuario.setPassword(pass);
@@ -141,5 +141,16 @@ public class UsuarioFacade extends AbstractFacade<Usuario> {
 
         return lista;
     }
+    
+      // Metodo que devuelve si un usuario esta bloqueado o no.
+     public boolean estaBloqueado(Usuario u) {      
+        boolean bloqueado = false;
+         if ("t".equals(u.getBloqueado())){
+             bloqueado = true;
+         }
+        return bloqueado;
+    }
+  
+   
     
 }
