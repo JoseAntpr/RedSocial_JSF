@@ -35,39 +35,64 @@
 			<div class="full col-sm-9">               
                             
                             <!-- content -->                     
-                                <div class="col-sm-8">  
+                                <div class="col-sm-10">
                                       
-                                 <h:form>
+                                 <h:form class="form-horizontal">
                                     
                                         <h3><h:outputText value="Editar Perfil"/></h3>
-                                        <h:panelGrid columns="2" width="500px">                                        
-
-                                            <h:outputLabel value="Nombre:" for="nombre" />
-                                            <h:inputText id="nombre" class="form-control" value="#{loginBean.usuarioEditar.nombre}" title="Nombre" required="true" requiredMessage="El campo nombre es obligatorio."/>
-
-                                            <h:outputLabel value="Apellidos:" for="apellidos" />
-                                            <h:inputText id="apellidos" class="form-control" value="#{loginBean.usuarioEditar.apellidos}" title="Apellidos" required="true" requiredMessage="El campo Apellidos es obligatorio."/>
-
-                                            <h:outputLabel value="Direccion:" for="direccion" />
-                                            <h:inputText id="direccion" class="form-control" value="#{loginBean.usuarioEditar.direccion}" title="Direccion" />
-
-                                            <h:outputLabel value="Localidad:" for="localidad" />
-                                            <h:inputText id="localidad" class="form-control" value="#{loginBean.usuarioEditar.localidad}" title="Localidad" />
-
-                                            <h:outputLabel value="Provincia:" for="provincia" />
-                                            <h:inputText id="provincia" class="form-control" value="#{loginBean.usuarioEditar.provincia}" title="Provincia" />
-
-                                            <h:outputLabel value="Pais:" for="pais" />
-                                            <h:inputText id="pais" class="form-control" value="#{loginBean.usuarioEditar.pais}" title="Pais" />
-
-                                            <h:outputLabel value="Email:" for="email" />
-                                            <h:inputText id="email" class="form-control" value="#{loginBean.usuarioEditar.email}" title="Email" />
-                                            
-                                            <h:outputLabel value="Descripción:" for="descripcion" />
-                                            <h:inputText id="descripcion" class="form-control" value="#{loginBean.usuarioEditar.descripcion}" title="Descripción" />                                                   
-                                            
+                                      
+                                        <div class="form-group">    
+                                           <h:outputLabel class="col-sm-2 control-label" value="Nombre: " for="nombre" />                                                                                     
+                                            <div class="col-sm-3">
+                                                <h:inputText id="nombre" class="form-control" value="#{loginBean.usuarioEditar.nombre}" title="Nombre" required="true" requiredMessage="El campo nombre es obligatorio."/>
+                                            </div>
+                                           <h:outputLabel class="col-sm-2 control-label" value="Apellidos: " for="apellidos" />                                                                                     
+                                            <div class="col-sm-4">
+                                                <h:inputText id="apellidos" class="form-control" value="#{loginBean.usuarioEditar.apellidos}" title="Apellidos" required="true" requiredMessage="El campo Apellidos es obligatorio."/>
+                                           </div>
+                                        </div>
+                                          
+                                        <div class="form-group"> 
+                                            <h:outputLabel class="col-sm-2 control-label" value="Direccion:" for="direccion" />
+                                            <div class="col-sm-6">
+                                               <h:inputText id="direccion" class="form-control" value="#{loginBean.usuarioEditar.direccion}" title="Direccion" />
+                                            </div>                                           
+                                        </div>
+                                        <div class="form-group"> 
+                                            <h:outputLabel class="col-sm-2 control-label" value="Localidad:" for="localidad"/>
+                                            <div class="col-sm-3">
+                                              <h:inputText id="localidad" class="form-control" value="#{loginBean.usuarioEditar.localidad}" title="Localidad" />
+                                            </div>  
+                                            <h:outputLabel class="col-sm-2 control-label" value="Provincia:" for="provincia"/>
+                                            <div class="col-sm-4">
+                                              <h:inputText id="provincia" class="form-control" value="#{loginBean.usuarioEditar.provincia}" title="Provincia" />
+                                            </div>
+                                        </div>
+                                         
+                                        <div class="form-group"> 
+                                            <h:outputLabel class="col-sm-2 control-label" value="Pais:" for="pais"/>
+                                            <div class="col-sm-4">
+                                               <h:inputText id="pais" class="form-control" value="#{loginBean.usuarioEditar.pais}" title="Pais" />
+                                            </div>                                              
+                                        </div>
+                                        
+                                         <div class="form-group"> 
+                                            <h:outputLabel class="col-sm-2 control-label" value="Email:" for="email" />
+                                            <div class="col-sm-6">
+                                              <h:inputText id="email" class="form-control" value="#{loginBean.usuarioEditar.email}" title="Email" />
+                                            </div>                                         
+                                        </div>
+                                           
+                                        <div class="form-group"> 
+                                            <h:outputLabel class="col-sm-2 control-label" value="Descripción:" for="descripcion" />
+                                            <div class="col-sm-8">
+                                             <h:inputText id="descripcion" class="form-control " value="#{loginBean.usuarioEditar.descripcion}" title="Descripción" />                                                   
+                                            </div>  
+                                        </div>
+                                        <div class="col-sm-6">
                                             <h:commandLink class="btn btn-success" value="Guardar" action="#{loginBean.modificarUsuario()}" title="Guardar cambios realizados"/>
-                                        </h:panelGrid>
+                                        </div>
+                                       
                                     </h:form> 
                                 </div> <!--/row-->
                          </div> <!-- /col-9 -->  
