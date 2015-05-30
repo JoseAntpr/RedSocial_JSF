@@ -45,8 +45,7 @@ public class LoginBean {
     private Usuario usuarioMuro;
     private Usuario usuarioEditar;
     private String error = null;
-    private String passError = null;
-
+    
     private List<Post> listaPostUsuario;
     private List<Post> listaPostSigues;
     private List<Usuario> listaUsuarios;
@@ -58,14 +57,6 @@ public class LoginBean {
          listaUsuarios = usuarioFacade.findAll();  
     }
 
-    public String getPassError() {
-        return passError;
-    }
-
-    public void setPassError(String passError) {
-        this.passError = passError;
-    }
-    
     public String getPassword2() {
         return password2;
     }
@@ -184,12 +175,16 @@ public class LoginBean {
         String ruta = null;
 
         if (usr != null) {
-            error="";
-            ruta = "muro";
-            this.usuario = usr;
-            this.usuarioMuro = usr;
-            listaPostUsuario = postFacade.findPostIdUsuarioOrder(usuario.getIdUsuario());
-            listaPostSigues = postFacade.findPostIdUsuarioSeguidoresOrder(usuario.getIdUsuario());
+            if (!"t".equals(usr.getBloqueado())){
+                error="";
+                ruta = "muro";
+                this.usuario = usr;
+                this.usuarioMuro = usr;
+                listaPostUsuario = postFacade.findPostIdUsuarioOrder(usuario.getIdUsuario());
+                listaPostSigues = postFacade.findPostIdUsuarioSeguidoresOrder(usuario.getIdUsuario());
+            }else{
+                error="El usuario con el que intenta acceder esta bloqueado.";
+            }
         } else {
             error = "Nombre de usuario o contraseña incorrectos, vuelve a intentarlo porfavor";
             ruta = "login";
@@ -282,14 +277,12 @@ public class LoginBean {
     }
 
     public String botonCambiarPass() {
-        usuarioEditar = usuarioMuro;
-        passError=null;
-        return "editarPassword.xhtml";
-       
+        usuarioEditar = usuarioMuro;    
+        error="";
+        return "editarPassword.xhtml";       
     }
 
-     public String botonAdministrar() {
-       
+     public String botonAdministrar() {       
         return "administrar.xhtml";
        
     }
@@ -302,20 +295,18 @@ public class LoginBean {
 
     public String modificarPassword() {
         
-        String fin = null;
+        String ruta = null;
         
         if (usuarioEditar.getPassword().equals(password2)){
             error="";
             usuarioFacade.editarPass(usuarioEditar, usuarioEditar.getPassword());
-            fin = "muro.xhtml";
-            passError=null;
+            ruta = "muro.xhtml";            
         }else{
             error="Las contraseñas no coinciden. Intentelo de nuevo.";
-            fin="editarPassword.xhtml";
-            passError="teEquivocasteWey";
+            ruta="editarPassword.xhtml";           
         }
         
-        return fin;
+        return ruta;
     }
      public String cerrarSesion() {
         nombre = null;
@@ -334,7 +325,7 @@ public class LoginBean {
         listaUsuarios = null;
         idListaUsuarios = null;
         password2=null;
-        passError=null;
+        error="";
         
         return "login.xhtml";
     }
