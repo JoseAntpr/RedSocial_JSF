@@ -4,7 +4,8 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:a="http://java.sun.com/jsf/passthrough"
       xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
-      >
+          
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <meta http-equiv="content-type" content="text/html; charset=UTF-8"/> 
         <meta charset="utf-8"/>
@@ -49,10 +50,17 @@
                                 <div class="row">                                   
                                     <h:form >
                                         <h4 class="form-signin-heading">Iniciar sesión:</h4> 
-                                        <h:inputText value="#{loginBean.email}" class="form-control"/><br/>
+                                        <h:inputText id="email" value="#{loginBean.email}" class="form-control"/><br/>
                                         <h:inputSecret value="#{loginBean.password}" class="form-control"/><br/>
-                                        <h:commandButton value="Entrar" action="#{loginBean.comprobarUsuario()}" class="btn btn-lg btn-primary btn-block"/>
-                                    </h:form>                                    
+                                        <h:commandButton value="Entrar" action="#{loginBean.comprobarUsuario()}" class="btn btn-lg btn-primary btn-block">
+                                        <!--    <f:ajax execute="email" render="noRegistrado" /> -->                                                                                      
+                                        </h:commandButton>
+                                        <div class="full row">
+                                            <h:outputText id="noRegistrado" value="#{loginBean.error}" class="alert-danger"/>
+                                        </div>
+                                    </h:form> 
+                                    
+                                    
                                 </div><!--/row-->
                             </div><!-- /col-94-->
 

@@ -184,6 +184,7 @@ public class LoginBean {
         String ruta = null;
 
         if (usr != null) {
+            error="";
             ruta = "muro";
             this.usuario = usr;
             this.usuarioMuro = usr;
@@ -201,6 +202,7 @@ public class LoginBean {
         Usuario usr = usuarioFacade.buscarEmail(email);
 
         if (usr == null) {
+            error="";
             usr = usuarioFacade.nuevoUser(this.nombre, this.apellidos, this.direccion, this.localidad, this.provincia, this.pais, this.email, this.password);
             this.usuario = usr;
             this.usuarioMuro = usr;
@@ -303,6 +305,7 @@ public class LoginBean {
         String fin = null;
         
         if (usuarioEditar.getPassword().equals(password2)){
+            error="";
             usuarioFacade.editarPass(usuarioEditar, usuarioEditar.getPassword());
             fin = "muro.xhtml";
             passError=null;
