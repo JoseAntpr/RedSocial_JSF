@@ -8,16 +8,15 @@ package eajsf.bean;
 import eajsf.ejb.UsuarioFacade;
 import eajsf.entity.Usuario;
 import javax.ejb.EJB;
-import javax.inject.Named;
-import javax.enterprise.context.Dependent;
-import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.RequestScoped;
 
 /**
  *
  * @author Azahar
  */
-@Named(value = "administrarBean")
-@Dependent
+@ManagedBean
+@RequestScoped
 public class AdministrarBean {
     @EJB
     private UsuarioFacade usuarioFacade;
