@@ -6,45 +6,54 @@
     xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 <!-- sidebar -->
 <div class="column col-sm-2 col-xs-1 sidebar-offcanvas" id="sidebar">
-    <ul class="nav">
-        <li><a href="#" data-toggle="offcanvas" class="visible-xs text-center"><i class="glyphicon glyphicon-chevron-right"></i></a></li>
-    </ul>
-    <ul class="nav hidden-xs" id="lg-menu"><br/><br/>
-        <li><img src="resources/img/Avatar.jpg" class="img-responsive"/></li><br/>
-        <li class="active">#{loginBean.usuarioMuro.getNombre()} #{loginBean.usuarioMuro.getApellidos()}</li><br/>
-        <li class="active">Vive en #{loginBean.usuarioMuro.getLocalidad()}, #{loginBean.usuarioMuro.getProvincia()}, #{loginBean.usuarioMuro.getPais()}</li><br/>
-        <li class="active">Fecha ingreso: #{muroBean.formatSinHora.format(loginBean.usuarioMuro.getFechaIngreso())}</li><br/>
-        <li>#{loginBean.usuarioMuro.getDescripcion()}</li><br/>
-        
-        
-        <h:form>
-        <li><i class="glyphicon glyphicon-align-right" />
-             <h:commandLink value=" Grupos" >
-            </h:commandLink>
-        </li>
-        <li><i class="glyphicon glyphicon-list" /> 
-            <h:commandLink value=" Seguidores" action="#{listarSeguidoresSiguiendoBean.cargarSeguidores()}">
-                <f:setPropertyActionListener target="#{loginBean.idListaUsuarios}" value="Seguidores"/>
-            </h:commandLink>
-            <b>#{loginBean.usuarioMuro.getUsuarioCollection1().size()}</b>
-            
-        </li>
-        <li><i class="glyphicon glyphicon-list" />
-            <h:commandLink value=" Siguiendo" action="#{listarSeguidoresSiguiendoBean.cargarSigues()}">
-                <f:setPropertyActionListener target="#{loginBean.idListaUsuarios}" value="Siguiendo"/>
-            </h:commandLink>
-            <b><h:outputText id="siguiendo" value="&#160;"/> #{loginBean.usuarioMuro.getUsuarioCollection().size()}</b>
-        </li>
-        </h:form>
-    </ul>
-    <ul class="list-unstyled hidden-xs" id="sidebar-footer"></ul>
-    <!-- tiny only nav-->
-    <ul class="nav visible-xs" id="xs-menu">
-        <li><a href="#featured" class="text-center"><i class="glyphicon glyphicon-list-alt"></i></a></li>
-        <li><a href="#stories" class="text-center"><i class="glyphicon glyphicon-list"></i></a></li>
-        <li><a href="#" class="text-center"><i class="glyphicon glyphicon-paperclip"></i></a></li>
-        <li><a href="#" class="text-center"><i class="glyphicon glyphicon-refresh"></i></a></li>
-    </ul>
-</div>
+                        <ul class="nav">
+                            <li><a href="#" data-toggle="offcanvas" class="visible-xs text-center"><i class="glyphicon glyphicon-chevron-right"></i></a></li>
+                        </ul>
+                        <ul class="nav hidden-xs" id="lg-menu"><br/><br/>
+                            <li><img src="resources/img/Avatar.jpg" class="img-responsive"/></li><br/>
+                            <li class="active">#{loginBean.usuarioMuro.getNombre()} #{loginBean.usuarioMuro.getApellidos()}</li><br/>
+                            <li class="active">Vive en #{loginBean.usuarioMuro.getLocalidad()}, #{loginBean.usuarioMuro.getProvincia()}, #{loginBean.usuarioMuro.getPais()}</li><br/>
+                            <li class="active">Fecha ingreso: #{muroBean.formatSinHora.format(loginBean.usuarioMuro.getFechaIngreso())}</li><br/>
+                            <li>#{loginBean.usuarioMuro.getDescripcion()}</li><br/>
+
+                            
+                            <li>
+                                <h:form>
+                                <i class="glyphicon glyphicon-align-right" />
+                                 <h:commandLink value=" Grupos" >
+                                </h:commandLink>
+                                </h:form>
+                            </li>
+                            <li> 
+                                <h:form style="display: inline"> 
+                                <i class="glyphicon glyphicon-list" />
+                                <h:commandLink value=" Seguidores" action="#{listarSeguidoresSiguiendoBean.cargarSeguidores()}">
+                                    <f:setPropertyActionListener target="#{loginBean.idListaUsuarios}" value="Seguidores"/>
+                                </h:commandLink>
+                                </h:form>
+                                <b>#{loginBean.usuarioMuro.getUsuarioCollection1().size()}</b>
+                            
+                            </li>
+                            
+                            <li>
+                                <h:form style="display: inline" > 
+                                <i class="glyphicon glyphicon-list" />
+                                <h:commandLink value=" Siguiendo" action="#{listarSeguidoresSiguiendoBean.cargarSigues()}">
+                                    <f:setPropertyActionListener target="#{loginBean.idListaUsuarios}" value="Siguiendo"/>
+                                </h:commandLink> 
+                                </h:form>
+                                <b><h:outputText value="&#160;"/> <h:outputText id="siguiendo" value="#{loginBean.usuarioMuro.getUsuarioCollection().size()}"/></b>
+                            </li>
+                            
+                        </ul>
+                        <ul class="list-unstyled hidden-xs" id="sidebar-footer"></ul>
+                        <!-- tiny only nav-->
+                        <ul class="nav visible-xs" id="xs-menu">
+                            <li><a href="#featured" class="text-center"><i class="glyphicon glyphicon-list-alt"></i></a></li>
+                            <li><a href="#stories" class="text-center"><i class="glyphicon glyphicon-list"></i></a></li>
+                            <li><a href="#" class="text-center"><i class="glyphicon glyphicon-paperclip"></i></a></li>
+                            <li><a href="#" class="text-center"><i class="glyphicon glyphicon-refresh"></i></a></li>
+                        </ul>
+                </div>
 <!-- /sidebar -->
 </ui:composition>

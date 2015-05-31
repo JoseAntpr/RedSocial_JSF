@@ -127,10 +127,10 @@ public class MuroBean {
     }
     
     public String cargarUsuarioMuro(Usuario u){
-        if(loginBean.getUsuario().siguesUsuario(u)){
-            loginBean.setUsuarioMuro(u);
-            listaPostUsuarioMuro = (List) postFacade.findPostIdUsuarioOrder(u.getIdUsuario());
-        }
+        
+        loginBean.setUsuarioMuro(u);
+        listaPostUsuarioMuro = (List) postFacade.findPostIdUsuarioOrder(u.getIdUsuario());
+        
         
         return "muro";
     }

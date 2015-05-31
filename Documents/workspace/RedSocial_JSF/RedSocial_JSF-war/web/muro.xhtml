@@ -22,7 +22,8 @@
             <div class="row row-offcanvas row-offcanvas-left">
 
 		<!-- Include sidebar <%@include file="sidebar.xhtml" %> -->
-                    <ui:include src="sidebar.xhtml"/>                                
+                    <ui:include src="sidebar.xhtml"/>
+                    
 		<!-- /Include sidebar -->
                 
 		<!-- main right col -->
@@ -39,9 +40,13 @@
                             <!-- content -->                      
                             <div class="row">
 				<!-- main col left -->
-                                
+                                <c:if test="#{!loginBean.usuario.equals(loginBean.usuarioMuro)}">
+                                    <c:if test="#{!loginBean.usuario.siguesUsuario(loginBean.usuarioMuro)}">
+                                        <p>No puedes ver el muro de un usuario que no sigues</p>
+                                    </c:if>
+                                </c:if>    
                                 <div class="#{muroBean.cssDiv}">
-                                    <h:panelGroup id="post">
+                                    <h:panelGroup id="post" rendered="#{loginBean.usuario.equals(loginBean.usuarioMuro) or loginBean.usuario.siguesUsuario(loginBean.usuarioMuro)}">
                                     <ui:repeat value="#{muroBean.listaPostUsuario()}" var="p">
                                   
                                             <div class="panel panel-default">

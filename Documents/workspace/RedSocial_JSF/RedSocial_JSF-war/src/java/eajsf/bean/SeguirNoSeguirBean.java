@@ -107,7 +107,7 @@ public class SeguirNoSeguirBean {
         usuario=u;
         String tit = tituloBoton(u);
             if(tit.equals("Siguiendo")){
-               usuario.getUsuarioCollection1().remove(loginBean.getUsuario());
+                usuario.getUsuarioCollection1().remove(loginBean.getUsuario());
                 loginBean.getUsuario().getUsuarioCollection().remove(usuario);
                 
                 loginBean.setIdListaUsuarios("Seguir");

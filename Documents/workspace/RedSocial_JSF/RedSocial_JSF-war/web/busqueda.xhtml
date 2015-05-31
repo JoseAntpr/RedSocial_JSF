@@ -20,9 +20,7 @@
                 <div class="row row-offcanvas row-offcanvas-left">
 
                    <!-- Include sidebar -->
-                   <h:panelGroup id="idSidebar">
-                        <ui:include src="sidebar.xhtml"/>
-                   </h:panelGroup>                  
+                        <ui:include src="sidebar.xhtml"/>               
 		<!-- /Include sidebar -->
 
                     <!-- main right col -->
@@ -51,7 +49,7 @@
                                                     <div class="panel-heading">                                               
                                                                                                          
                                                            <h:commandButton value="#{seguirNoSeguirBean.tituloBoton(u)}" class="#{seguirNoSeguirBean.classBoton()} pull-right" rendered="#{!loginBean.usuario.equals(u)}">
-                                                               <f:ajax listener="#{seguirNoSeguirBean.seguirDejarSeguir(u)}" render="panel idSidebar" />
+                                                               <f:ajax listener="#{seguirNoSeguirBean.seguirDejarSeguir(u)}" render="panel siguiendo" />
                                                                
                                                            </h:commandButton> 
                                                         <h:form>  
