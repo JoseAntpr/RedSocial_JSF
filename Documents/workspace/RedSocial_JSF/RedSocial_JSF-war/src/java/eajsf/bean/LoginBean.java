@@ -5,8 +5,10 @@
  */
 package eajsf.bean;
 
+import eajsf.ejb.GrupoFacade;
 import eajsf.ejb.PostFacade;
 import eajsf.ejb.UsuarioFacade;
+import eajsf.entity.Grupo;
 import eajsf.entity.Post;
 import eajsf.entity.Usuario;
 import java.math.BigDecimal;
@@ -23,6 +25,8 @@ import javax.faces.bean.SessionScoped;
 @ManagedBean
 @SessionScoped
 public class LoginBean {
+    @EJB
+    private GrupoFacade grupoFacade;
 
     @EJB
     private PostFacade postFacade;
@@ -49,12 +53,14 @@ public class LoginBean {
     private List<Post> listaPostUsuario;
     private List<Post> listaPostSigues;
     private List<Usuario> listaUsuarios;
+    private List<Grupo> listaGrupos;
 
     private String idListaUsuarios;
     
     @PostConstruct
     public void Init(){         
-         listaUsuarios = usuarioFacade.findAll();  
+         listaUsuarios = usuarioFacade.findAll();
+         listaGrupos = grupoFacade.findAll();
     }
 
     public String getPassword2() {
@@ -72,7 +78,7 @@ public class LoginBean {
     public void setIdListaUsuarios(String idListaUsuarios) {
         this.idListaUsuarios = idListaUsuarios;
     }
-
+    
     public UsuarioFacade getUsuarioFacade() {
         return usuarioFacade;
     }
@@ -169,6 +175,22 @@ public class LoginBean {
         this.usuarioMuro = usuarioMuro;
     }
 
+    public GrupoFacade getGrupoFacade() {
+        return grupoFacade;
+    }
+
+    public void setGrupoFacade(GrupoFacade grupoFacade) {
+        this.grupoFacade = grupoFacade;
+    }
+
+    public List<Grupo> getListaGrupos() {
+        return listaGrupos;
+    }
+
+    public void setListaGrupos(List<Grupo> listaGrupos) {
+        this.listaGrupos = listaGrupos;
+    }
+    
     public String comprobarUsuario() {
 
         Usuario usr = usuarioFacade.login(this.email, this.password);

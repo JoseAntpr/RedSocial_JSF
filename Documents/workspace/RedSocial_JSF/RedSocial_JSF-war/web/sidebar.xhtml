@@ -20,7 +20,7 @@
                             <li>
                                 <h:form rendered="#{loginBean.usuario.equals(loginBean.usuarioMuro) or loginBean.usuario.siguesUsuario(loginBean.usuarioMuro)}">
                                 <i class="glyphicon glyphicon-align-right" />
-                                 <h:commandLink value=" Grupos" rendered="#{loginBean.usuario.equals(loginBean.usuarioMuro) or loginBean.usuario.siguesUsuario(loginBean.usuarioMuro)}" >
+                                 <h:commandLink value=" Grupos" action="grupo">
                                 </h:commandLink>
                                 </h:form>
                             </li>
