@@ -9,14 +9,14 @@ import eajsf.ejb.UsuarioFacade;
 import eajsf.entity.Usuario;
 import javax.ejb.EJB;
 import javax.inject.Named;
-import javax.enterprise.context.Dependent;
+//import javax.enterprise.context.Dependent;
 
 /**
  *
  * @author Azahar
  */
 @Named(value = "usuarioBean")
-@Dependent
+//@Dependent
 public class UsuarioBean {
     
     @EJB
