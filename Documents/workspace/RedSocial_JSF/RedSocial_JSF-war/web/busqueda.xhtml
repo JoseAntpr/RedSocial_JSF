@@ -88,7 +88,7 @@
                                                         <div class="panel-body">
                                                             <h:commandButton class="#{seguirNoSeguirBean.getDatosForm(g,'claseBoton')}" 
                                                                              value="#{seguirNoSeguirBean.getDatosForm(g,'textoBoton')}"
-                                                                             rendered="#{g.usuarioCollection1.contains(loginBean.usuario)}">
+                                                                             rendered="#{seguirNoSeguirBean.mostrarBoton(g)}">
                                                                 <f:ajax listener="#{seguirNoSeguirBean.unirAbandonarGrupo(g)}" render="panelGrupo"/>
                                                             </h:commandButton>
                                                             <p>#{g.descripcion}</p>

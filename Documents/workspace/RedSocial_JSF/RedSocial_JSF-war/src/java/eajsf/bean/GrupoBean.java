@@ -54,8 +54,8 @@ public class GrupoBean {
     private PostFacade postFacade;
     @EJB
     private UsuarioFacade usuarioFacade;
-    
-    @ManagedProperty (value = "#{loginBean}")
+
+    @ManagedProperty(value = "#{loginBean}")
     private LoginBean loginBean;
 
     // Id usuarios session
@@ -76,7 +76,7 @@ public class GrupoBean {
     private Boolean tieneGrupos;
 
     // atributos para crear post
-    private String descripcionPostGrupo;
+    private String desPostGrupo;
     private String imagenPostGrupoUri;
     private Part imagenFile;
 //    private UploadedFile uploadedImage;
@@ -86,7 +86,7 @@ public class GrupoBean {
 
     private boolean esAdministradorGrupo;
 
-    private BigDecimal idPostABorrar;
+    private Post postABorrar;
     private Post postAEditar;
     private boolean editarPost;
     private String idPostToAjax;
@@ -227,12 +227,12 @@ public class GrupoBean {
         this.idPostEditar = idPostEditar;
     }
 
-    public String getDescripcionPostGrupo() {
-        return descripcionPostGrupo;
+    public String getDesPostGrupo() {
+        return desPostGrupo;
     }
 
-    public void setDescripcionPostGrupo(String descripcionPostGrupo) {
-        this.descripcionPostGrupo = descripcionPostGrupo;
+    public void setDesPostGrupo(String desPostGrupo) {
+        this.desPostGrupo = desPostGrupo;
     }
 
     public String getImagenPostGrupoUri() {
@@ -251,12 +251,12 @@ public class GrupoBean {
         this.esAdministradorGrupo = esAdministradorGrupo;
     }
 
-    public BigDecimal getIdPostABorrar() {
-        return idPostABorrar;
+    public Post getPostABorrar() {
+        return postABorrar;
     }
 
-    public void setIdPostABorrar(BigDecimal idPostABorrar) {
-        this.idPostABorrar = idPostABorrar;
+    public void setPostABorrar(Post postABorrar) {
+        this.postABorrar = postABorrar;
     }
 
     public Post getPostAEditar() {
@@ -324,7 +324,7 @@ public class GrupoBean {
         // Usuario de la sesion
         usuario = loginBean.getUsuario();
         usuarioMuro = loginBean.getUsuarioMuro();
-        
+
         // True si estamos viendo un muro de otra persona
         muroPropio = usuario.getIdUsuario().equals(usuarioMuro.getIdUsuario());
 
@@ -353,7 +353,7 @@ public class GrupoBean {
             //listaPostGrupo = (List) grupo.getPostCollection();
             listaMiembrosGrupo = (List) grupo.getUsuarioCollection1();
 
-            editarPost = false;
+            
         }
 
     }
@@ -391,70 +391,15 @@ public class GrupoBean {
     }
 
     public String doPostGrupoCrear() throws IOException {
-//        imagenPostGrupoUri = imagenFile.getName();
-
-//            String dirSubida = grupoFacade.uploadImagen(imagenFile);
-//        HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
-//        String dirSubida = grupoFacade.obtenerDatosFormConImagen(request).get("imagen");
-//        String dirSubida = grupoFacade.uploadImagen(imagenFile);
-        // Just to demonstrate what information you can get from the uploaded file.
-//        System.out.println("File type: " + uploadedImage.getContentType());
-//        System.out.println("File name: " + uploadedImage.getName());
-//        System.out.println("File size: " + uploadedImage.getSize() + " bytes");
-//
-//        // Prepare filename prefix and suffix for an unique filename in upload folder.
-//        String prefix = FilenameUtils.getBaseName(uploadedImage.getName());
-//        String suffix = FilenameUtils.getExtension(uploadedImage.getName());
-//        
-//        // Prepare file and outputstream.
-//        File file = null;
-//        OutputStream output = null;
-//        
-//        try {
-//            // Create file with unique name in upload folder and write to it.
-//            file = File.createTempFile(prefix + "_", "." + suffix, new File("c:/upload"));
-//            output = new FileOutputStream(file);
-//            IOUtils.copy(uploadedImage.getInputStream(), output);
-//            imagenPostGrupoUri = file.getName();
-//
-//            // Show succes message.
-//            FacesContext.getCurrentInstance().addMessage("uploadForm", new FacesMessage(
-//                FacesMessage.SEVERITY_INFO, "File upload succeed!", null));
-//        } catch (IOException e) {
-//            // Cleanup.
-//            if (file != null) file.delete();
-//
-//            // Show error message.
-//            FacesContext.getCurrentInstance().addMessage("uploadForm", new FacesMessage(
-//                FacesMessage.SEVERITY_ERROR, "File upload failed with I/O error.", null));
-//
-//            // Always log stacktraces (with a real logger).
-//            e.printStackTrace();
-//        } finally {
-//            IOUtils.closeQuietly(output);
-//        }
         Post p = new Post();
-        p.setDescripcion(descripcionPostGrupo);
+//        p.setDescripcion(desPostGrupo);
+        p.setDescripcion(desPostGrupo);
         p.setFecha(new Date());
         p.setIdGrupoP(grupo);
         p.setIdUsuarioP(usuario);
-        
+
         if (imagenFile != null) {
-//            String appPath = FacesContext.getCurrentInstance().getExternalContext().getRealPath("");
-//            String filePath = appPath + File.separator + "resources" + File.separator + "img" + File.separator + "uploadImages";
-//            File fileSaveDir = new File(filePath);
-//            if (!fileSaveDir.exists()) {
-//                fileSaveDir.mkdir();
-//            }
-//            String fileDirUpload = filePath + File.separator + imagenFile.getName();
-//            File file = new File(fileDirUpload);
-////        File file = new File(ruta);
-//            FileOutputStream fos = new FileOutputStream(file);
-////            IOUtils.copy(uploadFile.getInputstream(), fos);
-//
-//            String rutaWeb = "resources" + File.separator + "img" + File.separator + "uploadImages" + File.separator + "imagenSinNombre.jpg";
-//            
-//            p.setImagen(imagenPostGrupoUri);
+            p.setImagen(imagenPostGrupoUri);
         }
 
         // Añadimos el post a la DB
@@ -467,6 +412,7 @@ public class GrupoBean {
         usuario.getPostCollection().add(p);
         // Actualizamos el usuario con el post ya añadido
         usuarioFacade.edit(usuario);
+        listaPostGrupo.add(p);
 
         return null;
     }
@@ -483,19 +429,40 @@ public class GrupoBean {
     }
 
     public String doPostGrupoEditar() {
-        // Ajax
-        // Falta
+        postAEditar.setDescripcion(desPostGrupo);
+        List<Post> lista = (List)usuario.getPostCollection();
+        int posicion = posicionPost(postAEditar, lista);
+        lista.get(posicion).setDescripcion(desPostGrupo);
+        usuario.setPostCollection(lista);
+        usuarioMuro.setPostCollection(lista);
+        grupo.setPostCollection(lista);
+        listaPostGrupo = lista;
+        postFacade.edit(postAEditar);
+        usuarioFacade.edit(usuario);
+        grupoFacade.edit(grupo);
 
         // al final
         editarPost = false;
         return null;
     }
 
-    public String doPostGrupoEliminar() {
-        Post p = getPost(idPostABorrar, listaPostGrupo);
-        postFacade.deletePostGrupo(p, usuario, grupo);
+    public String doPostGrupoEliminar(Post p) {
+//        Post p = getPost(idPostABorrar, listaPostGrupo);
+//        postFacade.deletePostGrupo(postABorrar, usuario, grupo);
+        if (muroPropio) {
+//            usuario.getPostCollection().remove(postABorrar);
+//            usuarioMuro.getPostCollection().remove(postABorrar);
+//            grupo.getPostCollection().remove(postABorrar);
+            usuario.getPostCollection().remove(p);
+            usuarioMuro.getPostCollection().remove(p);
+            grupo.getPostCollection().remove(p);
+            listaPostGrupo.remove(p);
+            postFacade.remove(p);
+            usuarioFacade.edit(usuario);
+            grupoFacade.edit(grupo);
 
-        idPostABorrar = null;
+        }
+        postABorrar = null;
         return null;
     }
 
@@ -515,6 +482,21 @@ public class GrupoBean {
             }
         }
         return res;
+    }
+    
+    private int posicionPost(Post post, List<Post> lista){
+        int i=0;
+        Iterator<Post> it = lista.iterator();
+        boolean encontrado = false;
+        while(it.hasNext() && !encontrado){
+            Post p = it.next();
+            if(p.getIdPost().equals(post.getIdPost())){
+                encontrado = true;
+            }else{
+                i++;
+            }
+        }
+        return i;
     }
 
 }
