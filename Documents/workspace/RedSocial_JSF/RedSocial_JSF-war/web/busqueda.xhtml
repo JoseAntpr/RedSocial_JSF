@@ -43,7 +43,7 @@
 
 
                                         <!-- POST -->
-                                        <h3> Usuarios</h3>
+                                        <h3> #{msg['usuarios']}</h3>
                                         <h:form id="form">
                                         <h:panelGroup id="panel">
                                             <ui:repeat value="#{loginBean.listaUsuarios}" var="u" >
@@ -75,7 +75,7 @@
 
                                     <div class="col-sm-6">
                                       <!-- POST -->
-                                        <h3> Grupos</h3>
+                                      <h3> #{msg['grupos']}</h3>
                                         <h:panelGroup id="panelGrupo">
                                             <c:forEach id="idForBuscaGrupos" items="#{loginBean.listaGrupos}" var="g">
 

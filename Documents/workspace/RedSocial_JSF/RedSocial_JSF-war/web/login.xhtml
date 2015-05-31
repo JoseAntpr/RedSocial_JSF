@@ -49,10 +49,10 @@
                                 <!-- content -->                      
                                 <div class="row">                                   
                                     <h:form >
-                                        <h4 class="form-signin-heading">Iniciar sesión:</h4> 
+                                        <h4 class="form-signin-heading">#{msg['iniciarSesion']}:</h4> 
                                         <h:inputText id="email" value="#{loginBean.email}" class="form-control"/><br/>
                                         <h:inputSecret value="#{loginBean.password}" class="form-control"/><br/>
-                                        <h:commandButton value="Entrar" action="#{loginBean.comprobarUsuario()}" class="btn btn-lg btn-primary btn-block">
+                                        <h:commandButton value="#{msg['iniciarSesion']}" action="#{loginBean.comprobarUsuario()}" class="btn btn-lg btn-primary btn-block">
                                         <!--    <f:ajax execute="email" render="noRegistrado" /> -->                                                                                      
                                         </h:commandButton>
                                         <div class="full row">
@@ -68,7 +68,7 @@
                                 <!-- content -->                      
                                 <div class="row">                                   
                                     <h:form>
-                                        <h4 class="form-signin-heading">Registrate:</h4> 
+                                        <h4 class="form-signin-heading">#{msg['registrar']}:</h4> 
                                         <div class="col-sm-4">
                                             <h:inputText    class="form-control col-sm-4" value="#{loginBean.nombre}" pt:type="nombre" pt:placeholder="Nombre" /><br/>
                                         </div>
@@ -94,7 +94,7 @@
                                             <h:inputSecret value="#{loginBean.password}" class="form-control" pt:type="password" pt:placeholder="Password" /> <br/>  
                                         </div>
                                         <div class="col-sm-4">
-                                            <h:commandButton value="Registrar" action="#{loginBean.registrarUsuario()}" class="btn btn-success btn-block"/>
+                                            <h:commandButton value="#{msg['registrar']}" action="#{loginBean.registrarUsuario()}" class="btn btn-success btn-block"/>
                                         </div>
                                     </h:form>                                    
                                 </div><!--/row-->

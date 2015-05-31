@@ -47,12 +47,16 @@
             <li class="dropdown" id="fat-menu"> <a data-toggle="dropdown" class="dropdown-toggle" role="button" id="drop3" href="#">#{loginBean.usuario.getNombre()} <b class="caret"></b></a>
                 <ul aria-labelledby="drop3" role="menu" class="dropdown-menu">                    
                     <h:form>
-                       <li role="presentation"><h:commandLink class="menu-usuario" action="#{loginBean.botonEditarPerfil()}" tabindex="-1" role="menuitem" >Editar Perfil</h:commandLink></li>
-                       <li role="presentation"><h:commandLink class="menu-usuario" action="#{loginBean.botonCambiarPass()}" tabindex="-1" role="menuitem" >Cambiar Contraseña</h:commandLink></li>
+                        <li role="presentation"><h:commandLink class="menu-usuario" action="#{loginBean.botonEditarPerfil()}" tabindex="-1" role="menuitem" >#{msg['editarPerfil']}</h:commandLink></li>
+                        <li role="presentation"><h:commandLink class="menu-usuario" action="#{loginBean.botonCambiarPass()}" tabindex="-1" role="menuitem" >#{msg['cambiarContra']}</h:commandLink></li>
                        <li class="divider" role="presentation"></li>                
-                       <li role="presentation"><h:commandLink class="menu-usuario" action="#{loginBean.cerrarSesion()}" tabindex="-1" role="menuitem" >Cerrar Sesion</h:commandLink></li>
+                       <li role="presentation"><h:commandLink class="menu-usuario" action="#{loginBean.cerrarSesion()}" tabindex="-1" role="menuitem" >#{msg['cerrarSesion']}</h:commandLink></li>
                        <li class="divider" role="presentation"></li>                   
-                       <li role="presentation"><h:commandLink class="menu-usuario" action="#{loginBean.botonAdministrar()}" tabindex="-1" role="menuitem" >Administrar</h:commandLink></li>
+                       <li role="presentation"><h:commandLink class="menu-usuario" action="#{loginBean.botonAdministrar()}" tabindex="-1" role="menuitem" >#{msg['administrar']}</h:commandLink></li>
+                        <li class="divider" role="presentation"></li>        
+                        <li role="presentation"><h:commandLink class="menu-usuario" action="#{languageBean.changeLanguage('en')}" value="English" /></li>
+                        <li role="presentation"><h:commandLink class="menu-usuario" action="#{languageBean.changeLanguage('es')}" value="Spanish"/></li>
+
                     </h:form>
                 </ul>
            </li> 
