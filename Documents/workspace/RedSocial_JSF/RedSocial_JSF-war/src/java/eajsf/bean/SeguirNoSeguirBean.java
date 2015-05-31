@@ -6,9 +6,12 @@ package eajsf.bean;
  * and open the template in the editor.
  */
 
+import eajsf.ejb.GrupoFacade;
 import eajsf.ejb.UsuarioFacade;
+import eajsf.entity.Grupo;
 import eajsf.entity.Usuario;
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
@@ -24,6 +27,8 @@ import javax.faces.event.AjaxBehaviorEvent;
 @RequestScoped
 public class SeguirNoSeguirBean {
     @EJB
+    private GrupoFacade grupoFacade;
+    @EJB
     private UsuarioFacade usuarioFacade;
     
     
@@ -33,6 +38,8 @@ public class SeguirNoSeguirBean {
     private String classBoton;
     
     private Usuario usuario;
+    
+    private Grupo grupo;
     
     /**
      * Creates a new instance of SeguirNoSeguirBean
@@ -72,6 +79,22 @@ public class SeguirNoSeguirBean {
         this.classBoton = classBoton;
     }
 
+    public GrupoFacade getGrupoFacade() {
+        return grupoFacade;
+    }
+
+    public void setGrupoFacade(GrupoFacade grupoFacade) {
+        this.grupoFacade = grupoFacade;
+    }
+
+    public Grupo getGrupo() {
+        return grupo;
+    }
+
+    public void setGrupo(Grupo grupo) {
+        this.grupo = grupo;
+    }
+    
     public UsuarioFacade getUsuarioFacade() {
         return usuarioFacade;
     }
@@ -132,6 +155,52 @@ public class SeguirNoSeguirBean {
         
     }
     
-    
+    public void unirAbandonarGrupo(Grupo g){
+        // Es miembro
+        Usuario u = loginBean.getUsuario();
+        if(u.getGrupoCollection1().contains(g)){
+            u.getGrupoCollection1().remove(g);
+            g.getUsuarioCollection1().remove(u);
+            usuarioFacade.edit(u);
+            grupoFacade.edit(g);
+        }else{
+            u.getGrupoCollection1().add(g);
+            g.getUsuarioCollection1().add(u);
+            usuarioFacade.edit(u);
+            grupoFacade.edit(g);
+        }
+    }
+            
+
+    public String getDatosForm(Grupo g, String s) {
+        String res = "";
+        boolean publico = g.getPrivacidad().equals(BigInteger.ZERO);
+        boolean miembro = loginBean.getUsuario().getGrupoCollection1().contains(g);
+        if (s.equals("estadoEnGrupo")) {
+            if (publico) {
+                res += "Grupo público";
+            } else {
+                res += "Grupo privado";
+            }
+            if (miembro) {
+                res += ", eres miembro.";
+            } else {
+                res += ", no eres miembro.";
+            }
+        } else if (s.equals("claseBoton")) {
+            if (miembro) {
+                res += "btn btn-danger pull-right";
+            } else {
+                res += "btn btn-success pull-right";
+            }
+        } else if (s.equals("textoBoton")) {
+            if (miembro) {
+                res = "Abandonar";
+            } else {
+                res = "Unirse";
+            }
+        }
+        return res;
+    }
    
 }
