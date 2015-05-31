@@ -72,7 +72,7 @@ public class PostFacade extends AbstractFacade<Post> {
         q.executeUpdate();
     }
     
-    public void deletePostGrupo(Post post, Usuario usuario){
+    public void deletePostGrupo(Post post, Usuario usuario, Grupo grupo){
         // Busco el Post en la BD
 //        Post post = find(id_post);
         
@@ -83,8 +83,9 @@ public class PostFacade extends AbstractFacade<Post> {
         usuarioFacade.edit(usuario);
         
         // Borro el post en el grupo al que pertenece
-        Grupo grupo = grupoFacade.find(post.getIdGrupoP().getIdGrupo());
+//        Grupo grupo = grupoFacade.find(post.getIdGrupoP().getIdGrupo());
         grupo.getPostCollection().remove(post);
+        
         
         // Actualizo el grupo en la BD
         grupoFacade.edit(grupo);
