@@ -203,4 +203,12 @@ public class SeguirNoSeguirBean {
         return res;
     }
    
+    public boolean mostrarBoton(Grupo g){
+        boolean res = true;
+        boolean miembro = g.getUsuarioCollection1().contains(loginBean.getUsuario());
+        if(!miembro && g.getPrivacidad().equals(BigInteger.ONE)){
+            res = false;
+        }
+        return res;
+    }
 }

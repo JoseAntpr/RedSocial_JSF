@@ -6,8 +6,8 @@
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
-    
-      <!--xmlns:t="http://myfaces.apache.org/tomahawk">-->
+
+    <!--xmlns:t="http://myfaces.apache.org/tomahawk">-->
     <h:head>
         <meta http-equiv="content-type" content="text/html; charset=UTF-8"/> 
         <meta charset="utf-8"/>
@@ -23,6 +23,7 @@
         <div class="wrapper">
             <div class="box">
                 <div class="row row-offcanvas row-offcanvas-left">
+
                     <!-- LISTADO GRUPOS -->
                     <div class="column col-sm-2 col-xs-1 sidebar-offcanvas" id="sidebar">
                         <ul class="nav hidden-xs" id="lg-menu">
@@ -49,13 +50,14 @@
                                     </li>
                                 </c:forEach>
                             </c:if>
-                         </ul>
+                        </ul>
                     </div> <!-- fin LISTADO GRUPOS -->
                     <!-- /sidebar -->
 
                     <!-- main right col -->
                     <div class="column col-sm-10 col-xs-11" id="main">
                         <!-- top nav -->
+                        <ui:include src="navbar.xhtml"/>
                         <!-- AQUI VA EL INCLUDE DEL NAVEGADOR -->
                         <div class="padding">
                             <div class="full col-sm-9">
@@ -80,7 +82,7 @@
                                                     </c:if>
                                                 </div>
                                             </div> <!-- fin INFO DEL GRUPO -->
-                                            
+
                                             <!-- MIEMBROS DEL GRUPO -->
                                             <div class="panel panel-default">
                                                 <div class="panel-heading"> <h4>Miembros</h4></div>
@@ -94,8 +96,8 @@
                                                         <img src="#{g.imagen}" class="img-circle pull-right">
                                                             <h:link outcome="muro?usuarioMuro=#{grupoBean.usuarioMuro.idUsuario}">#{m.nombre}</h:link>
                                                         </img>
-                                                    <div class="clearfix"></div>
-                                                    <hr/>
+                                                        <div class="clearfix"></div>
+                                                        <hr/>
                                                     </div>
                                                 </c:forEach>
                                             </div> <!-- fin MIEMBROS DEL GRUPO -->
@@ -109,90 +111,89 @@
                                     <div class="col-sm-7">
                                         <c:if test="#{grupoBean.tieneGrupos}">
                                             <c:if test="#{grupoBean.muroPropio}">
-                                                
-                                            <!-- CREAR POST GRUPO -->
+
+                                                <!-- CREAR POST GRUPO -->
                                                 <div class="well"> 
                                                     <h:form id="uploadedImageForm" enctype="multipart/form-data">
                                                         <h4>¿Qué te cuentas?</h4>
                                                         <div class="form-group" style="padding:14px;">
-                                                            <h:inputTextarea class="form-control" pt:placeholder="Actualiza tu estado" value="#{grupoBean.descripcionPostGrupo}" />
-                                                            <h:inputFile class="filestyle" pt:data-input="false" pt:data-buttonText="Buscar Archivo" value="#{grupoBean.imagenFile}"/>
-                                                            
-                                                            <h:message for="file" style="color: red;" />
-                                                            <h:commandButton class="btn btn-primary pull-right" action="#{grupoBean.doPostGrupoCrear()}" value="Post" >
-                                                                <f:ajax render="iteradorPostGrupo"/>
+                                                            <h:inputTextarea id="text" class="form-control" pt:placeholder="Actualiza tu estado" value="#{grupoBean.desPostGrupo}" />
+                                                            <h:commandButton class="btn btn-primary pull-right" value="Post" >
+                                                                <f:ajax execute="text" listener="#{grupoBean.doPostGrupoCrear()}" render="idForPostGrupo"/>
                                                             </h:commandButton>
-                                                            <h:messages for="uploadForm" infoStyle="color: green;" errorStyle="color: red;" />
+                                                            <h:inputFile class="filestyle" pt:data-input="false" pt:data-buttonText="Buscar Archivo" value="#{grupoBean.imagenFile}"/>
                                                         </div>
                                                     </h:form>
                                                 </div> <!-- fin CREAR POST GRUPO -->
                                             </c:if>
-                                            
+
                                             <!-- LISTAR POST GRUPO -->
-                                            <c:forEach id="iteradorPostGrupo" items="#{grupoBean.listaPostGrupo}" var="p">
-                                                <!-- form Post -->
-                                                <h:form enctype="multipart/form-data">
-                                                    <div class="panel panel-default">
-                                                        <c:if test="#{p.imagen != null}">
-                                                            <div class="panel-thumbnail"><img src="#{p.imagen}" class="img-responsive"/></div>
-                                                        </c:if>
-                                                        <!-- EDITANDO POST -->
-                                                        <c:if test="#{grupoBean.editarPost}">
-                                                            <c:if test="#{p.idPost.equals(grupoBean.postAEditar.idPost)}">
-                                                                <div class="well">
+                                            <h:panelGroup id="idForPostGrupo">
+                                                <c:forEach id="iteradorPostGrupo" items="#{grupoBean.listaPostGrupo}" var="p">
+                                                    <!-- form Post -->
+                                                    <h:form enctype="multipart/form-data">
+                                                        <div class="panel panel-default">
+                                                            <c:if test="#{p.imagen != null}">
+                                                                <div class="panel-thumbnail"><img src="#{p.imagen}" class="img-responsive"/></div>
+                                                            </c:if>
+                                                            <!-- EDITANDO POST -->
+                                                            <c:if test="#{grupoBean.editarPost}">
+                                                                <c:if test="#{p.idPost.equals(grupoBean.postAEditar.idPost)}">
+                                                                    <div class="well">
                                                                         <h4>¡Editando Post!</h4>
                                                                         <div class="form-group" style="padding:14px;">
-                                                                            <h:inputTextarea class="form-control" pt:placeholder="Actualiza tu estado" value="#{grupoBean.descripcionPostGrupo}" />
-                                                                            <h:inputFile class="filestyle" pt:data-input="false" pt:data-buttonText="Buscar Archivo" pt:placeholder="sube una foto" value="#{grupoBean.imagenPostGrupoUri}"/>
-                                                                            <h:commandButton class="btn btn-primary pull-right" action="#{grupoBean.doPostGrupoEditar()}" value="Actualizar">
-                                                                                <f:ajax render="@form"/>
+                                                                            <h:inputTextarea id="textEdit" class="form-control" pt:placeholder="Actualiza tu estado" value="#{grupoBean.desPostGrupo}" />
+                                                                            <h:inputFile class="filestyle" pt:data-input="false" pt:data-buttonText="Buscar Archivo" pt:placeholder="sube una foto" value="#{grupoBean.imagenFile}"/>
+                                                                            <h:commandButton class="btn btn-primary pull-right" value="Actualizar">
+                                                                                <f:ajax execute="textEdit" listener="#{grupoBean.doPostGrupoEditar()}" render="@form"/>
                                                                             </h:commandButton>
                                                                         </div>
-                                                                </div>
-                                                            </c:if>
-                                                            <c:if test="#{!p.idPost.equals(grupoBean.postAEditar.idPost)}">
-                                                                <div class="panel-body">
-                                                                    <p>#{p.descripcion}</p>
-                                                                    <c:if test="#{p.idUsuarioP.idUsuario.equals(grupoBean.usuario.idUsuario)}">
-                                                                            <h:commandButton class="btn btn-danger pull-right" value="Eliminar" action="#{grupoBean.doPostGrupoEliminar()}" type="button">
-                                                                                <f:setPropertyActionListener target="#{grupoBean.idPostABorrar}" value="#{p.idPost}"/>
-                                                                                <f:ajax render="iteradorPostGrupo"/>
+                                                                    </div>
+                                                                </c:if>
+                                                                <c:if test="#{!p.idPost.equals(grupoBean.postAEditar.idPost)}">
+                                                                    <div class="panel-body">
+                                                                        <p>#{p.descripcion}</p>
+                                                                        <c:if test="#{p.idUsuarioP.idUsuario.equals(grupoBean.usuario.idUsuario)}">
+                                                                            <h:commandButton class="btn btn-danger pull-right" value="Eliminar" type="button">
+                                                                                <f:setPropertyActionListener target="#{grupoBean.postABorrar}" value="#{p}"/>
+                                                                                <f:ajax listener="#{grupoBean.doPostGrupoEliminar(p)}" render="idForPostGrupo"/>
                                                                             </h:commandButton>
                                                                             <h:commandButton class="btn btn-warning pull-right" value="Editar" action="#" type="button">
                                                                                 <f:setPropertyActionListener target="#{grupoBean.postAEditar}" value="#{p}"/>
                                                                                 <f:setPropertyActionListener target="#{grupoBean.editarPost}" value="#{true}"/>
                                                                                 <f:ajax render="@form"/>
                                                                             </h:commandButton>
-                                                                    </c:if>
-                                                                </div>
+                                                                        </c:if>
+                                                                    </div>
+                                                                </c:if>
                                                             </c:if>
-                                                        </c:if>
-                                                        <c:if test="#{!grupoBean.editarPost}">
-                                                            <div class="panel-body">
-                                                                <p>#{p.descripcion}</p>
-                                                                <c:if test="#{p.idUsuarioP.idUsuario.equals(grupoBean.usuario.idUsuario)}">
-                                                                        <h:commandButton class="btn btn-danger pull-right" value="Eliminar" action="#{grupoBean.doPostGrupoEliminar()}" type="button">
-                                                                            <f:setPropertyActionListener target="#{grupoBean.idPostABorrar}" value="#{p}"/>
-                                                                            <f:ajax render="iteradorPostGrupo"/>
+                                                            <c:if test="#{!grupoBean.editarPost}">
+                                                                <div class="panel-body">
+                                                                    <p>#{p.descripcion}</p>
+                                                                    <c:if test="#{p.idUsuarioP.idUsuario.equals(grupoBean.usuario.idUsuario)}">
+                                                                        <h:commandButton class="btn btn-danger pull-right" value="Eliminar" type="button">
+                                                                            <f:setPropertyActionListener target="#{grupoBean.postABorrar}" value="#{p}"/>
+                                                                            <f:ajax listener="#{grupoBean.doPostGrupoEliminar(p)}" render="idForPostGrupo"/>
                                                                         </h:commandButton>
                                                                         <h:commandButton class="btn btn-warning pull-right" value="Editar" action="#" type="button">
                                                                             <f:setPropertyActionListener target="#{grupoBean.postAEditar}" value="#{p}"/>
                                                                             <f:setPropertyActionListener target="#{grupoBean.editarPost}" value="#{true}"/>
                                                                             <f:ajax render="@form"/>
                                                                         </h:commandButton>
-                                                                </c:if>
-                                                            </div>
-                                                        </c:if>
-                                                    </div>
-                                                </h:form> <!-- / form Post -->
-                                            </c:forEach> <!--/fin LISTAR POST GRUPO-->
+                                                                    </c:if>
+                                                                </div>
+                                                            </c:if>
+                                                        </div>
+                                                    </h:form> <!-- / form Post -->
+                                                </c:forEach> <!--/fin LISTAR POST GRUPO-->
+                                            </h:panelGroup>
                                         </c:if> <!--/tieneGrupos-->
                                     </div> <!-- /main col right -->
                                 </div><!--/row-->
                                 <hr/>
                             </div><!-- /col-9 -->
                         </div><!-- /padding -->
-                        
+
                     </div><!-- /main -->
 
                 </div>
@@ -201,7 +202,7 @@
 
 
         <!--post modal-->
-        
+
 
         <script type="text/javascript" src="assets/js/jquery.js"></script>
         <script type="text/javascript" src="assets/js/bootstrap.js"></script>
