@@ -21,7 +21,9 @@
                 <div class="row row-offcanvas row-offcanvas-left">
 
                    <!-- Include sidebar -->
-                    <ui:include src="sidebar.xhtml"/>                   
+                   <h:panelGroup id="idSidebar">
+                        <ui:include src="sidebar.xhtml"/>
+                   </h:panelGroup> 
 		<!-- /Include sidebar -->
 
                     <!-- main right col -->
@@ -43,24 +45,17 @@
 
 
                                         <!-- POST -->
-
+                                    <h:panelGroup id="panel">
                                         <ui:repeat value="#{loginBean.listaUsuarios}" var="u">
                                         <div class="panel panel-default">
                                             <div class="panel-heading">
-                                               
-                                               <h:form>
-                                                   
-                                                   <h:commandButton value="#{seguirNoSeguirBean.tituloBoton(u)}" class="#{seguirNoSeguirBean.classBoton()} pull-right" action="#{seguirNoSeguirBean.seguirDejarSeguir(u)}" rendered="#{!loginBean.usuario.equals(u)}" >
-                                                       
-                                                     <!--<f:ajax  render="seguirsiguiendo"/>-->
-                                                    </h:commandButton> 
-                                                   <h:commandLink action="#{muroBean.cargarUsuarioMuro(u)}"><h4><img src="resources/img/uFp_tsTJboUY7kue5XAsGAs28.png" height="28px" width="28px"/> #{u.getNombre()} #{u.getApellidos()}</h4></h:commandLink>
+                                                
+                                                <h:form >                                                    
+                                                        <h:commandButton value="#{seguirNoSeguirBean.tituloBoton(u)}" class="#{seguirNoSeguirBean.classBoton()} pull-right" rendered="#{!loginBean.usuario.equals(u)}" >
+                                                            <f:ajax listener="#{seguirNoSeguirBean.seguirDejarSeguir(u)}" render="panel idSidebar" />                                                           
+                                                        </h:commandButton> 
+                                                        <h:commandLink action="#{muroBean.cargarUsuarioMuro(u)}" ><h4><img src="resources/img/uFp_tsTJboUY7kue5XAsGAs28.png" height="28px" width="28px"/> #{u.getNombre()} #{u.getApellidos()}</h4></h:commandLink>                                                    
                                                 </h:form> 
-                                              
-                                                 
-                                               
-                                                 
- 
                                             </div>
                                             <div class="panel-body">
                                                 <p>#{u.getDescripcion()}</p> 
@@ -68,6 +63,7 @@
                                             </div>
                                         </div> 
                                         </ui:repeat>
+                                    </h:panelGroup>
 
                                     </div>
 

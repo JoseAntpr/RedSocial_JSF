@@ -33,7 +33,7 @@
             <h:commandLink value=" Siguiendo" action="#{listarSeguidoresSiguiendoBean.cargarSigues()}">
                 <f:setPropertyActionListener target="#{loginBean.idListaUsuarios}" value="Siguiendo"/>
             </h:commandLink>
-            <b><h:outputText value="&#160;"/> #{loginBean.usuarioMuro.getUsuarioCollection().size()}</b>
+            <b><h:outputText id="siguiendo" value="&#160;"/> #{loginBean.usuarioMuro.getUsuarioCollection().size()}</b>
         </li>
         </h:form>
     </ul>

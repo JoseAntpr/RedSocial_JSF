@@ -41,7 +41,6 @@ public class MuroBean {
    
     private String cssDiv;
     
-    
     private SimpleDateFormat format = new SimpleDateFormat("EEEEE dd MMM yyyy - HH:mm");
     private SimpleDateFormat formatSinHora = new SimpleDateFormat("EEE dd MMM yyyy");
     
@@ -128,8 +127,10 @@ public class MuroBean {
     }
     
     public String cargarUsuarioMuro(Usuario u){
-        loginBean.setUsuarioMuro(u);
-        listaPostUsuarioMuro = (List) postFacade.findPostIdUsuarioOrder(u.getIdUsuario());
+        if(loginBean.getUsuario().siguesUsuario(u)){
+            loginBean.setUsuarioMuro(u);
+            listaPostUsuarioMuro = (List) postFacade.findPostIdUsuarioOrder(u.getIdUsuario());
+        }
         
         return "muro";
     }

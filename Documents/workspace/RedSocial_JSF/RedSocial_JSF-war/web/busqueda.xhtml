@@ -2,7 +2,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
       <meta http-equiv="content-type" content="text/html; charset=UTF-8"/> 
         <meta charset="utf-8"/>
@@ -19,7 +20,9 @@
                 <div class="row row-offcanvas row-offcanvas-left">
 
                    <!-- Include sidebar -->
-                    <ui:include src="sidebar.xhtml"/>                   
+                   <h:panelGroup id="idSidebar">
+                        <ui:include src="sidebar.xhtml"/>
+                   </h:panelGroup>                  
 		<!-- /Include sidebar -->
 
                     <!-- main right col -->
@@ -42,53 +45,37 @@
 
                                         <!-- POST -->
                                         <h3> Usuarios</h3>
+                                        <h:panelGroup id="panel">
+                                            <ui:repeat value="#{loginBean.listaUsuarios}" var="u">
+                                                <div class="panel panel-default">
+                                                    <div class="panel-heading">                                               
+                                                                                                         
+                                                           <h:commandButton value="#{seguirNoSeguirBean.tituloBoton(u)}" class="#{seguirNoSeguirBean.classBoton()} pull-right" rendered="#{!loginBean.usuario.equals(u)}">
+                                                               <f:ajax listener="#{seguirNoSeguirBean.seguirDejarSeguir(u)}" render="panel idSidebar" />
+                                                               
+                                                           </h:commandButton> 
+                                                        <h:form>  
+                                                           <h:commandLink action="#{muroBean.cargarUsuarioMuro(u)}"><h4><img src="resources/img/uFp_tsTJboUY7kue5XAsGAs28.png" height="28px" width="28px"/> #{u.getNombre()} #{u.getApellidos()}</h4></h:commandLink>
+                                                        </h:form> 
+                                                    </div>
+                                                    <div class="panel-body">
+                                                        <p>#{u.getDescripcion()}</p> 
 
-
-                                                                                
-                                           <!-- String s=null;
-                                            for (int i = 0; i < listaUsuario.size(); i++) {
-                                                    Usuario u = listaUsuario.get(i);
-                                                    s=usuario.siguesUsuario(u);  -->                                          
-                                           <ui:repeat value="#{buscarBean.listaUsuarios}" var="u">
-                                        <div class="panel panel-default">
-                                            <div class="panel-heading">
-                                               
-                                               <h:form>
-                                                   
-                                                   <h:commandButton value="#{seguirNoSeguirBean.tituloBoton(u)}" class="#{seguirNoSeguirBean.classBoton()} pull-right" action="#{seguirNoSeguirBean.seguirDejarSeguir(u)}"  rendered="#{!loginBean.usuario.equals(u)}">
-                                                       
-                                                     <!--<f:ajax  render="seguirsiguiendo"/>-->
-                                                    </h:commandButton> 
-                                                   <h:commandLink action="#{muroBean.cargarUsuarioMuro(u)}"><h4><img src="resources/img/uFp_tsTJboUY7kue5XAsGAs28.png" height="28px" width="28px"/> #{u.getNombre()} #{u.getApellidos()}</h4></h:commandLink>
-                                                </h:form> 
-                                              
-                                                 
-                                               
-                                                 
- 
-                                            </div>
-                                            <div class="panel-body">
-                                                <p>#{u.getDescripcion()}</p> 
-
-                                            </div>
-                                        </div> 
-                                        </ui:repeat>
-
+                                                    </div>
+                                                </div> 
+                                            </ui:repeat>
+                                        </h:panelGroup>
                                     </div>
 
-                                       <div class="col-sm-6">
-
-
+                                    <div class="col-sm-6">
                                         <!-- POST -->
-                                      <!--  <h3> Grupos</h3>
-
-
-                                        <%                                          
-                                            
+                                      <h3> Grupos</h3>
+                                        <!--  
+                                        <%                                                     
                                             for (int i = 0; i < listaGrupos.size(); i++) {
-                                                    Grupo g = listaGrupos.get(i);
-                                                                                                
-                                        %> 
+                                                    Grupo g = listaGrupos.get(i);                                                                                               
+                                        %> -->
+<!--                                        <ui:repeat value="" var="g" >
                                             <div class="panel panel-default">
                                                 <div class="panel-heading">
                                                     <% // GRUPO PUBLICO
@@ -133,15 +120,11 @@
 
                                                 </div>
                                             </div> 
-                                        <%  
-                                                
-                                            }%> -->
-                                            
 
+                                       </ui:repeat>-->
                                         <!--<ul class="list-inline"><li><a href=""><i class="glyphicon glyphicon-upload"></i></a></li><li><a href=""><i class="glyphicon glyphicon-film"></i></a></li><li><a href=""><i class="glyphicon glyphicon-map-marker"></i></a></li></ul>-->
 
                                     </div>
-
                                 </div><!--/row-->
 
                             </div><!-- /col-9 -->

@@ -12,6 +12,7 @@ import eajsf.entity.Usuario;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 
 /**
@@ -26,8 +27,9 @@ public class BuscarBean {
     @EJB
     private UsuarioFacade usuarioFacade;
 
+    @ManagedProperty(value = "#{loginBean}")
+    private LoginBean loginBean;
     
-    private List<Usuario> listaUsuarios;
     private List<Grupo> listaGrupos;
     private String datos;
     
@@ -53,14 +55,6 @@ public class BuscarBean {
         this.usuarioFacade = usuarioFacade;
     }
 
-    public List<Usuario> getListaUsuarios() {
-        return listaUsuarios;
-    }
-
-    public void setListaUsuarios(List<Usuario> listaUsuarios) {
-        this.listaUsuarios = listaUsuarios;
-    }
-
     public List<Grupo> getListaGrupos() {
         return listaGrupos;
     }
@@ -76,11 +70,19 @@ public class BuscarBean {
     public void setDatos(String datos) {
         this.datos = datos;
     }
+
+    public LoginBean getLoginBean() {
+        return loginBean;
+    }
+
+    public void setLoginBean(LoginBean loginBean) {
+        this.loginBean = loginBean;
+    }
     
     
     
     public String buscar()  {
-        this.listaUsuarios = (List) usuarioFacade.buscarUsuarios(datos);
+        loginBean.setListaUsuarios((List) usuarioFacade.buscarUsuarios(datos));
         return "busqueda";
     }   
     

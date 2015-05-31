@@ -14,6 +14,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.event.AjaxBehaviorEvent;
 
 /**
  *
@@ -102,14 +103,14 @@ public class SeguirNoSeguirBean {
         return classBoton;
     }
     
-    public String seguirDejarSeguir(Usuario u){
+    public void seguirDejarSeguir(Usuario u){
         usuario=u;
         String tit = tituloBoton(u);
             if(tit.equals("Siguiendo")){
                usuario.getUsuarioCollection1().remove(loginBean.getUsuario());
                 loginBean.getUsuario().getUsuarioCollection().remove(usuario);
                 
-           
+                loginBean.setIdListaUsuarios("Seguir");
                 usuarioFacade.edit(loginBean.getUsuario());
                 usuarioFacade.edit(usuario);
                 if(loginBean.getIdListaUsuarios().equals("Siguiendo")){
@@ -127,7 +128,7 @@ public class SeguirNoSeguirBean {
             }
             
             
-            return "seguidores_siguiendo";
+//            return "seguidores_siguiendo";
         
     }
     

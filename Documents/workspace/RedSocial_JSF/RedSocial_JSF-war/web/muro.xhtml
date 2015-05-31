@@ -41,7 +41,7 @@
 				<!-- main col left -->
                                 
                                 <div class="#{muroBean.cssDiv}">
-                                
+                                    <h:panelGroup id="post">
                                     <ui:repeat value="#{muroBean.listaPostUsuario()}" var="p">
                                   
                                             <div class="panel panel-default">
@@ -58,13 +58,16 @@
                                                    <p>#{p.getDescripcion()}</p> 
                                                    <c:if test="#{loginBean.usuario.equals(loginBean.usuarioMuro)}"> 
                                                         <h:form>
-                                                            <h:commandButton class="btnEliminar botonEliminar" value="Eliminar" action="#{postBean.borrarPost(p)}"/>    
+                                                            <h:commandButton class="btnEliminar botonEliminar" value="Eliminar" action="#{postBean.borrarPost(p)}">
+                                                                <f:ajax render="post"/>
+                                                            </h:commandButton>    
                                                         </h:form>  
                                                    </c:if>
                                                </div>
                                            </div>
                                       
                                     </ui:repeat>
+                                    </h:panelGroup>
                                     
                                 </div>
                                 <!-- Include sidebar -->

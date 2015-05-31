@@ -199,7 +199,7 @@ public class PostBean {
         return null;
     }
 
-    public String borrarPost(Post p) {
+    public void borrarPost(Post p) {
 
         postFacade.deletePost(p.getIdPost());
         loginBean.getUsuario().getPostCollection().remove(p);
@@ -208,7 +208,7 @@ public class PostBean {
         
         //        muroBean.setListaPost(postFacade.findPostIdUsuarioOrder(loginBean.getUsuario().getIdUsuario()));
         
-        return "muro";
+//        return "muro";
     }
     
 }
