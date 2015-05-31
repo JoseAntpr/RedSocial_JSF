@@ -39,13 +39,9 @@
                </c:if>
                
             </li>
+            
 	</ul>
-        <ul class="nav navbar-nav navbar-right">
-            <h:selectOneMenu value="#{languageBean.localeCode}" onchange="submit()"
-			valueChangeListener="#{languageBean.countryLocaleCodeChanged}">
-   			<f:selectItems value="#{languageBean.countriesInMap}" /> 
-            </h:selectOneMenu>
-        </ul>
+       
         <!-- MENU DESPLEGAR -->
 	<ul class="nav navbar-nav navbar-right">
             <li class="dropdown" id="fat-menu"> <a data-toggle="dropdown" class="dropdown-toggle" role="button" id="drop3" href="#">#{loginBean.usuario.getNombre()} <b class="caret"></b></a>

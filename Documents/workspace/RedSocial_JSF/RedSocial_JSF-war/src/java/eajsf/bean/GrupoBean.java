@@ -326,7 +326,7 @@ public class GrupoBean {
         usuarioMuro = loginBean.getUsuarioMuro();
         
         // True si estamos viendo un muro de otra persona
-        muroPropio = idUsuario.equals(idUsuarioMuro);
+        muroPropio = usuario.getIdUsuario().equals(usuarioMuro.getIdUsuario());
 
         if (muroPropio) {
             listaGruposUsuarioMuro = (List) usuarioMuro.getGrupoCollection1();
@@ -347,7 +347,7 @@ public class GrupoBean {
                 grupo = (Grupo) grupoFacade.find(listaGruposUsuarioMuro.get(0).getIdGrupo());
             }
 
-            esAdministradorGrupo = idUsuario.toBigInteger().equals(grupo.getIdAdministradorG());
+            esAdministradorGrupo = usuario.getIdUsuario().toBigInteger().equals(grupo.getIdAdministradorG());
 
             listaPostGrupo = (List) postFacade.getListaPostGrupo(grupo.getIdGrupo());
             //listaPostGrupo = (List) grupo.getPostCollection();
@@ -440,21 +440,21 @@ public class GrupoBean {
         p.setIdUsuarioP(usuario);
         
         if (imagenFile != null) {
-            String appPath = FacesContext.getCurrentInstance().getExternalContext().getRealPath("");
-            String filePath = appPath + File.separator + "resources" + File.separator + "img" + File.separator + "uploadImages";
-            File fileSaveDir = new File(filePath);
-            if (!fileSaveDir.exists()) {
-                fileSaveDir.mkdir();
-            }
-            String fileDirUpload = filePath + File.separator + imagenFile.getName();
-            File file = new File(fileDirUpload);
-//        File file = new File(ruta);
-            FileOutputStream fos = new FileOutputStream(file);
-//            IOUtils.copy(uploadFile.getInputstream(), fos);
-
-            String rutaWeb = "resources" + File.separator + "img" + File.separator + "uploadImages" + File.separator + "imagenSinNombre.jpg";
-            
-            p.setImagen(imagenPostGrupoUri);
+//            String appPath = FacesContext.getCurrentInstance().getExternalContext().getRealPath("");
+//            String filePath = appPath + File.separator + "resources" + File.separator + "img" + File.separator + "uploadImages";
+//            File fileSaveDir = new File(filePath);
+//            if (!fileSaveDir.exists()) {
+//                fileSaveDir.mkdir();
+//            }
+//            String fileDirUpload = filePath + File.separator + imagenFile.getName();
+//            File file = new File(fileDirUpload);
+////        File file = new File(ruta);
+//            FileOutputStream fos = new FileOutputStream(file);
+////            IOUtils.copy(uploadFile.getInputstream(), fos);
+//
+//            String rutaWeb = "resources" + File.separator + "img" + File.separator + "uploadImages" + File.separator + "imagenSinNombre.jpg";
+//            
+//            p.setImagen(imagenPostGrupoUri);
         }
 
         // Añadimos el post a la DB

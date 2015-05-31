@@ -82,7 +82,9 @@ public class BuscarBean {
     
     
     public String buscar()  {
+        loginBean.setUsuarioMuro(loginBean.getUsuario());
         loginBean.setListaUsuarios((List) usuarioFacade.buscarUsuarios(datos));
+        loginBean.setListaGrupos((List) grupoFacade.buscarGrupos(datos));
         return "busqueda";
     }   
     
