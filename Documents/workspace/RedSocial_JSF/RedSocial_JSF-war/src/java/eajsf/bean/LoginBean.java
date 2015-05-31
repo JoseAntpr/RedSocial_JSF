@@ -364,7 +364,7 @@ public class LoginBean {
         usuarioMuro = null;
         usuarioEditar = null;
         listaPostUsuario = null;
-        listaUsuarios = null;
+        //listaUsuarios = null;
         idListaUsuarios = null;
         password2=null;
         error="";

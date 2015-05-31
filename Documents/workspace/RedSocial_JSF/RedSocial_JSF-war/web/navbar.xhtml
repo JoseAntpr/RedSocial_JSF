@@ -51,9 +51,9 @@
                         <li role="presentation"><h:commandLink class="menu-usuario" action="#{loginBean.botonCambiarPass()}" tabindex="-1" role="menuitem" >#{msg['cambiarContra']}</h:commandLink></li>
                        <li class="divider" role="presentation"></li>                
                        <li role="presentation"><h:commandLink class="menu-usuario" action="#{loginBean.cerrarSesion()}" tabindex="-1" role="menuitem" >#{msg['cerrarSesion']}</h:commandLink></li>
+                        <c:if test="#{loginBean.esAdministrador()}">
                        <li class="divider" role="presentation"></li>                   
-                       <c:if test="#{loginBean.esAdministrador()}">
-                        <li role="presentation"><h:commandLink class="menu-usuario" action="#{loginBean.botonAdministrar()}" tabindex="-1" role="menuitem" >#{msg['administrar']}</h:commandLink></li>
+                       <li role="presentation"><h:commandLink class="menu-usuario" action="#{loginBean.botonAdministrar()}" tabindex="-1" role="menuitem" >#{msg['administrar']}</h:commandLink></li>
                         </c:if>
                         <li class="divider" role="presentation"></li>        
                         <li role="presentation"><h:commandLink class="menu-usuario" action="#{languageBean.changeLanguage('en')}" value="English" /></li>
