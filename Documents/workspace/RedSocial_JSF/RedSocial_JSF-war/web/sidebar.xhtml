@@ -18,31 +18,31 @@
 
                             
                             <li>
-                                <h:form>
+                                <h:form rendered="#{loginBean.usuario.equals(loginBean.usuarioMuro) or loginBean.usuario.siguesUsuario(loginBean.usuarioMuro)}">
                                 <i class="glyphicon glyphicon-align-right" />
-                                 <h:commandLink value=" Grupos" >
+                                 <h:commandLink value=" Grupos" rendered="#{loginBean.usuario.equals(loginBean.usuarioMuro) or loginBean.usuario.siguesUsuario(loginBean.usuarioMuro)}" >
                                 </h:commandLink>
                                 </h:form>
                             </li>
                             <li> 
-                                <h:form style="display: inline"> 
+                                <h:form style="display: inline" rendered="#{loginBean.usuario.equals(loginBean.usuarioMuro) or loginBean.usuario.siguesUsuario(loginBean.usuarioMuro)}"> 
                                 <i class="glyphicon glyphicon-list" />
-                                <h:commandLink value=" Seguidores" action="#{listarSeguidoresSiguiendoBean.cargarSeguidores()}">
+                                <h:commandLink value=" Seguidores" action="#{listarSeguidoresSiguiendoBean.cargarSeguidores()}" rendered="#{loginBean.usuario.equals(loginBean.usuarioMuro) or loginBean.usuario.siguesUsuario(loginBean.usuarioMuro)}">
                                     <f:setPropertyActionListener target="#{loginBean.idListaUsuarios}" value="Seguidores"/>
                                 </h:commandLink>
                                 </h:form>
-                                <b>#{loginBean.usuarioMuro.getUsuarioCollection1().size()}</b>
+                                <b><h:outputText value="#{loginBean.usuarioMuro.getUsuarioCollection1().size()}"  rendered="#{loginBean.usuario.equals(loginBean.usuarioMuro) or loginBean.usuario.siguesUsuario(loginBean.usuarioMuro)}"/></b>
                             
                             </li>
                             
                             <li>
-                                <h:form style="display: inline" > 
+                                <h:form style="display: inline" rendered="#{loginBean.usuario.equals(loginBean.usuarioMuro) or loginBean.usuario.siguesUsuario(loginBean.usuarioMuro)}" > 
                                 <i class="glyphicon glyphicon-list" />
-                                <h:commandLink value=" Siguiendo" action="#{listarSeguidoresSiguiendoBean.cargarSigues()}">
+                                <h:commandLink value=" Siguiendo" action="#{listarSeguidoresSiguiendoBean.cargarSigues()}" >
                                     <f:setPropertyActionListener target="#{loginBean.idListaUsuarios}" value="Siguiendo"/>
                                 </h:commandLink> 
                                 </h:form>
-                                <b><h:outputText value="&#160;"/> <h:outputText id="siguiendo" value="#{loginBean.usuarioMuro.getUsuarioCollection().size()}"/></b>
+                                <b><h:outputText value="&#160;"/> <h:outputText id="siguiendo" value="#{loginBean.usuarioMuro.getUsuarioCollection().size()}" rendered="#{loginBean.usuario.equals(loginBean.usuarioMuro) or loginBean.usuario.siguesUsuario(loginBean.usuarioMuro)}"/></b>
                             </li>
                             
                         </ul>

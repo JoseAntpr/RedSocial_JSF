@@ -43,20 +43,22 @@
 
                                         <!-- POST -->
                                         <h3> Usuarios</h3>
+                                        <h:form id="form">
                                         <h:panelGroup id="panel">
-                                            <ui:repeat value="#{loginBean.listaUsuarios}" var="u" id="for">
+                                            <ui:repeat value="#{loginBean.listaUsuarios}" var="u" >
                                                
                                                 <div class="panel panel-default">
                                                     <div class="panel-heading">  
                                                         
-                                                                                                    
+                                                                                                  
                                                            <h:commandButton value="#{seguirNoSeguirBean.tituloBoton(u)}" class="#{seguirNoSeguirBean.classBoton()} pull-right" rendered="#{!loginBean.usuario.equals(u)}">
-                                                               <f:ajax listener="#{seguirNoSeguirBean.seguirDejarSeguir(u)}" render="for:panel siguiendo" />
+                                                               <f:ajax listener="#{seguirNoSeguirBean.seguirDejarSeguir(u)}" render="form:panel siguiendo" />
                                                                
                                                            </h:commandButton> 
-                                                        <h:form> 
-                                                           <h:commandLink action="#{muroBean.cargarUsuarioMuro(u)}"><h4><img src="resources/img/uFp_tsTJboUY7kue5XAsGAs28.png" height="28px" width="28px"/> #{u.getNombre()} #{u.getApellidos()}</h4></h:commandLink>
-                                                        </h:form> 
+                                                        
+                                                        
+                                                            <h:commandLink   action="#{muroBean.cargarUsuarioMuro(u)}"><h4><img src="resources/img/uFp_tsTJboUY7kue5XAsGAs28.png" height="28px" width="28px"/> #{u.getNombre()} #{u.getApellidos()}</h4></h:commandLink>
+                                                       
                                                         
                                                     </div>
                                                     <div class="panel-body">
@@ -67,6 +69,7 @@
                                                  
                                             </ui:repeat>
                                         </h:panelGroup>
+                                       </h:form>
                                     </div>
 
                                     <div class="col-sm-6">
