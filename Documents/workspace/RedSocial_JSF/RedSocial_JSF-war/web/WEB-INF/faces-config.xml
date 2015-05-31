@@ -9,7 +9,7 @@
                 <supported-locale>es</supported-locale>
      	   </locale-config>
 	   <resource-bundle>
-		<base-name>idioma</base-name>
+		<base-name>idiomas.idioma</base-name>
 		<var>msg</var>
 	   </resource-bundle>
 </application>

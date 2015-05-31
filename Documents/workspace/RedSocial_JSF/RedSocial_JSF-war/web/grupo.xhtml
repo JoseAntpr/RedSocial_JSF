@@ -112,12 +112,12 @@
                                                 
                                             <!-- CREAR POST GRUPO -->
                                                 <div class="well"> 
-                                                    <h:form id="uploadForm" enctype="multipart/form-data">
+                                                    <h:form id="uploadedImageForm" enctype="multipart/form-data">
                                                         <h4>¿Qué te cuentas?</h4>
                                                         <div class="form-group" style="padding:14px;">
                                                             <h:inputTextarea class="form-control" pt:placeholder="Actualiza tu estado" value="#{grupoBean.descripcionPostGrupo}" />
                                                             <h:inputFile class="filestyle" pt:data-input="false" pt:data-buttonText="Buscar Archivo" value="#{grupoBean.imagenFile}"/>
-                                                            <!--<t:inputFileUpload id="file" class="filestyle" value="#{grupoBean.uploadedImage}" required="true"/>-->
+                                                            
                                                             <h:message for="file" style="color: red;" />
                                                             <h:commandButton class="btn btn-primary pull-right" action="#{grupoBean.doPostGrupoCrear()}" value="Post" >
                                                                 <f:ajax render="iteradorPostGrupo"/>
