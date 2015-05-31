@@ -6,6 +6,7 @@
 package eajsf.ejb;
 
 import eajsf.entity.Grupo;
+import eajsf.entity.Roles;
 import eajsf.entity.Usuario;
 import java.math.BigInteger;
 import java.util.Date;
@@ -150,6 +151,28 @@ public class UsuarioFacade extends AbstractFacade<Usuario> {
          }
         return bloqueado;
     }
+     
+      // Metodo que devuelve si un usuario es admin o no.
+     public boolean esAdmin(Usuario u) {      
+        boolean admin = false;
+       String nombre= "Administrador" ;
+        Roles rol =null;
+        Query query = em.createNamedQuery("Roles.findByNombre");
+        query.setParameter("nombre", nombre);
+         try {
+            rol =   (Roles) query.getSingleResult();
+        } catch (Exception ex) {
+        }
+        
+        
+        
+      
+        if (u.getRolesCollection().contains(rol)){
+            admin=true;
+        }
+       
+        return admin;
+    }    
   
    
     

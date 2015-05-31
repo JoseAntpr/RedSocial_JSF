@@ -62,6 +62,11 @@ public class LoginBean {
          listaUsuarios = usuarioFacade.findAll();
          listaGrupos = grupoFacade.findAll();
     }
+    
+     public Boolean esAdministrador() {
+          return usuarioFacade.esAdmin(usuario);        
+          
+      }
 
     public String getPassword2() {
         return password2;
