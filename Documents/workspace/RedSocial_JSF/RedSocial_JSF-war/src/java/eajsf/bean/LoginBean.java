@@ -54,6 +54,7 @@ public class LoginBean {
     private List<Post> listaPostUsuario;
     private List<Post> listaPostSigues;
     private List<Usuario> listaUsuarios;
+     private List<Usuario> listaUsuariosAdmin;
     private List<Grupo> listaGrupos;
 
     private String idListaUsuarios;
@@ -62,8 +63,16 @@ public class LoginBean {
     
     @PostConstruct
     public void Init(){         
-         listaUsuarios = usuarioFacade.findAll();
+         listaUsuariosAdmin = usuarioFacade.findAll();
          listaGrupos = grupoFacade.findAll();
+    }
+
+    public List<Usuario> getListaUsuariosAdmin() {
+        return listaUsuariosAdmin;
+    }
+
+    public void setListaUsuariosAdmin(List<Usuario> listaUsuariosAdmin) {
+        this.listaUsuariosAdmin = listaUsuariosAdmin;
     }
 
     public String getPassError() {
@@ -364,7 +373,7 @@ public class LoginBean {
         usuarioMuro = null;
         usuarioEditar = null;
         listaPostUsuario = null;
-        //listaUsuarios = null;
+        listaUsuarios = null;
         idListaUsuarios = null;
         password2=null;
         error="";
