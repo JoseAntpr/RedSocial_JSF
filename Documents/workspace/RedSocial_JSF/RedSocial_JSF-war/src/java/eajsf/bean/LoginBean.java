@@ -44,6 +44,7 @@ public class LoginBean {
     private String descripcion;
     private String password;
     private String password2;
+    private String passError=null;
 
     private Usuario usuario;
     private Usuario usuarioMuro;
@@ -57,11 +58,23 @@ public class LoginBean {
 
     private String idListaUsuarios;
     
+    
+    
     @PostConstruct
     public void Init(){         
          listaUsuarios = usuarioFacade.findAll();
          listaGrupos = grupoFacade.findAll();
     }
+
+    public String getPassError() {
+        return passError;
+    }
+
+    public void setPassError(String passError) {
+        this.passError = passError;
+    }
+    
+    
     
      public Boolean esAdministrador() {
           return usuarioFacade.esAdmin(usuario);        
@@ -306,6 +319,7 @@ public class LoginBean {
     public String botonCambiarPass() {
         usuarioEditar = usuarioMuro;    
         error="";
+        passError=null;
         return "editarPassword.xhtml";       
     }
 
@@ -330,7 +344,8 @@ public class LoginBean {
             ruta = "muro.xhtml";            
         }else{
             error="Las contraseñas no coinciden. Intentelo de nuevo.";
-            ruta="editarPassword.xhtml";           
+            ruta="editarPassword.xhtml"; 
+            passError="teEquivocasteWey";
         }
         
         return ruta;
@@ -353,6 +368,7 @@ public class LoginBean {
         idListaUsuarios = null;
         password2=null;
         error="";
+        passError=null;
         
         return "login.xhtml";
     }
